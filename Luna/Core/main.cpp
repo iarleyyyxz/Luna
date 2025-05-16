@@ -1,9 +1,21 @@
+// main.cpp
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <string>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
-int main() 
+#include "Renderer/shader.hpp"
+#include "Renderer/texture.hpp"
+#include "camera.hpp"
+#include "Renderer/sprite.hpp"
+#include "Renderer/sprite_renderer.hpp"
+
+int main()
 {
+
     // Inicializar o GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -18,7 +30,7 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Para macOS
 #endif
-    
+
     // Criar a janela GLFW
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;
@@ -42,21 +54,25 @@ int main()
     // Configurar o viewport OpenGL
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-   
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Loop principal
     while (!glfwWindowShouldClose(window)) {
         // Limpar o buffer de cor
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        // Ativar o shader
+
         // Trocar os buffers
         glfwSwapBuffers(window);
 
         // Processar eventos
         glfwPollEvents();
     }
+;
 
-    // Encerrar o GLFW
     glfwTerminate();
     return 0;
 }
