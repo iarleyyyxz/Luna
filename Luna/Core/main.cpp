@@ -18,7 +18,7 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Para macOS
 #endif
-
+    
     // Criar a janela GLFW
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;

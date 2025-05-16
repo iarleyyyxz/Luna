@@ -13,27 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{5744616d-ee60-40a5-8f68-d2a24a9a9134}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Core\main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="shader.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="texture.hpp">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="shader.hpp">
-      <Filter>Core</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
