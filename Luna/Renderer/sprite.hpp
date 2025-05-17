@@ -21,10 +21,6 @@ private:
     Texture m_texture;
     glm::vec3 m_position;
     glm::vec2 m_size;
-
-    // VAO, VBO para cada sprite instance? Ou gerenciado externamente?
-    // Por simplicidade inicial, vamos assumir que o VAO/VBO é configurado externamente
-    // e o Sprite apenas se preocupa com a textura e a transformação.
 };
 
 #endif // SPRITE_HPP

@@ -11,17 +11,22 @@
 #include "Renderer/texture.hpp"
 #include "camera.hpp"
 #include "Renderer/sprite.hpp"
-#include "Renderer/sprite_renderer.hpp"
+
+#include <Core/keyboard.hpp>
+#include <Core/mouse.hpp>
+
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
 
 int main()
 {
-
     // Inicializar o GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
-
     // Definir as hints da janela
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -44,6 +49,21 @@ int main()
     // Tornar o contexto da janela o atual
     glfwMakeContextCurrent(window);
 
+
+    Core::KeyListener keyListener;
+    Core::MouseListener mouseListener;
+
+    glfwSetWindowUserPointer(window, &keyListener);
+    glfwSetKeyCallback(window, Core::KeyListener::keyCallback);
+
+    glfwSetWindowUserPointer(window, &mouseListener);
+    glfwSetMouseButtonCallback(window, Core::MouseListener::mouseButtonCallback);
+    glfwSetCursorPosCallback(window, Core::MouseListener::cursorPosCallback);
+    glfwSetScrollCallback(window, Core::MouseListener::mouseScrollCallback);
+
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+
     // Inicializar GLEW
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -63,8 +83,6 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Ativar o shader
-
         // Trocar os buffers
         glfwSwapBuffers(window);
 
@@ -76,3 +94,4 @@ int main()
     glfwTerminate();
     return 0;
 }
+

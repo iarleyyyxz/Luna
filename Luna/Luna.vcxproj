@@ -128,14 +128,16 @@
   <ItemGroup>
     <ClCompile Include="Core\camera.cpp" />
     <ClCompile Include="Core\main.cpp" />
+    <ClCompile Include="Core\keyboard.cpp" />
+    <ClCompile Include="Core\mouse.cpp" />
     <ClCompile Include="Renderer\texture.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\sprite.cpp" />
-    <ClCompile Include="Renderer\sprite_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\camera.hpp" />
-    <ClInclude Include="Renderer\sprite_renderer.hpp" />
+    <ClInclude Include="Core\keyboard.hpp" />
+    <ClInclude Include="Core\mouse.hpp" />
     <ClInclude Include="Renderer\texture.hpp" />
     <ClInclude Include="Renderer\shader.hpp" />
     <ClInclude Include="Renderer\sprite.hpp" />
