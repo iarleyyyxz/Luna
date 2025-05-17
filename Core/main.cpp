@@ -1,4 +1,3 @@
-// main.cpp
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -14,14 +13,13 @@
 
 #include <Core/keyboard.hpp>
 #include <Core/mouse.hpp>
-
+#include <Core/Game.hpp>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-int main()
-{
+int main() {
     // Inicializar o GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -49,21 +47,6 @@ int main()
     // Tornar o contexto da janela o atual
     glfwMakeContextCurrent(window);
 
-
-    Core::KeyListener keyListener;
-    Core::MouseListener mouseListener;
-
-    glfwSetWindowUserPointer(window, &keyListener);
-    glfwSetKeyCallback(window, Core::KeyListener::keyCallback);
-
-    glfwSetWindowUserPointer(window, &mouseListener);
-    glfwSetMouseButtonCallback(window, Core::MouseListener::mouseButtonCallback);
-    glfwSetCursorPosCallback(window, Core::MouseListener::cursorPosCallback);
-    glfwSetScrollCallback(window, Core::MouseListener::mouseScrollCallback);
-
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-
     // Inicializar GLEW
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -77,21 +60,43 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // Loop principal
+    Core::MouseListener mouseListener;
+    Core::KeyListener keyListener;
+
+    glfwSetWindowUserPointer(window, &keyListener);
+    glfwSetKeyCallback(window, Core::KeyListener::glfwKeyCallback);
+
+    glfwSetWindowUserPointer(window, &mouseListener);
+    glfwSetMouseButtonCallback(window, Core::MouseListener::mouseButtonCallback);
+    glfwSetCursorPosCallback(window, Core::MouseListener::cursorPosCallback);
+    glfwSetScrollCallback(window, Core::MouseListener::mouseScrollCallback);
+
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+
+    Core::Game game(window, &keyListener, &mouseListener); // Passar a janela para Game
+
+    // Loop principal do jogo
     while (!glfwWindowShouldClose(window)) {
-        // Limpar o buffer de cor
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
 
-        // Trocar os buffers
-        glfwSwapBuffers(window);
-
-        // Processar eventos
         glfwPollEvents();
+        keyListener.endFrame();
+        mouseListener.endFrame();
+
+        // Renderizar a cena do jogo (usando a instância de Game)
+        game.render();
+
+       
+
+        glfwSwapBuffers(window);
     }
-;
+
 
     glfwTerminate();
     return 0;
 }
-
