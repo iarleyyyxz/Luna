@@ -1,5 +1,6 @@
 #include "keyboard.hpp"
 #include <algorithm>
+#include <iostream>
 
 namespace Core {
 
@@ -8,20 +9,23 @@ namespace Core {
     }
 
     void KeyListener::endFrame() {
-        std::fill(keyPressed, keyPressed + GLFW_KEY_LAST + 1, false);
+        // Lógica para o final do frame, se necessário
     }
 
-
-    void KeyListener::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    void KeyListener::glfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
         KeyListener* listener = static_cast<KeyListener*>(glfwGetWindowUserPointer(window));
         if (listener) {
-            if (key >= 0 && key <= GLFW_KEY_LAST) {
-                if (action == GLFW_PRESS) {
-                    listener->keyPressed[key] = true;
-                }
-                else if (action == GLFW_RELEASE) {
-                    listener->keyPressed[key] = false;
-                }
+            listener->processKeyEvent(key, action);
+        }
+    }
+
+    void KeyListener::processKeyEvent(int key, int action) {
+        if (key >= 0 && key <= GLFW_KEY_LAST) {
+            if (action == GLFW_PRESS) {
+                keyPressed[key] = true;
+            }
+            else if (action == GLFW_RELEASE) {
+                keyPressed[key] = false;
             }
         }
     }

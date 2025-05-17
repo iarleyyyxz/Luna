@@ -8,14 +8,15 @@ namespace Core {
 
     class KeyListener {
     public:
-
         KeyListener();
         ~KeyListener() = default;
+
         bool keyPressed[GLFW_KEY_LAST + 1];
 
-        void endFrame();
-        static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        static void glfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        void processKeyEvent(int key, int action);
         bool isKeyPressed(int keyCode) const;
+        void endFrame();
     };
 
 } // namespace Core

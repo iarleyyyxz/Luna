@@ -130,17 +130,24 @@
     <ClCompile Include="Core\main.cpp" />
     <ClCompile Include="Core\keyboard.cpp" />
     <ClCompile Include="Core\mouse.cpp" />
+    <ClCompile Include="Core\game.cpp" />
+    <ClCompile Include="Component\gameObject.cpp" />
     <ClCompile Include="Renderer\texture.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\sprite.cpp" />
+    <ClCompile Include="Scene\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\component.hpp" />
     <ClInclude Include="Core\camera.hpp" />
     <ClInclude Include="Core\keyboard.hpp" />
     <ClInclude Include="Core\mouse.hpp" />
+    <ClInclude Include="Core\game.hpp" />
+    <ClInclude Include="Component\gameObject.hpp" />
     <ClInclude Include="Renderer\texture.hpp" />
     <ClInclude Include="Renderer\shader.hpp" />
     <ClInclude Include="Renderer\sprite.hpp" />
+    <ClInclude Include="Scene\scene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\fragment_shader.glsl" />
