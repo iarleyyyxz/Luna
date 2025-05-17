@@ -41,9 +41,7 @@ namespace Core {
     }
 
     void Game::update() {
-        if (keyListener && keyListener->isKeyPressed(GLFW_KEY_E)) {
-            std::cout << "Tecla E pressionada (na Game)." << std::endl;
-        }
+        
         if (currentScene) {
             currentScene->update(deltaTime);
         }
@@ -51,8 +49,7 @@ namespace Core {
     }
 
     void Game::render() {
-      //  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-      //  glClear(GL_COLOR_BUFFER_BIT);
+      
         if (currentScene) {
             currentScene->render();
         }
@@ -65,7 +62,6 @@ namespace Core {
 
     void Game::loadResources() {
         std::cout << "Carregando recursos do editor..." << std::endl;
-        // Carregar recursos necessários para o editor
     }
 
     void Game::initGameObjects() {

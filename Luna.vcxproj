@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\rapidjson;C:\Users\josy-\source\repos\Luna\Luna\imgui\backends;C:\Users\josy-\source\repos\Luna\Luna\imgui;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +132,7 @@
     <ClCompile Include="Core\mouse.cpp" />
     <ClCompile Include="Core\game.cpp" />
     <ClCompile Include="Component\gameObject.cpp" />
+    <ClCompile Include="Core\fileUtils.cpp" />
     <ClCompile Include="Renderer\texture.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\sprite.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Core\mouse.hpp" />
     <ClInclude Include="Core\game.hpp" />
     <ClInclude Include="Component\gameObject.hpp" />
+    <ClInclude Include="Core\fileUtils.hpp" />
     <ClInclude Include="Renderer\texture.hpp" />
     <ClInclude Include="Renderer\shader.hpp" />
     <ClInclude Include="Renderer\sprite.hpp" />
