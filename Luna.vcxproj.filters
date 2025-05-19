@@ -39,7 +39,7 @@
     <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="Source\Core\Application.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\EventManager.cpp">
@@ -71,7 +71,7 @@
     <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Application.hpp">
+    <ClInclude Include="Source\Core\Application.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Source\Events\EventManager.hpp">
