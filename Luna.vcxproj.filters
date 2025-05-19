@@ -15,77 +15,70 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\main.cpp">
+    <ClCompile Include="Source\Core\main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\texture.cpp">
+    <ClCompile Include="vendor\ImGui\imgui.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\shader.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_demo.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\sprite.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_draw.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Core\camera.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_tables.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Core\keyboard.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_widgets.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Core\mouse.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_impl_glfw.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Core\game.cpp">
+    <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Component\gameObject.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\scene.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\fileUtils.cpp">
+    <ClCompile Include="Source\Events\EventManager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Renderer\texture.hpp">
+    <ClInclude Include="vendor\ImGui\imgui.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\shader.hpp">
+    <ClInclude Include="vendor\ImGui\imgui_internal.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\sprite.hpp">
+    <ClInclude Include="vendor\ImGui\imstb_rectpack.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Core\camera.hpp">
+    <ClInclude Include="vendor\ImGui\imstb_textedit.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Core\keyboard.hpp">
+    <ClInclude Include="vendor\ImGui\imstb_truetype.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Core\mouse.hpp">
+    <ClInclude Include="vendor\ImGui\imgui_impl_glfw.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Core\game.hpp">
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Component\component.hpp">
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Component\gameObject.hpp">
+    <ClInclude Include="Application.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\scene.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\fileUtils.hpp">
+    <ClInclude Include="Source\Events\EventManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\vertex_shader.glsl" />
-    <None Include="Assets\fragment_shader.glsl" />
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

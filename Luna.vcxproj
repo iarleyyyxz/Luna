@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\rapidjson;C:\Users\josy-\source\repos\Luna\Luna\imgui\backends;C:\Users\josy-\source\repos\Luna\Luna\imgui;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui;C:\Users\josy-\source\repos\Luna\Luna\imgui;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;C:\Users\josy-\source\repos\Luna\Luna\imgui\backends;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,34 +126,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\camera.cpp" />
-    <ClCompile Include="Core\main.cpp" />
-    <ClCompile Include="Core\keyboard.cpp" />
-    <ClCompile Include="Core\mouse.cpp" />
-    <ClCompile Include="Core\game.cpp" />
-    <ClCompile Include="Component\gameObject.cpp" />
-    <ClCompile Include="Core\fileUtils.cpp" />
-    <ClCompile Include="Renderer\texture.cpp" />
-    <ClCompile Include="Renderer\shader.cpp" />
-    <ClCompile Include="Renderer\sprite.cpp" />
-    <ClCompile Include="Scene\scene.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Source\Events\EventManager.cpp" />
+    <ClCompile Include="Source\Core\main.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component\component.hpp" />
-    <ClInclude Include="Core\camera.hpp" />
-    <ClInclude Include="Core\keyboard.hpp" />
-    <ClInclude Include="Core\mouse.hpp" />
-    <ClInclude Include="Core\game.hpp" />
-    <ClInclude Include="Component\gameObject.hpp" />
-    <ClInclude Include="Core\fileUtils.hpp" />
-    <ClInclude Include="Renderer\texture.hpp" />
-    <ClInclude Include="Renderer\shader.hpp" />
-    <ClInclude Include="Renderer\sprite.hpp" />
-    <ClInclude Include="Scene\scene.hpp" />
+    <ClInclude Include="Application.hpp" />
+    <ClInclude Include="Source\Events\EventManager.hpp" />
+    <ClInclude Include="vendor\ImGui\imgui.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="vendor\ImGui\imgui_internal.h" />
+    <ClInclude Include="vendor\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\ImGui\imstb_textedit.h" />
+    <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\fragment_shader.glsl" />
-    <None Include="Assets\vertex_shader.glsl" />
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
