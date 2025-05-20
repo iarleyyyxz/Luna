@@ -102,13 +102,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui;C:\Users\josy-\source\repos\Luna\Luna\imgui;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;C:\Users\josy-\source\repos\Luna\Luna\imgui\backends;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer;C:\lv;C:\OpenAL\include\AL;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\GLFW\lib-vc2022;C:\GLEW\lib\Release\x64;C:\sdl\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenAL\libs\Win64;C:\GLFW\lib-vc2022;C:\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;opengl32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,31 +127,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="Source\Core\Game.cpp" />
+    <ClCompile Include="Source\Renderer\Renderer.cpp" />
+    <ClCompile Include="Source\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Core\InputManager.cpp" />
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Events\EventManager.cpp" />
     <ClCompile Include="Source\Core\main.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
+    <ClInclude Include="Source\Core\Game.hpp" />
+    <ClInclude Include="Source\Renderer\Renderer.hpp" />
+    <ClInclude Include="Source\Renderer\Shader.hpp" />
+    <ClInclude Include="Source\Core\InputManager.hpp" />
     <ClInclude Include="Source\Core\Application.hpp" />
     <ClInclude Include="Source\Events\EventManager.hpp" />
-    <ClInclude Include="vendor\ImGui\imgui.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="vendor\ImGui\imgui_internal.h" />
-    <ClInclude Include="vendor\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="vendor\ImGui\imstb_textedit.h" />
-    <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\Renderer\Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\Downloads\epic-hybrid-logo-157092.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\batch.fs" />
+    <None Include="Resources\Shaders\batch.vs" />
+    <None Include="Resources\Shaders\basic.fs" />
+    <None Include="Resources\Shaders\basic.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
