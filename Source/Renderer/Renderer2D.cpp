@@ -265,3 +265,15 @@ void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, Text
 
     indexCount += 6; // Adicionar 6 índices para este quad
 }
+
+// NOVO: Implementação do drawSprite
+void Renderer2D::drawSprite(const glm::vec2& position, const glm::vec2& size, Sprite& sprite, const glm::vec4& tintColor) {
+    // Reutiliza o método drawQuad, passando a textura e as coordenadas de textura do sprite
+    if (sprite.getTexture()) {
+        drawQuad(position, size, *sprite.getTexture(), sprite.getTexCoordMin(), sprite.getTexCoordMax(), tintColor);
+    }
+    else {
+        std::cerr << "ERRO::RENDERER2D::DRAW_SPRITE: Sprite com textura nula. Desenhando quad de cor sólida." << std::endl;
+        drawQuad(position, size, tintColor); // Desenha um quad de cor sólida como fallback
+    }
+}

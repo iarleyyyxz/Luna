@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Anim\Animation.cpp" />
+    <ClCompile Include="Source\Core\Camera2D.cpp" />
     <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
     <ClCompile Include="Source\Core\Game.cpp" />
     <ClCompile Include="Source\Renderer\Renderer.cpp" />
@@ -136,8 +138,12 @@
     <ClCompile Include="Source\Events\EventManager.cpp" />
     <ClCompile Include="Source\Core\main.cpp" />
     <ClCompile Include="Source\Renderer\Texture.cpp" />
+    <ClCompile Include="Source\Renderer\Sprite.cpp" />
+    <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Core\Anim\Animation.hpp" />
+    <ClInclude Include="Source\Core\Camera2D.hpp" />
     <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
     <ClInclude Include="Source\Core\Game.hpp" />
     <ClInclude Include="Source\Renderer\Renderer.hpp" />
@@ -146,6 +152,8 @@
     <ClInclude Include="Source\Core\Application.hpp" />
     <ClInclude Include="Source\Events\EventManager.hpp" />
     <ClInclude Include="Source\Renderer\Texture.hpp" />
+    <ClInclude Include="Source\Renderer\Sprite.hpp" />
+    <ClInclude Include="Source\Renderer\Spritesheet.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

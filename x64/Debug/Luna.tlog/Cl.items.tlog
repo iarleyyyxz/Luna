@@ -1,3 +1,5 @@
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Anim\Animation.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Animation.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Camera2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Camera2D.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Renderer2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer2D.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Game.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Game.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Renderer.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer.obj
@@ -7,3 +9,5 @@ C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp;C:\Users\josy-
 C:\Users\josy-\source\repos\Luna\Luna\Source\Events\EventManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\EventManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\main.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\main.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Texture.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Texture.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Sprite.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Sprite.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Spritesheet.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Spritesheet.obj

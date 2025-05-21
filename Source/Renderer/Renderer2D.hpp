@@ -4,17 +4,18 @@
 #include <GL/glew.h>
 #include <glm.hpp>
 #include <vector>
-#include <array> // Para std::array
+#include <array>
 
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "Sprite.hpp" // NOVO: Incluir a classe Sprite
 
 // Estrutura para um vértice de quad 2D para renderização em lotes
 struct QuadVertex {
     glm::vec3 position; // Posição (x, y, z)
     glm::vec4 color;    // Cor (r, g, b, a)
     glm::vec2 texCoord; // Coordenadas de textura (u, v)
-    float texID;        // ID da textura (para atlas de texturas ou múltiplos binds)
+    float texID;        // ID da textura (para múltiplos binds)
 };
 
 class Renderer2D {
@@ -38,6 +39,9 @@ public:
     void drawQuad(const glm::vec2& position, const glm::vec2& size, Texture& texture, const glm::vec4& tintColor = glm::vec4(1.0f));
     // Desenha um quad com textura e coordenadas de textura específicas
     void drawQuad(const glm::vec2& position, const glm::vec2& size, Texture& texture, const glm::vec2& texCoordMin, const glm::vec2& texCoordMax, const glm::vec4& tintColor = glm::vec4(1.0f));
+
+    // NOVO: Desenha um Sprite
+    void drawSprite(const glm::vec2& position, const glm::vec2& size, Sprite& sprite, const glm::vec4& tintColor = glm::vec4(1.0f));
 
 private:
     // Constantes para renderização em lotes
