@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer;C:\lv;C:\OpenAL\include\AL;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\Source\Core;C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer;C:\lv;C:\OpenAL\include\AL;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Core\Anim\Animation.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
     <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
@@ -142,6 +143,8 @@
     <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scene\SceneManager.hpp" />
+    <ClInclude Include="Source\Scene\Scene.hpp" />
     <ClInclude Include="Source\Core\Anim\Animation.hpp" />
     <ClInclude Include="Source\Core\Camera2D.hpp" />
     <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
