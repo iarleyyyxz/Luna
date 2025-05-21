@@ -2,42 +2,42 @@
 #define ANIMATION_HPP
 
 #include <vector>
-#include "Sprite.hpp" // A animação gerencia ponteiros para Sprites
+#include "Sprite.hpp" // The animation manages pointers to Sprites
 
 class Animation {
 public:
-    // Construtor: recebe um vetor de ponteiros para Sprites (os frames da animação)
-    // e a duração de cada frame em segundos.
+    // Constructor: receives a vector of pointers to Sprites (the animation frames)
+    // and the duration of each frame in seconds.
     Animation(const std::vector<Sprite*>& frames, float frameDuration);
 
-    // Destrutor: libera a memória dos Sprites que a animação é responsável por gerenciar.
-    // Se os Sprites forem gerenciados pela Spritesheet, a animação não os deleta.
-    // Neste caso, a Spritesheet é dona dos Sprites, então a animação apenas os referencia.
+    // Destructor: frees the memory of the Sprites that the animation is responsible for managing.
+    // If the Sprites are managed by the Spritesheet, the animation does not delete them.
+    // In that case, the Spritesheet owns the Sprites, so the animation only references them.
     ~Animation();
 
-    // Atualiza a animação com base no tempo decorrido.
-    // deltaTime: tempo em segundos desde a última atualização.
+    // Updates the animation based on the elapsed time.
+    // deltaTime: time in seconds since the last update.
     void Update(float deltaTime);
 
-    // Reinicia a animação para o primeiro frame.
+    // Resets the animation to the first frame.
     void Reset();
 
-    // Obtém o Sprite do frame atual da animação.
+    // Gets the Sprite of the current animation frame.
     Sprite* GetCurrentFrame() const;
 
-    // Define se a animação deve repetir (loop) ou parar no último frame.
+    // Sets whether the animation should loop or stop at the last frame.
     void SetLooping(bool looping) { m_looping = looping; }
 
-    // Verifica se a animação terminou (apenas se não estiver em loop).
+    // Checks whether the animation has finished (only if not looping).
     bool IsFinished() const { return !m_looping && m_isFinished; }
 
 private:
-    std::vector<Sprite*> m_frames; // Ponteiros para os sprites que compõem a animação
-    float m_frameDuration;         // Duração de cada frame em segundos
-    float m_currentTime;           // Tempo acumulado para o frame atual
-    int m_currentFrameIndex;       // Índice do frame atual
-    bool m_looping;                // Se a animação deve repetir
-    bool m_isFinished;             // Se a animação terminou (para não looping)
+    std::vector<Sprite*> m_frames; // Pointers to the sprites that make up the animation
+    float m_frameDuration;         // Duration of each frame in seconds
+    float m_currentTime;           // Accumulated time for the current frame
+    int m_currentFrameIndex;       // Index of the current frame
+    bool m_looping;                // Whether the animation should loop
+    bool m_isFinished;             // Whether the animation has finished (for non-looping)
 };
 
 #endif // ANIMATION_HPP

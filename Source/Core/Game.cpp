@@ -31,7 +31,7 @@ void Game::windowCloseCallback(GLFWwindow* window) {
 }
 
 
-Game::Game() : m_window(nullptr), m_screenWidth(0.0f), m_screenHeight(0.0f), m_mainSpritesheet(nullptr), m_playerAnimation(nullptr), m_lastFrameTime(0.0)
+Game::Game() : m_window(nullptr), m_screenWidth(0.0f), m_screenHeight(0.0f), m_lastFrameTime(0.0)
 {
     std::cout << "Jogo construído!" << std::endl;
 }

@@ -1,3 +1,6 @@
+#include <GL/glew.h>    // SEMPRE INCLUIR GLEW PRIMEIRO
+#include <GLFW/glfw3.h> // INCLUIR GLFW DEPOIS DE GLEW
+
 #include "SceneManager.hpp"
 #include <iostream>
 

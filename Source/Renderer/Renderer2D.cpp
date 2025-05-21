@@ -106,6 +106,8 @@ void Renderer2D::initOpenGLResources() {
     glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), (const void*)offsetof(QuadVertex, texID));
     glEnableVertexAttribArray(3);
 
+   
+
     // Gerar índices para os quads (eles são sempre os mesmos)
     // 0, 1, 2, 2, 3, 0 para cada quad
     GLuint* quadIndices = new GLuint[MAX_INDICES];

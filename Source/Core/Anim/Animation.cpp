@@ -12,9 +12,10 @@ Animation::Animation(const std::vector<Sprite*>& frames, float frameDuration)
 }
 
 Animation::~Animation() {
-    // Neste modelo, a animação NÃO é responsável por deletar os ponteiros de Sprite
-    // que ela contém. A Spritesheet é a "dona" desses Sprites.
-    // Se a animação fosse a dona, precisaríamos deletar cada Sprite aqui.
+    // In this model, the animation is NOT responsible for deleting the Sprite pointers
+// it contains. The Spritesheet is the "owner" of these Sprites.
+// If the animation were the owner, we would need to delete each Sprite here.
+
 }
 
 void Animation::Update(float deltaTime) {
@@ -24,9 +25,9 @@ void Animation::Update(float deltaTime) {
 
     m_currentTime += deltaTime;
 
-    // Avança para o próximo frame se o tempo do frame atual exceder a duração
+    // Advances to the next frame if the current frame's time exceeds the duration
     if (m_currentTime >= m_frameDuration) {
-        m_currentTime -= m_frameDuration; // Subtrai a duração do frame para manter o resto do tempo
+        m_currentTime -= m_frameDuration; // Subtracts the frame duration to keep the remaining time
         m_currentFrameIndex++;
 
         // Verifica se chegamos ao fim da animação

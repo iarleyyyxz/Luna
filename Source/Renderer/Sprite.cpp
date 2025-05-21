@@ -67,9 +67,9 @@ void Sprite::calculateTexCoords(const glm::vec4& sourceRect) {
     // corresponde ao (0,1) das UVs no OpenGL.
     // Para corrigir isso e ter (0,0) da imagem = (0,0) UV (canto superior esquerdo),
     // precisamos inverter as coordenadas Y aqui.
-    float tempY = m_texCoordMin.y;
-    m_texCoordMin.y = m_texCoordMax.y;
-    m_texCoordMax.y = tempY;
+   // float tempY = m_texCoordMin.y;
+    // m_texCoordMin.y = m_texCoordMax.y;
+    // m_texCoordMax.y = tempY;
 
     // Nota: A inversão de Y aqui é uma convenção comum para jogos 2D onde a origem do mundo é superior esquerda
     // e as texturas são carregadas com stbi_set_flip_vertically_on_load(true).

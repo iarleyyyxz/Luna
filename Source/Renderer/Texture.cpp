@@ -36,10 +36,9 @@ Texture::Texture(const char* imagePath) : ID(0), width(0), height(0), nrChannels
         // GL_REPEAT: Repete a textura se as coordenadas estiverem fora do [0,1]
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        // GL_LINEAR_MIPMAP_LINEAR: Filtragem linear para mipmaps e entre mipmaps
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        // GL_LINEAR: Filtragem linear para ampliação (quando a textura é maior que os pixels)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        // NOVO: Usar GL_NEAREST para filtragem de minificação e magnificação para um visual pixelado
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST); // Para minificação (redução)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); // Para magnificação (ampliação)
 
         // Carregar os dados da imagem para a textura OpenGL
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
@@ -63,8 +62,9 @@ Texture::Texture(int w, int h, unsigned char* data, GLenum format) : ID(0), widt
     // para evitar problemas de amostragem nas bordas.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Filtragem linear
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Filtragem linear
+    // NOVO: Usar GL_NEAREST para filtragem de minificação e magnificação para um visual pixelado
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); // Filtragem por vizinho mais próximo
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); // Filtragem por vizinho mais próximo
 
     // Carregar os dados de pixel brutos para a textura
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
