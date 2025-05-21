@@ -66,36 +66,10 @@ bool Game::Init(GLFWwindow* window, float screenWidth, float screenHeight) {
     // Carregar a spritesheet.
     // Substitua "Resources/spritesheet_example.png" pelo caminho da sua imagem de spritesheet.
     // E ajuste a largura e altura dos frames (ex: 32x32 pixels por frame).
-    m_mainSpritesheet = new Spritesheet("Resources/example.png", 24, 24); // Exemplo: 32x32 pixels por frame
-    if (!m_mainSpritesheet->isValid()) {
-        std::cerr << "Falha ao carregar a spritesheet principal." << std::endl;
-        delete m_mainSpritesheet;
-        m_mainSpritesheet = nullptr;
-        return false;
-    }
-
-    // NOVO: Obter frames da spritesheet para a animação de caminhada
-    // Assumindo que os frames de caminhada estão nos índices 0, 1, 2, 3 da sua spritesheet
-    // Ajuste esses índices para corresponder à sua spritesheet real.
-    m_playerWalkFrames.push_back(m_mainSpritesheet->getSprite(0, 2));
-    m_playerWalkFrames.push_back(m_mainSpritesheet->getSprite(1, 2));
-    m_playerWalkFrames.push_back(m_mainSpritesheet->getSprite(2, 2));
-    m_playerWalkFrames.push_back(m_mainSpritesheet->getSprite(3, 2));
-
-    // Verificar se todos os sprites foram obtidos com sucesso
-    for (Sprite* frame : m_playerWalkFrames) {
-        if (!frame) {
-            std::cerr << "AVISO: Um frame da animação do jogador é nulo." << std::endl;
-            // Lidar com o erro conforme necessário (ex: limpar e retornar false)
-        }
-    }
-
-    // NOVO: Criar a animação do jogador
-    m_playerAnimation = new Animation(m_playerWalkFrames, 0.15f); // 0.15 segundos por frame
-    m_playerAnimation->SetLooping(true); // A animação deve repetir
+   
 
     // Inicializar o tempo do último frame para calcular o deltaTime
-    m_lastFrameTime = glfwGetTime();
+  //  m_lastFrameTime = glfwGetTime();
 
     std::cout << "Jogo inicializado com sucesso." << std::endl;
     return true;
@@ -125,9 +99,7 @@ void Game::Update(float deltaTime) {
     // Exemplo de controle de câmara com input
     
     // NOVO: Atualizar a animação do jogador
-    if (m_playerAnimation) {
-        m_playerAnimation->Update(deltaTime);
-    }
+   
 }
 
 void Game::Render() {
@@ -148,9 +120,6 @@ void Game::Render() {
     m_renderer2D.drawQuad(glm::vec2(200.0f, 200.0f), glm::vec2(120.0f, 120.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)); // Exemplo de um novo quad
 
     // NOVO: Desenhar o frame atual da animação do jogador
-    if (m_playerAnimation && m_playerAnimation->GetCurrentFrame()) {
-        m_renderer2D.drawSprite(glm::vec2(300.0f, 300.0f), glm::vec2(64.0f, 64.0f), *m_playerAnimation->GetCurrentFrame(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-    }
 
     // Terminar a cena 2D
     m_renderer2D.endScene();
@@ -161,17 +130,9 @@ void Game::Shutdown() {
     m_renderer2D.Shutdown();
 
     // NOVO: Liberar a animação e a spritesheet
-    if (m_playerAnimation) {
-        delete m_playerAnimation;
-        m_playerAnimation = nullptr;
-    }
     // Os Sprites em m_playerWalkFrames são de propriedade da Spritesheet,
     // então não os deletamos individualmente aqui.
 
-    if (m_mainSpritesheet) {
-        delete m_mainSpritesheet; // Isso também deletará a textura interna da spritesheet e os Sprites que ela criou
-        m_mainSpritesheet = nullptr;
-    }
 
     std::cout << "Recursos de jogo encerrados." << std::endl;
 }

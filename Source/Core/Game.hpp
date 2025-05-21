@@ -33,12 +33,12 @@ private:
     Renderer2D m_renderer2D;
     Camera2D m_camera;
 
-    Spritesheet* m_mainSpritesheet; // A spritesheet principal
+   // Spritesheet* m_mainSpritesheet; // A spritesheet principal
     // Sprite* m_playerSprite; // Removido: Agora o sprite é gerenciado pela animação
 
     // NOVO: Animação do jogador
-    Animation* m_playerAnimation;
-    std::vector<Sprite*> m_playerWalkFrames; // Vetor para armazenar os frames da animação de caminhada
+ //   Animation* m_playerAnimation;
+ //   std::vector<Sprite*> m_playerWalkFrames; // Vetor para armazenar os frames da animação de caminhada
 
     // Instâncias de Keyboard e Mouse
     Keyboard m_keyboard;
