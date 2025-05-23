@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor\ImGuiManager.cpp" />
+    <ClCompile Include="Source\Manager\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Core\Anim\Animation.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
@@ -154,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\ImGuiManager.hpp" />
+    <ClInclude Include="Source\Manager\ResourceManager.hpp" />
     <ClInclude Include="Source\Scene\SceneManager.hpp" />
     <ClInclude Include="Source\Scene\Scene.hpp" />
     <ClInclude Include="Source\Core\Anim\Animation.hpp" />
