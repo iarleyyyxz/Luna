@@ -129,11 +129,6 @@
   <ItemGroup>
     <ClCompile Include="Editor\ImGuiManager.cpp" />
     <ClCompile Include="Editor\Menubar.cpp" />
-    <ClCompile Include="Editor\SceneEditor.cpp" />
-    <ClCompile Include="Source\Scene\Scene.cpp" />
-    <ClCompile Include="Source\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Scene\SceneManager.hpp" />
-    <ClCompile Include="Source\Ecs\GameObject.cpp" />
     <ClCompile Include="Source\Manager\ResourceManager.cpp" />
     <ClCompile Include="Source\Core\Anim\Animation.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
@@ -149,9 +144,6 @@
     <ClCompile Include="Source\Renderer\Sprite.cpp" />
     <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
     <ClCompile Include="Editor\SpritesheetEditor.cpp" />
-    <ClCompile Include="Source\Ecs\Transform.hpp" />
-    <ClCompile Include="Source\Ecs\Transform.cpp" />
-    <ClCompile Include="Source\Ecs\SpriteRenderer.cpp" />
     <ClCompile Include="vendor\ImGui\imgui.cpp" />
     <ClCompile Include="vendor\ImGui\ImGuiFileDialog.cpp" />
     <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
@@ -162,9 +154,7 @@
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Editor\SceneEditor.hpp" />
-    <ClInclude Include="Source\Scene\Scene.hpp" />
-    <ClInclude Include="Source\Ecs\GameObject.hpp" />
+    <ClInclude Include="Source\Ecs\SceneObject.hpp" />
     <ClInclude Include="Source\Ecs\Component.hpp" />
     <ClInclude Include="Editor\ImGuiManager.hpp" />
     <ClInclude Include="Editor\Menubar.hpp" />
@@ -182,7 +172,7 @@
     <ClInclude Include="Source\Renderer\Sprite.hpp" />
     <ClInclude Include="Source\Renderer\Spritesheet.hpp" />
     <ClInclude Include="Editor\SpritesheetEditor.hpp" />
-    <ClInclude Include="Source\Ecs\SpriteRenderer.hpp" />
+    <ClInclude Include="Source\Ecs\Transform2D.hpp" />
     <ClInclude Include="vendor\ImGui\dirent\dirent.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
     <ClInclude Include="vendor\ImGui\imgui.h" />

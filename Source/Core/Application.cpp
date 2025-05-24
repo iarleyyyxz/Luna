@@ -78,19 +78,7 @@ bool Application::Init()
 
     // 9. Inicializar o SceneManager
     // Definir as referências da engine no SceneManager ANTES de inicializar o ImGuiManager
-    m_sceneManager.m_windowRef = window;
-    m_sceneManager.m_screenWidthRef = screenWidth;
-    m_sceneManager.m_screenHeightRef = screenHeight;
-    m_sceneManager.m_rendererRef = &m_renderer2D;
-    m_sceneManager.m_keyboardRef = &m_keyboard;
-    m_sceneManager.m_mouseRef = &m_mouse;
-
-    if (!m_sceneManager.Init()) {
-        std::cerr << "Falha ao inicializar o SceneManager." << std::endl;
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        return false;
-    }
+  
 
     // 10. Inicializar ImGuiManager, passando as dependências
     // O ImGuiManager agora recebe as referências para os gerenciadores de input e renderização,
@@ -108,9 +96,9 @@ bool Application::Init()
     }
 
     // Adicionar uma cena inicial padrão e alternar para ela
-    m_sceneManager.addScene("Cena Inicial", std::make_unique<Luna::Scene>("Cena Inicial"));
-    m_sceneManager.switchToScene("Cena Inicial", window, screenWidth, screenHeight,
-        m_renderer2D, m_keyboard, m_mouse);
+  //  m_sceneManager.addScene("Cena Inicial", std::make_unique<Luna::Scene>("Cena Inicial"));
+    //m_sceneManager.switchToScene("Cena Inicial", window, screenWidth, screenHeight,
+     //   m_renderer2D, m_keyboard, m_mouse);
 
 
     std::cout << "Application inicializada com sucesso. Pronto para o utilizador registar as suas cenas." << std::endl;
@@ -146,10 +134,7 @@ void Application::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Renderizar a cena atual (se houver uma)
-        if (m_sceneManager.getCurrentScene()) {
-            m_sceneManager.UpdateCurrentScene(deltaTime);
-            m_sceneManager.RenderCurrentScene();
-        }
+      
 
         // Finalizar e renderizar o ImGui
         m_imGuiManager.EndFrame(window); // Usar m_imGuiManager
@@ -168,7 +153,7 @@ void Application::Shutdown()
     m_imGuiManager.Shutdown(); // Usar m_imGuiManager
 
     // Encerrar o SceneManager (isso desligará a cena atual e liberará todas as cenas)
-    m_sceneManager.Shutdown(); // Usar m_sceneManager
+   // m_sceneManager.Shutdown(); // Usar m_sceneManager
 
     // Encerrar o Renderer2D
     m_renderer2D.Shutdown(); // Usar m_renderer2D

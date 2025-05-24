@@ -2,9 +2,10 @@
 #define ANIMATION_HPP
 
 #include <vector>
+#include "Source/Ecs/Component.hpp"
 #include "Sprite.hpp" // The animation manages pointers to Sprites
 
-class Animation {
+class Animation : public Component {
 public:
     // Constructor: receives a vector of pointers to Sprites (the animation frames)
     // and the duration of each frame in seconds.
@@ -17,7 +18,10 @@ public:
 
     // Updates the animation based on the elapsed time.
     // deltaTime: time in seconds since the last update.
-    void Update(float deltaTime);
+    void Update(float deltaTime) override;
+
+    // We dont will add OnGui temporally
+    // void OnGui() override; 
 
     // Resets the animation to the first frame.
     void Reset();

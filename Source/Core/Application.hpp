@@ -10,7 +10,7 @@
 #include "Source/Events/EventManager.hpp" // Certifique-se de que este caminho está correto
 #include "Renderer2D.hpp"   // Para a instância do Renderer2D
 #include "InputManager.hpp" // Para Keyboard e Mouse
-#include "Source/Scene/SceneManager.hpp" // Para o SceneManager
+//#include "Source/Scene/SceneManager.hpp" // Para o SceneManager
 #include "Editor/ImGuiManager.hpp" // Para o ImGuiManager
 
 class Application
@@ -50,7 +50,7 @@ private:
     Renderer2D m_renderer2D;   // Instância do Renderer2D
     Keyboard m_keyboard;       // Instância do Keyboard
     Mouse m_mouse;             // Instância do Mouse
-    Luna::SceneManager m_sceneManager; // Instância do SceneManager
+  //  Luna::SceneManager m_sceneManager; // Instância do SceneManager
     ImGuiManager m_imGuiManager; // Instância do ImGuiManager
 
     EventManager eventManager; // Instância do EventManager
