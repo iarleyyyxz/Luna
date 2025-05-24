@@ -15,7 +15,6 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2025-02-03: Metal: Crash fix. (#8367)
 //  2024-01-08: Metal: Fixed memory leaks when using metal-cpp (#8276, #8166) or when using multiple contexts (#7419).
 //  2022-08-23: Metal: Update deprecated property 'sampleCount'->'rasterSampleCount'.
 //  2022-07-05: Metal: Add dispatch synchronization.
@@ -312,11 +311,11 @@ void ImGui_ImplMetal_RenderDrawData(ImDrawData* drawData, id<MTLCommandBuffer> c
         indexBufferOffset += (size_t)draw_list->IdxBuffer.Size * sizeof(ImDrawIdx);
     }
 
-    MetalContext* sharedMetalContext = bd->SharedMetalContext;
+    __block MetalContext* sharedMetalContext = bd->SharedMetalContext;
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer>)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            @synchronized(sharedMetalContext.bufferCache)
+            @synchronized(bd->SharedMetalContext.bufferCache)
             {
                 [sharedMetalContext.bufferCache addObject:vertexBuffer];
                 [sharedMetalContext.bufferCache addObject:indexBuffer];

@@ -11,6 +11,7 @@
 #include <string> // Para caminhos de fonte
 
 // NOVO: Incluir o cabeçalho do SpritesheetEditor
+#include "Menubar.hpp"
 #include "SpritesheetEditor.hpp"
 
 // Forward declarations para GLFWwindow e os gerenciadores de recursos
@@ -52,9 +53,15 @@ public:
     // NOVO: Desenha a interface do utilizador do SpritesheetEditor
     void DrawEditorUI(float deltaTime);
 
+    // handlers
+    Luna::MenuBar m_mainMenuBar;
+    bool m_showSceneManager;
+    bool m_showSpritesheetEditor;
+
 private:
     // NOVO: Instância do SpritesheetEditor gerenciada pelo ImGuiManager
     SpritesheetEditor m_spritesheetEditor;
+
 };
 
 #endif // IMGUI_MANAGER_HPP

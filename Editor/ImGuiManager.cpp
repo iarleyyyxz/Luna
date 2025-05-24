@@ -2,7 +2,10 @@
 #include <iostream>
 
 // Para GLFWwindow
-#include <GLFW/glfw3.h>
+#include <GLFW/glfw3.h> // Se você estiver usando GLFW
+#include <GL/glew.h>   // Inclua GLEW aqui
+#include <GL/gl.h>     // Ou outros headers OpenGL, se necessário
+// ... outros includes ...
 // Para Renderer2D, Keyboard, Mouse (necessário para inicializar SpritesheetEditor)
 #include "Renderer2D.hpp"
 #include "InputManager.hpp"
@@ -24,15 +27,15 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
     // Configurar flags do ImGui
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Habilitar navegação por teclado
-//    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;       // Habilitar docking (para layout de editor)
-//    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;     // Habilitar viewports (para janelas fora da janela principal)
-    // 2. Aplicar o estilo Godot
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;    // Habilitar navegação por teclado
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;          // Habilitar docking (para layout de editor)
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;        // Habilitar viewports (para janelas fora da janela principal)
+    // 2. Aplicar o estilo Luna (Godot)
     SetLunaStyle();
 
     // Quando viewports estão habilitados, o ImGui criará janelas GLFW/contextos OpenGL adicionais
     // para cada viewport, e precisará de callbacks GLFW.
-    if (io.ConfigFlags)
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         ImGuiStyle& style = ImGui::GetStyle();
         style.WindowRounding = 0.0f;
@@ -45,6 +48,31 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
 
     // 4. Carregar uma fonte padrão (opcional, pode ser substituída por LoadFont)
     // io.Fonts->AddFontDefault(); // Fonte padrão do ImGui
+     // Configurar a Menu Bar uma vez
+    // 5. Carregar Itens da Menubar
+    Luna::Menu arquivoMenu;
+    arquivoMenu.label = "Arquivo";
+    arquivoMenu.items.push_back({ "Novo", "Ctrl+N", []() { std::cout << "Novo clicado\n"; } });
+    arquivoMenu.items.push_back({ "Abrir...", "Ctrl+O", []() { std::cout << "Abrir clicado\n"; } });
+    arquivoMenu.items.push_back({ "Salvar", "Ctrl+S", []() { std::cout << "Salvar clicado\n"; } });
+    arquivoMenu.items.push_back({ "Salvar Como...", "", []() { std::cout << "Salvar Como clicado\n"; } });
+    arquivoMenu.items.push_back({ "Sair", "Alt+F4", []() { glfwSetWindowShouldClose(glfwGetCurrentContext(), true); } });
+    m_mainMenuBar.AddMenu(arquivoMenu);
+
+    Luna::Menu editarMenu;
+    editarMenu.label = "Editar";
+    editarMenu.items.push_back({ "Desfazer", "Ctrl+Z", []() { std::cout << "Desfazer clicado\n"; } });
+    editarMenu.items.push_back({ "Refazer", "Ctrl+Y", []() { std::cout << "Refazer clicado\n"; }, false }); // Desabilitado
+    editarMenu.items.push_back({ "Recortar", "Ctrl+X", []() { std::cout << "Recortar clicado\n"; } });
+    editarMenu.items.push_back({ "Copiar", "Ctrl+C", []() { std::cout << "Copiar clicado\n"; } });
+    editarMenu.items.push_back({ "Colar", "Ctrl+V", []() { std::cout << "Colar clicado\n"; } });
+    m_mainMenuBar.AddMenu(editarMenu);
+
+    Luna::Menu janelasMenu;
+    janelasMenu.label = "Janelas";
+    janelasMenu.items.push_back({ "Gerenciador de Cenas", "", [this]() { m_showSceneManager = !m_showSceneManager; } });
+    janelasMenu.items.push_back({ "Spritesheet Editor", "", [this]() { m_showSpritesheetEditor = !m_showSpritesheetEditor; } });
+    m_mainMenuBar.AddMenu(janelasMenu);
 
     // NOVO: Inicializar o SpritesheetEditor que agora é membro do ImGuiManager
     m_spritesheetEditor.Init(renderer, keyboard, mouse);
@@ -58,23 +86,53 @@ void ImGuiManager::BeginFrame() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-}
 
-void ImGuiManager::EndFrame(GLFWwindow* window) {
+    // DockSpace (Comente este bloco)
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking;
+    window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+    window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    ImGui::Begin("DockSpace Demo", nullptr, window_flags);
+    ImGui::PopStyleVar(2);
+    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+
+    // Menu Bar
+    m_mainMenuBar.Draw();
+}void ImGuiManager::EndFrame(GLFWwindow* window) {
+    ImGui::End(); // End DockSpace
+
+    // Renderizar as janelas (agora fora do BeginFrame/EndFrame do DockSpace)
+    if (m_showSceneManager) {
+        // Supondo que você tenha acesso ao SceneManager de alguma forma
+        // Exemplo: extern Luna::SceneManager g_sceneManager;
+        // g_sceneManager.OnImGuiRender();
+    }
+    
+
     // Renderizar o ImGui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     // Lidar com viewports do ImGui (se habilitados)
     ImGuiIO& io = ImGui::GetIO();
-    if (io.ConfigFlags)
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         GLFWwindow* backup_current_context = glfwGetCurrentContext();
-   //     ImGui::UpdatePlatformWindows();
-   //     ImGui::RenderPlatformWindowsDefault();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(backup_current_context);
     }
 }
+
+// Adicione essas variáveis de controle como membros privados de ImGuiManager.hpp:
+// bool m_showSceneManager = true;
+// bool m_showSpritesheetEditor = true;
 
 void ImGuiManager::Shutdown() {
     std::cout << "Encerrando ImGuiManager..." << std::endl;
@@ -142,8 +200,8 @@ void ImGuiManager::SetLunaStyle() {
     style.Colors[ImGuiCol_TabActive] = godotActive;
     style.Colors[ImGuiCol_TabUnfocused] = godotHeader;
     style.Colors[ImGuiCol_TabUnfocusedActive] = godotActive;
- //   style.Colors[ImGuiCol_DockingPreview] = godotActive;
- //   style.Colors[ImGuiCol_DockingEmptyBg] = godotBg;
+    style.Colors[ImGuiCol_DockingPreview] = godotActive;
+    style.Colors[ImGuiCol_DockingEmptyBg] = godotBg;
     style.Colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
     style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
     style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
@@ -184,5 +242,8 @@ bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
 }
 
 void ImGuiManager::DrawEditorUI(float deltaTime) { // NOVO: Implementação do método de desenho
-    m_spritesheetEditor.DrawUI(deltaTime);
+    // DockSpace está ativo no BeginFrame/EndFrame, então podemos usar ImGui::DockSpaceGetID() aqui se necessário.
+    if (m_showSpritesheetEditor) {
+        m_spritesheetEditor.DrawUI(deltaTime);
+    }
 }

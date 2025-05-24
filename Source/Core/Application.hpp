@@ -1,5 +1,5 @@
-﻿#ifndef APPLICATION_H
-#define APPLICATION_H
+﻿#ifndef APPLICATION_HPP
+#define APPLICATION_HPP
 
 #include <functional>
 #include <string>
@@ -7,15 +7,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Source/Events/EventManager.hpp" // Certifique-se de que este caminho est� correto
-#include "Renderer2D.hpp"   // Para a inst�ncia do Renderer2D
+#include "Source/Events/EventManager.hpp" // Certifique-se de que este caminho está correto
+#include "Renderer2D.hpp"   // Para a instância do Renderer2D
 #include "InputManager.hpp" // Para Keyboard e Mouse
-#include "Source/Scene/SceneManager.hpp" // Para a inst�ncia do SceneManager
-
-// Incluir o cabe�alho do ImGuiManager
-#include "Editor/ImGuiManager.hpp"
-// REMOVIDO: Inclus�o direta do SpritesheetEditor, pois agora � gerenciado pelo ImGuiManager
-// #include "SpritesheetEditor.hpp"
+#include "Source/Scene/SceneManager.hpp" // Para o SceneManager
+#include "Editor/ImGuiManager.hpp" // Para o ImGuiManager
 
 class Application
 {
@@ -23,13 +19,16 @@ public:
     Application();
     ~Application();
 
+    // Inicializa a aplicação (GLFW, GLEW, Renderer2D, SceneManager, ImGuiManager)
     bool Init();
+    // Executa o loop principal da aplicação
     void Run();
+    // Encerra a aplicação (libera recursos)
     void Shutdown();
 
     bool IsRunning() const { return isRunning; }
 
-    // Event delegates
+    // Event delegates (mantidos da sua estrutura original)
     std::function<void()> OnStep;
     std::function<void()> OnExit;
     std::function<void(const std::string&)> OnNewScene;
@@ -37,35 +36,31 @@ public:
     // Acesso ao EventManager
     EventManager& GetEventManager() { return eventManager; }
 
-    // Acesso aos gerenciadores de input (para passar para as cenas)
-    Keyboard& GetKeyboard() { return keyboard; }
-    Mouse& GetMouse() { return mouse; }
-    Renderer2D& GetRenderer() { return renderer2D; } // Acesso ao Renderer2D
+    // Acesso às instâncias de Keyboard e Mouse (ainda podem ser úteis para acesso global)
+    Keyboard& GetKeyboard() { return m_keyboard; }
+    Mouse& GetMouse() { return m_mouse; }
 
 private:
-    bool isRunning;
-    GLFWwindow* window; // Ponteiro para a janela GLFW
-    EventManager eventManager; // Inst�ncia do EventManager
+    bool isRunning;          // Flag para controlar o loop da aplicação
+    GLFWwindow* window;      // Ponteiro para a janela GLFW
 
-    // Recursos da engine que ser�o gerenciados pela Application e passados para as cenas
-    Renderer2D renderer2D;
-    Keyboard keyboard;
-    Mouse mouse;
+    float screenWidth;       // Largura da janela
+    float screenHeight;      // Altura da janela
 
-    Luna::SceneManager sceneManager;
+    Renderer2D m_renderer2D;   // Instância do Renderer2D
+    Keyboard m_keyboard;       // Instância do Keyboard
+    Mouse m_mouse;             // Instância do Mouse
+    Luna::SceneManager m_sceneManager; // Instância do SceneManager
+    ImGuiManager m_imGuiManager; // Instância do ImGuiManager
 
-    // REMOVIDO: Inst�ncia do SpritesheetEditor
-    // SpritesheetEditor spritesheetEditor;
+    EventManager eventManager; // Instância do EventManager
 
-    // Inst�ncia do ImGuiManager (agora gerencia o SpritesheetEditor)
-    ImGuiManager imGuiManager;
-
-    float screenWidth;
-    float screenHeight;
-
-    // Fun��es de callback est�ticas do GLFW
+    // Funções de callback estáticas do GLFW (agora membros da Application)
     static void glfwErrorCallback(int error, const char* description);
     static void windowCloseCallback(GLFWwindow* window);
+    // Os callbacks de input (keyCallback, cursorPositionCallback, mouseButtonCallback)
+    // são agora gerenciados internamente pelo ImGuiManager e pelo Game/SceneManager.
+    // Se você precisar de acesso direto a eles na Application, precisará reintroduzi-los.
 };
 
-#endif // APPLICATION_H
+#endif // APPLICATION_HPP

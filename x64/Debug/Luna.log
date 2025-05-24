@@ -1,40 +1,32 @@
-﻿  SceneManager.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,9): warning C4005: 'APIENTRY': redefinição de macro
-  (compilando o arquivo fonte 'Source/Scene/SceneManager.cpp')
-      C:\GLFW\include\GLFW\glfw3.h(123,11):
-      ver a definição anterior de "APIENTRY"
-  
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(4813,18): warning C4244: '=': conversão de 'wchar_t' para 'char', possível perda de dados
-  (compilando o arquivo fonte 'Source/Scene/SceneManager.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(4813,18):
+﻿  SceneEditor.cpp
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28): error C2039: ' onAttach': não é um membro de 'Luna::Ecs::Transform'
+  (compilando o arquivo fonte 'Editor/SceneEditor.cpp')
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Transform.hpp(12,16):
+      consulte a declaração de 'Luna::Ecs::Transform'
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28):
       o contexto de instanciação do modelo (o mais antigo primeiro) é
-          C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\SceneManager.cpp(153,43):
-          consulte a referência à instanciação 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' do modelo que está sendo compilada
-          with
-          [
-              _Elem=wchar_t,
-              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
-              _Alloc=std::allocator<char>
-          ]
-              C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\SceneManager.cpp(153,25):
-              veja a primeira referência a 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' em 'Luna::SceneManager::openFolderDialog'
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xstring(812,17):
-          consulte a referência à instanciação 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<wchar_t*,wchar_t*,_Size_type>(_Iter,const _Sent,_Size)' do modelo que está sendo compilada
-          with
-          [
-              _Size_type=unsigned __int64,
-              _Iter=wchar_t *,
-              _Sent=wchar_t *,
-              _Size=unsigned __int64
-          ]
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xstring(968,18):
-          consulte a referência à instanciação '_OutIt *std::_Copy_n_unchecked4<wchar_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' do modelo que está sendo compilada
-          with
-          [
-              _OutIt=char *,
-              _Size=unsigned __int64,
-              _InIt=wchar_t *,
-              _SizeTy=unsigned __int64
-          ]
+          C:\Users\josy-\source\repos\Luna\Luna\Editor\SceneEditor.cpp(308,43):
+          consulte a referência à instanciação 'std::shared_ptr<Luna::Ecs::Transform> Luna::Ecs::GameObject::addComponent<Luna::Ecs::Transform,>(void)' do modelo que está sendo compilada
   
-  Luna.vcxproj -> C:\Users\josy-\source\repos\Luna\x64\Debug\Luna.exe
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28): error C2039: ' onAttach': não é um membro de 'Luna::Ecs::SpriteRendererComponent'
+  (compilando o arquivo fonte 'Editor/SceneEditor.cpp')
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\SpriteRenderer.hpp(15,16):
+      consulte a declaração de 'Luna::Ecs::SpriteRendererComponent'
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28):
+      o contexto de instanciação do modelo (o mais antigo primeiro) é
+          C:\Users\josy-\source\repos\Luna\Luna\Editor\SceneEditor.cpp(315,43):
+          consulte a referência à instanciação 'std::shared_ptr<Luna::Ecs::SpriteRendererComponent> Luna::Ecs::GameObject::addComponent<Luna::Ecs::SpriteRendererComponent,>(void)' do modelo que está sendo compilada
+  
+  GameObject.cpp
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28): error C2039: ' onAttach': não é um membro de 'Luna::Ecs::Transform'
+  (compilando o arquivo fonte 'Source/Ecs/GameObject.cpp')
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Transform.hpp(12,16):
+      consulte a declaração de 'Luna::Ecs::Transform'
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.hpp(45,28):
+      o contexto de instanciação do modelo (o mais antigo primeiro) é
+          C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\GameObject.cpp(26,13):
+          consulte a referência à instanciação 'std::shared_ptr<Luna::Ecs::Transform> Luna::Ecs::GameObject::addComponent<Luna::Ecs::Transform,>(void)' do modelo que está sendo compilada
+  
+  ResourceManager.cpp
+  imgui_widgets.cpp
+  Gerando Código...

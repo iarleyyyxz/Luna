@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\nlohmann;C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui;C:\Users\josy-\source\repos\Luna\Luna\Source\Core;C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer;C:\lv;C:\OpenAL\include\AL;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs;C:\nlohmann;C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\backends;C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui;C:\Users\josy-\source\repos\Luna\Luna\Source\Core;C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer;C:\lv;C:\OpenAL\include\AL;C:\SFML-3.0.1\include\SFML\Audio;C:\SFML-3.0.1\include\SFML\Graphics;C:\SFML-3.0.1\include;C:\SFML-3.0.1\include\SFML;C:\AL;C:\rapidjson;$(ProjectDir);C:\glm\gtc;C:\glm;C:\GLFW\include;C:\GLEW\include;C:\sdl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -128,13 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor\ImGuiManager.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_stdlib.cpp" />
+    <ClCompile Include="Editor\Menubar.cpp" />
+    <ClCompile Include="Editor\SceneEditor.cpp" />
     <ClCompile Include="Source\Scene\Scene.cpp" />
-    <ClCompile Include="Source\Ecs\Systems\RenderingSystem.cpp" />
-    <ClCompile Include="Source\Ecs\Systems\RenderingSystem.hpp" />
-    <ClCompile Include="Source\Ecs\Entity.cpp" />
-    <ClCompile Include="Source\Manager\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.hpp" />
+    <ClCompile Include="Source\Ecs\GameObject.cpp" />
+    <ClCompile Include="Source\Manager\ResourceManager.cpp" />
     <ClCompile Include="Source\Core\Anim\Animation.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
     <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
@@ -149,6 +149,9 @@
     <ClCompile Include="Source\Renderer\Sprite.cpp" />
     <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
     <ClCompile Include="Editor\SpritesheetEditor.cpp" />
+    <ClCompile Include="Source\Ecs\Transform.hpp" />
+    <ClCompile Include="Source\Ecs\Transform.cpp" />
+    <ClCompile Include="Source\Ecs\SpriteRenderer.cpp" />
     <ClCompile Include="vendor\ImGui\imgui.cpp" />
     <ClCompile Include="vendor\ImGui\ImGuiFileDialog.cpp" />
     <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
@@ -157,15 +160,15 @@
     <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="vendor\ImGui\imgui_tables.cpp" />
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Source\Ecs\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Editor\ImGuiManager.hpp" />
-    <ClInclude Include="vendor\ImGui\imgui_stdlib.h" />
-    <ClInclude Include="Source\Ecs\Entity.hpp" />
-    <ClInclude Include="Source\Manager\ResourceManager.hpp" />
-    <ClInclude Include="Source\Scene\SceneManager.hpp" />
+    <ClInclude Include="Editor\SceneEditor.hpp" />
     <ClInclude Include="Source\Scene\Scene.hpp" />
+    <ClInclude Include="Source\Ecs\GameObject.hpp" />
+    <ClInclude Include="Source\Ecs\Component.hpp" />
+    <ClInclude Include="Editor\ImGuiManager.hpp" />
+    <ClInclude Include="Editor\Menubar.hpp" />
+    <ClInclude Include="Source\Manager\ResourceManager.hpp" />
     <ClInclude Include="Source\Core\Anim\Animation.hpp" />
     <ClInclude Include="Source\Core\Camera2D.hpp" />
     <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
@@ -179,7 +182,6 @@
     <ClInclude Include="Source\Renderer\Sprite.hpp" />
     <ClInclude Include="Source\Renderer\Spritesheet.hpp" />
     <ClInclude Include="Editor\SpritesheetEditor.hpp" />
-    <ClInclude Include="Source\Ecs\Transform.hpp" />
     <ClInclude Include="Source\Ecs\SpriteRenderer.hpp" />
     <ClInclude Include="vendor\ImGui\dirent\dirent.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
@@ -190,10 +192,10 @@
     <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="vendor\ImGui\imgui_internal.h" />
+    <ClInclude Include="vendor\ImGui\imgui_stdlib.h" />
     <ClInclude Include="vendor\ImGui\imstb_rectpack.h" />
     <ClInclude Include="vendor\ImGui\imstb_textedit.h" />
     <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Source\Ecs\World.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

@@ -110,7 +110,9 @@ ImGui::PopFont();
 **For advanced options create a ImFontConfig structure and pass it to the AddFont() function (it will be copied internally):**
 ```cpp
 ImFontConfig config;
-config.RasterizerDensity = 2.0f;
+config.OversampleH = 2;
+config.OversampleV = 1;
+config.GlyphExtraSpacing.x = 1.0f;
 ImFont* font = io.Fonts->AddFontFromFileTTF("font.ttf", size_pixels, &config);
 ```
 
