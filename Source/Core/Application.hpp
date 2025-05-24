@@ -1,4 +1,4 @@
-#ifndef APPLICATION_H
+ï»¿#ifndef APPLICATION_H
 #define APPLICATION_H
 
 #include <functional>
@@ -7,14 +7,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Source/Events/EventManager.hpp" // Certifique-se de que este caminho está correto
-#include "Renderer2D.hpp"   // Para a instância do Renderer2D
+#include "Source/Events/EventManager.hpp" // Certifique-se de que este caminho estï¿½ correto
+#include "Renderer2D.hpp"   // Para a instï¿½ncia do Renderer2D
 #include "InputManager.hpp" // Para Keyboard e Mouse
-#include "Source/Scene/SceneManager.hpp" // Para a instância do SceneManager
+#include "Source/Scene/SceneManager.hpp" // Para a instï¿½ncia do SceneManager
 
-// Incluir o cabeçalho do ImGuiManager
+// Incluir o cabeï¿½alho do ImGuiManager
 #include "Editor/ImGuiManager.hpp"
-// REMOVIDO: Inclusão direta do SpritesheetEditor, pois agora é gerenciado pelo ImGuiManager
+// REMOVIDO: Inclusï¿½o direta do SpritesheetEditor, pois agora ï¿½ gerenciado pelo ImGuiManager
 // #include "SpritesheetEditor.hpp"
 
 class Application
@@ -45,26 +45,25 @@ public:
 private:
     bool isRunning;
     GLFWwindow* window; // Ponteiro para a janela GLFW
-    EventManager eventManager; // Instância do EventManager
+    EventManager eventManager; // Instï¿½ncia do EventManager
 
-    // Recursos da engine que serão gerenciados pela Application e passados para as cenas
+    // Recursos da engine que serï¿½o gerenciados pela Application e passados para as cenas
     Renderer2D renderer2D;
     Keyboard keyboard;
     Mouse mouse;
 
-    // Instância do SceneManager
-    SceneManager sceneManager;
+    Luna::SceneManager sceneManager;
 
-    // REMOVIDO: Instância do SpritesheetEditor
+    // REMOVIDO: Instï¿½ncia do SpritesheetEditor
     // SpritesheetEditor spritesheetEditor;
 
-    // Instância do ImGuiManager (agora gerencia o SpritesheetEditor)
+    // Instï¿½ncia do ImGuiManager (agora gerencia o SpritesheetEditor)
     ImGuiManager imGuiManager;
 
     float screenWidth;
     float screenHeight;
 
-    // Funções de callback estáticas do GLFW
+    // Funï¿½ï¿½es de callback estï¿½ticas do GLFW
     static void glfwErrorCallback(int error, const char* description);
     static void windowCloseCallback(GLFWwindow* window);
 };

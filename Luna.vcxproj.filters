@@ -184,9 +184,6 @@
     <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\..\Downloads\epic-hybrid-logo-157092.mp3" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Shaders\basic.vs" />
     <None Include="Resources\Shaders\basic.fs" />
     <None Include="Resources\Shaders\batch.vs" />

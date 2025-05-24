@@ -1,8 +1,8 @@
-#include "Application.hpp"
+ï»¿#include "Application.hpp"
 #include <iostream>
 #include <memory> // Para std::make_unique
 
-// Definições das funções de callback estáticas da classe Application
+// DefiniÃ§Ãµes das funcoes de callback estÃ¡ticas da classe Application
 void Application::glfwErrorCallback(int error, const char* description) {
     std::cerr << "Erro GLFW: " << description << std::endl;
 }
@@ -12,14 +12,14 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 }
 
 
-Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f)
+Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f), sceneManager() // Inicializa sceneManager aqui
 {
-    std::cout << "Application construída!" << std::endl;
+    std::cout << "Application construÃ­da!" << std::endl;
 }
 
 Application::~Application()
 {
-    std::cout << "Application destruída!" << std::endl;
+    std::cout << "Application destruÃ­da!" << std::endl;
 }
 
 bool Application::Init()
@@ -65,7 +65,7 @@ bool Application::Init()
     // 6. Definir o callback de fechar janela
     glfwSetWindowCloseCallback(window, Application::windowCloseCallback);
 
-    // 7. Definir o ponteiro do utilizador da janela para 'this' (instância da Application)
+    // 7. Definir o ponteiro do utilizador da janela para 'this' (instÃ¢ncia da Application)
     glfwSetWindowUserPointer(window, this);
 
     // 8. Inicializar o Renderer2D
@@ -83,8 +83,16 @@ bool Application::Init()
         glfwTerminate();
         return false;
     }
+    // Configurar Renderer2D e dimensÃµes da tela no SceneManager
+  //  sceneManager->setRenderer(m_renderer);
+   // sceneManager->setScreenSize(m_viewportWidth, m_viewportHeight);
+    sceneManager.setRenderer(&renderer2D);
+    sceneManager.setScreenSize(screenWidth, screenHeight);
+    // Carregar uma cena inicial (opcional)
+    sceneManager.addScene("default");
+    sceneManager.loadScene("default");
 
-    // Inicializar ImGuiManager, passando as dependências do SpritesheetEditor
+    // Inicializar ImGuiManager, passando as dependÃªncias do SpritesheetEditor
     if (!imGuiManager.Init(window, "#version 330 core", renderer2D, keyboard, mouse)) {
         std::cerr << "Falha ao inicializar o ImGuiManager." << std::endl;
         glfwDestroyWindow(window);
@@ -92,12 +100,9 @@ bool Application::Init()
         return false;
     }
 
-    // Carregar uma fonte personalizada (ex: "Resources/Fonts/Roboto-Medium.ttf")
-    // Certifique-se de ter um arquivo de fonte .ttf no caminho especificado.
-    // Você pode baixar fontes gratuitas em sites como Google Fonts.
+    // Carregar uma fonte personalizada
     if (!imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 16.0f)) {
-        std::cerr << "Falha ao carregar a fonte personalizada. Usando a fonte padrão do ImGui." << std::endl;
-        // Não é um erro crítico, a aplicação pode continuar com a fonte padrão.
+        std::cerr << "Falha ao carregar a fonte personalizada. Usando a fonte padrÃ£o do ImGui." << std::endl;
     }
 
     std::cout << "Application inicializada com sucesso. Pronto para o utilizador registar as suas cenas." << std::endl;
@@ -110,43 +115,36 @@ void Application::Run()
 
     double lastFrameTime = glfwGetTime(); // Para calcular deltaTime no loop principal
 
-    // Loop principal da aplicação
+    // Loop principal da aplicaÃ§Ã£o
     while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents(); // Processar eventos GLFW (input, fechamento de janela, etc.)
+        glfwPollEvents(); // Processar eventos GLFW
 
         // Calcular deltaTime
         double currentFrameTime = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
         lastFrameTime = currentFrameTime;
 
-        // Atualizar o estado do mouse (delta)
+        // Atualizar o estado do mouse
         mouse.UpdatePosition(window);
 
         // Iniciar o novo frame do ImGui
         imGuiManager.BeginFrame();
 
-        // Desenhar a interface do SpritesheetEditor através do ImGuiManager
-        // Desenhar outras interfaces aqui também
+        // Desenhar a interface do Editor (incluindo o SceneManager)
         imGuiManager.DrawEditorUI(deltaTime);
+        sceneManager.OnImGuiRender(); // Renderizar a interface do SceneManager
 
-        // Limpar o buffer de cor e profundidade antes de cada frame
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // Cor de fundo (azul-esverdeado)
+        // Limpar o buffer de cor e profundidade
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Renderizar a cena atual através do SceneManager (se houver uma)
-        if (sceneManager.GetCurrentScene()) {
-            sceneManager.GetCurrentScene()->Update(deltaTime);
-            sceneManager.GetCurrentScene()->Render();
-        }
-        else {
-            // Se nenhuma cena estiver ativa, podemos renderizar uma tela preta ou uma mensagem de aviso.
-            // std::cout << "Nenhuma cena ativa para renderizar." << std::endl; // Descomente para depuração
-        }
+        // Renderizar a cena atual
+        sceneManager.RenderCurrentScene();
 
         // Finalizar e renderizar o ImGui
         imGuiManager.EndFrame(window);
 
-        // Trocar os buffers da janela para exibir o frame renderizado
+        // Trocar os buffers da janela
         glfwSwapBuffers(window);
     }
     isRunning = false; // Define como false quando a janela deve fechar
@@ -159,7 +157,7 @@ void Application::Shutdown()
     // Desligar ImGuiManager
     imGuiManager.Shutdown();
 
-    // Encerrar o SceneManager (isso desligará a cena atual e liberará todas as cenas)
+    // Encerrar o SceneManager
     sceneManager.Shutdown();
 
     // Encerrar o Renderer2D

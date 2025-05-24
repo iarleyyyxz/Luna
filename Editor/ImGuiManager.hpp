@@ -1,9 +1,12 @@
 #ifndef IMGUI_MANAGER_HPP
 #define IMGUI_MANAGER_HPP
 
+#define IMGUI_ENABLE_DOCKING
 #include "imgui.h"          // Core ImGui
+#include "imgui_internal.h" // Opcional, para funcionalidades avançadas
 #include "imgui_impl_glfw.h" // ImGui para GLFW
 #include "imgui_impl_opengl3.h" // ImGui para OpenGL
+
 
 #include <string> // Para caminhos de fonte
 

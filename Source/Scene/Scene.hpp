@@ -1,40 +1,57 @@
-#ifndef SCENE_HPP
-#define SCENE_HPP
+// Scene/Scene.hpp
+#ifndef LUNA_SCENE_SCENE_HPP
+#define LUNA_SCENE_SCENE_HPP
 
-#include <GLFW/glfw3.h> // Para GLFWwindow*
-#include <glm.hpp>   // Para glm::vec2, etc.
+#include "Source/Ecs/World.hpp"
+#include "Source/Ecs/Systems/RenderingSystem.hpp"
+#include "Source/Renderer/Renderer2D.hpp"
+#include <fstream>
+#include <nlohmann/json.hpp> // Incluir a biblioteca JSON
 
-// Forward declarations para evitar inclusões circulares e dependências desnecessárias
-class Renderer2D;
-class Keyboard;
-class Mouse;
-class Camera2D;
-class Spritesheet;
-class Animation;
-class Sprite;
+namespace Luna {
 
-class Scene {
-public:
-    Scene() = default;
-    virtual ~Scene() = default;
+    using json = nlohmann::json;
 
-    // Métodos virtuais puros que cada cena concreta deve implementar
-    // window: Ponteiro para a janela GLFW
-    // screenWidth, screenHeight: Dimensões da janela
-    // renderer: Referência ao Renderer2D para desenhar
-    // keyboard, mouse: Referências aos gerenciadores de input
-    virtual bool Init(GLFWwindow* window, float screenWidth, float screenHeight,
-        Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse) = 0;
+    class Scene {
+    public:
+        Scene(float screenWidth, float screenHeight, Renderer2D& renderer);
+        ~Scene();
 
-    // Atualiza a lógica da cena
-    // deltaTime: Tempo decorrido desde a última atualização
-    virtual void Update(float deltaTime) = 0;
+        Luna::Ecs::Entity CreateEntity();
+        void DestroyEntity(Luna::Ecs::Entity entity);
 
-    // Renderiza o conteúdo da cena
-    virtual void Render() = 0;
+        template <typename T, typename... Args>
+        T& AddComponent(Luna::Ecs::Entity entity, Args&&... args);
 
-    // Encerra a cena e libera seus recursos
-    virtual void Shutdown() = 0;
-};
+        template <typename T>
+        T* GetComponent(Luna::Ecs::Entity entity) const;
 
-#endif // SCENE_HPP
+        template <typename T>
+        bool HasComponent(Luna::Ecs::Entity entity) const;
+
+        void Update(float deltaTime);
+        void Render();
+
+        void Serialize(const std::string& filepath) const;
+        bool Deserialize(const std::string& filepath);
+
+        Luna::Ecs::World m_world;
+        Luna::Ecs::Systems::RenderingSystem m_renderingSystem;
+
+        std::string name;
+
+    private:
+        
+        Renderer2D& m_renderer;
+        float m_screenWidth;
+        float m_screenHeight;
+
+        friend void to_json(json& j, const Ecs::Transform& p);
+        friend void from_json(const json& j, Ecs::Transform& p);
+        friend void to_json(json& j, const Ecs::SpriteRenderer& p);
+        friend void from_json(const json& j, Ecs::SpriteRenderer& p);
+    };
+
+} // namespace Luna
+
+#endif // LUNA_SCENE_SCENE_HPP

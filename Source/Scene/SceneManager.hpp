@@ -1,59 +1,66 @@
-#ifndef SCENE_MANAGER_HPP
-#define SCENE_MANAGER_HPP
+#ifndef LUNA_SCENEMANAGER_HPP
+#define LUNA_SCENEMANAGER_HPP
 
 #include <string>
+#include <vector>
+#include <memory>
 #include <unordered_map>
-#include <memory> // Para std::unique_ptr
 
-#include "Scene.hpp" // Inclui a classe base Scene
+#include "Scene.hpp"
+#include "Renderer2D.hpp"
+#include "Source/Ecs/Entity.hpp"
 
-// Forward declarations para evitar inclusões circulares
-class Renderer2D;
-class Keyboard;
-class Mouse;
+namespace Luna {
 
-class SceneManager {
-public:
-    SceneManager();
-    ~SceneManager();
+    class SceneManager {
+    public:
+        SceneManager();
+        ~SceneManager();
 
-    // Inicializa o SceneManager (não faz muito, apenas configura o estado inicial)
-    bool Init();
-    // Encerra o SceneManager, liberando a cena atual
-    void Shutdown();
+        bool Init();
+        void Shutdown();
 
-    // Adiciona uma cena ao gerenciador.
-    // sceneName: Nome único para identificar a cena.
-    // scene: Um unique_ptr para a instância da cena. O SceneManager assume a propriedade.
-    void AddScene(const std::string& sceneName, std::unique_ptr<Scene> scene);
+        void setRenderer(Renderer2D* renderer) { m_renderer = renderer; } // <-- Definição inline
+        void setScreenSize(float width, float height) { m_screenWidth = width; m_screenHeight = height; } // <-- Definição inline
 
-    // Alterna para uma cena específica.
-    // sceneName: O nome da cena para a qual alternar.
-    // window, screenWidth, screenHeight: Parâmetros necessários para inicializar a nova cena.
-    // renderer, keyboard, mouse: Referências aos recursos da engine passados para a cena.
-    bool SwitchToScene(const std::string& sceneName, GLFWwindow* window, float screenWidth, float screenHeight,
-        Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse);
+        void addScene(const std::string& name);
+        void loadScene(const std::string& name);
+        void removeScene(const std::string& name);
+        Scene* getCurrentScene();
 
-    // Obtém a cena atualmente ativa.
-    Scene* GetCurrentScene() const { return m_currentScene.get(); }
+        Ecs::Entity createEntity();
+        void destroyEntity(Ecs::Entity entity);
 
-private:
-    // Mapa para armazenar todas as cenas registradas.
-    // Usamos unique_ptr para garantir que o SceneManager é o único proprietário das cenas.
-    std::unordered_map<std::string, std::unique_ptr<Scene>> m_scenes;
+        template <typename T, typename... Args>
+        T& addComponent(Ecs::Entity entity, Args&&... args);
 
-    // Ponteiro para a cena atualmente ativa.
-    // Não é um unique_ptr porque a propriedade já está em m_scenes.
-    std::unique_ptr<Scene> m_currentScene;
+        template <typename T>
+        T* getComponent(Ecs::Entity entity) const;
 
-    // Referências aos recursos da engine que serão passados para as cenas.
-    // Não são de propriedade do SceneManager.
-    Renderer2D* m_rendererRef;
-    Keyboard* m_keyboardRef;
-    Mouse* m_mouseRef;
-    GLFWwindow* m_windowRef;
-    float m_screenWidthRef;
-    float m_screenHeightRef;
-};
+        template <typename T>
+        bool hasComponent(Ecs::Entity entity) const;
 
-#endif // SCENE_MANAGER_HPP
+        void UpdateCurrentScene(float deltaTime);
+        void RenderCurrentScene();
+        void OnImGuiRender();
+
+    private:
+        std::unordered_map<std::string, std::unique_ptr<Scene>> m_scenes;
+        std::unique_ptr<Scene> m_currentScene;
+        Renderer2D* m_renderer;
+        float m_screenWidth;
+        float m_screenHeight;
+
+    public:
+        static char newSceneName[128];
+        static std::string saveDirectory;
+#ifdef _WIN32
+        std::string openFolderDialog();
+#else
+        std::string openFolderDialog();
+#endif
+    };
+
+} // namespace Luna
+
+#endif // LUNA_SCENEMANAGER_HPP

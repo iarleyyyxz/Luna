@@ -1,4 +1,10 @@
 C:\Users\josy-\source\repos\Luna\Luna\Editor\ImGuiManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ImGuiManager.obj
+C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_stdlib.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_stdlib.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\Scene.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Scene.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Systems\RenderingSystem.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\RenderingSystem.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Systems\RenderingSystem.hpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\RenderingSystem.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Entity.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Entity.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Manager\ResourceManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ResourceManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\SceneManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SceneManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Anim\Animation.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Animation.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Camera2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Camera2D.obj
@@ -22,3 +28,4 @@ C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_impl_glfw.cpp;C:\Users\
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_impl_opengl3.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_impl_opengl3.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_tables.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_tables.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_widgets.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_widgets.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\World.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\World.obj

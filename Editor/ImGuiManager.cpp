@@ -27,7 +27,6 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Habilitar navegação por teclado
 //    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;       // Habilitar docking (para layout de editor)
 //    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;     // Habilitar viewports (para janelas fora da janela principal)
-
     // 2. Aplicar o estilo Godot
     SetLunaStyle();
 

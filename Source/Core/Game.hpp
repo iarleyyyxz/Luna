@@ -53,6 +53,10 @@ private:
 
     // Tempo para calcular o deltaTime
     double m_lastFrameTime;
+
+    // Adicionando handlers para manipular a viewport
+    // do jogo // Scene Viewport // Framebuffer...
+   
 };
 
 #endif // GAME_HPP
