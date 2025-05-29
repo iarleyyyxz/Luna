@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Source/Renderer/Renderer2D.hpp"
 
 class SceneObject;
 

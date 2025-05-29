@@ -36,9 +36,6 @@
     <ClCompile Include="Source\Renderer\Renderer.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Game.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Renderer\Renderer2D.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -51,7 +48,7 @@
     <ClCompile Include="Source\Renderer\Spritesheet.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Anim\Animation.cpp">
+    <ClCompile Include="Source\Ecs\Anim\Animation.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Editor\ImGuiManager.cpp">
@@ -90,6 +87,9 @@
     <ClCompile Include="Editor\Menubar.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\ViewportGui.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Application.hpp">
@@ -110,9 +110,6 @@
     <ClInclude Include="Source\Renderer\Renderer.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Game.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Renderer\Renderer2D.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -125,7 +122,7 @@
     <ClInclude Include="Source\Renderer\Spritesheet.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Anim\Animation.hpp">
+    <ClInclude Include="Source\Ecs\Anim\Animation.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Editor\ImGuiManager.hpp">
@@ -186,6 +183,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ecs\Transform2D.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\ViewportGui.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

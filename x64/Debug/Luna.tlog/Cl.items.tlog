@@ -1,10 +1,9 @@
 C:\Users\josy-\source\repos\Luna\Luna\Editor\ImGuiManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ImGuiManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\Menubar.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Menubar.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Manager\ResourceManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ResourceManager.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Anim\Animation.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Animation.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Anim\Animation.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Animation.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Camera2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Camera2D.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Renderer2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer2D.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Game.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Game.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Renderer.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Shader.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Shader.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\InputManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\InputManager.obj
@@ -23,3 +22,4 @@ C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_impl_glfw.cpp;C:\Users\
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_impl_opengl3.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_impl_opengl3.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_tables.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_tables.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_widgets.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_widgets.obj
+C:\Users\josy-\source\repos\Luna\Luna\Editor\ViewportGui.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ViewportGui.obj

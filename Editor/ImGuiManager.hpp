@@ -2,13 +2,13 @@
 #define IMGUI_MANAGER_HPP
 
 #define IMGUI_ENABLE_DOCKING
-#include "imgui.h"          // Core ImGui
+#include "imgui.h"         // Core ImGui
 #include "imgui_internal.h" // Opcional, para funcionalidades avançadas
 #include "imgui_impl_glfw.h" // ImGui para GLFW
 #include "imgui_impl_opengl3.h" // ImGui para OpenGL
 
-
 #include <string> // Para caminhos de fonte
+#include "RenderTarget.hpp" // <--- Inclua este header
 
 // NOVO: Incluir o cabeçalho do SpritesheetEditor
 #include "Menubar.hpp"
@@ -19,7 +19,6 @@ struct GLFWwindow;
 class Renderer2D; // Declarar antes de usar em Init
 class Keyboard;   // Declarar antes de usar em Init
 class Mouse;      // Declarar antes de usar em Init
-
 
 class ImGuiManager {
 public:
@@ -55,13 +54,15 @@ public:
 
     // handlers
     Luna::MenuBar m_mainMenuBar;
-    bool m_showSceneManager;
-    bool m_showSpritesheetEditor;
+    bool m_showSceneManager = false; // Inicializado como false
+    bool m_showSpritesheetEditor = false; // Inicializado como false
+    bool m_showViewport = true; // Inicializado como true
 
 private:
+    // NOVO: Instância do RenderTarget para a viewport
+   // Luna::RenderTarget m_renderTarget;
     // NOVO: Instância do SpritesheetEditor gerenciada pelo ImGuiManager
     SpritesheetEditor m_spritesheetEditor;
-
 };
 
 #endif // IMGUI_MANAGER_HPP

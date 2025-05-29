@@ -17,6 +17,7 @@ public:
 
     // Obtém a textura do sprite
     Texture* getTexture() const { return m_texture; }
+    void SetTexture(Texture* texture) { this->m_texture = texture; }
 
     // Obtém as coordenadas de textura (UVs) para o sprite
     // Estas são normalizadas (0.0 a 1.0)

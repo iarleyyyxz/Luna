@@ -10,15 +10,18 @@
 #include "Renderer2D.hpp"
 #include "InputManager.hpp"
 
-ImGuiManager::ImGuiManager() : m_spritesheetEditor() { // NOVO: Inicializa m_spritesheetEditor
+#include "RenderTarget.hpp" // Certifique-se de incluir aqui também
+
+ImGuiManager::ImGuiManager() : m_spritesheetEditor() { // Tamanho inicial arbitrário
     std::cout << "ImGuiManager construído!" << std::endl;
 }
 
+// ... (restante do ImGuiManager::Init) ...
 ImGuiManager::~ImGuiManager() {
     std::cout << "ImGuiManager destruído!" << std::endl;
 }
 
-bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse) { // NOVO: Parâmetros adicionais
+bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse) {
     std::cout << "Inicializando ImGuiManager..." << std::endl;
 
     // 1. Inicializar o contexto ImGui
@@ -27,29 +30,25 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
     // Configurar flags do ImGui
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;    // Habilitar navegação por teclado
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;          // Habilitar docking (para layout de editor)
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;        // Habilitar viewports (para janelas fora da janela principal)
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
     // 2. Aplicar o estilo Luna (Godot)
     SetLunaStyle();
 
-    // Quando viewports estão habilitados, o ImGui criará janelas GLFW/contextos OpenGL adicionais
-    // para cada viewport, e precisará de callbacks GLFW.
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
+    // Viewports
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
         ImGuiStyle& style = ImGui::GetStyle();
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
 
     // 3. Inicializar os backends do ImGui para GLFW e OpenGL
-    ImGui_ImplGlfw_InitForOpenGL(window, true); // O 'true' instala os callbacks do ImGui para o GLFW
-    ImGui_ImplOpenGL3_Init(glslVersion.c_str()); // Versão do GLSL
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(glslVersion.c_str());
 
-    // 4. Carregar uma fonte padrão (opcional, pode ser substituída por LoadFont)
-    // io.Fonts->AddFontDefault(); // Fonte padrão do ImGui
-     // Configurar a Menu Bar uma vez
-    // 5. Carregar Itens da Menubar
+    // Menu Bar
     Luna::Menu arquivoMenu;
     arquivoMenu.label = "Arquivo";
     arquivoMenu.items.push_back({ "Novo", "Ctrl+N", []() { std::cout << "Novo clicado\n"; } });
@@ -62,7 +61,7 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     Luna::Menu editarMenu;
     editarMenu.label = "Editar";
     editarMenu.items.push_back({ "Desfazer", "Ctrl+Z", []() { std::cout << "Desfazer clicado\n"; } });
-    editarMenu.items.push_back({ "Refazer", "Ctrl+Y", []() { std::cout << "Refazer clicado\n"; }, false }); // Desabilitado
+    editarMenu.items.push_back({ "Refazer", "Ctrl+Y", []() { std::cout << "Refazer clicado\n"; }, false });
     editarMenu.items.push_back({ "Recortar", "Ctrl+X", []() { std::cout << "Recortar clicado\n"; } });
     editarMenu.items.push_back({ "Copiar", "Ctrl+C", []() { std::cout << "Copiar clicado\n"; } });
     editarMenu.items.push_back({ "Colar", "Ctrl+V", []() { std::cout << "Colar clicado\n"; } });
@@ -72,9 +71,10 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     janelasMenu.label = "Janelas";
     janelasMenu.items.push_back({ "Gerenciador de Cenas", "", [this]() { m_showSceneManager = !m_showSceneManager; } });
     janelasMenu.items.push_back({ "Spritesheet Editor", "", [this]() { m_showSpritesheetEditor = !m_showSpritesheetEditor; } });
+    janelasMenu.items.push_back({ "Viewport", "", [this]() { m_showViewport = !m_showViewport; } }); // Adicionado item da viewport
     m_mainMenuBar.AddMenu(janelasMenu);
 
-    // NOVO: Inicializar o SpritesheetEditor que agora é membro do ImGuiManager
+    // NOVO: Inicializar o SpritesheetEditor
     m_spritesheetEditor.Init(renderer, keyboard, mouse);
 
     std::cout << "ImGuiManager inicializado com sucesso." << std::endl;
@@ -241,9 +241,19 @@ bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
     return true;
 }
 
-void ImGuiManager::DrawEditorUI(float deltaTime) { // NOVO: Implementação do método de desenho
-    // DockSpace está ativo no BeginFrame/EndFrame, então podemos usar ImGui::DockSpaceGetID() aqui se necessário.
+void ImGuiManager::DrawEditorUI(float deltaTime) {
+    // DockSpace está ativo no BeginFrame/EndFrame
+
+   /* if (m_showViewport) {
+        ImGui::Begin("Viewport");
+        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        ImGui::Image(m_renderTarget.getTextureID(), viewportPanelSize, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::End();
+    }*/
+
     if (m_showSpritesheetEditor) {
         m_spritesheetEditor.DrawUI(deltaTime);
     }
+
+  //  this->assetBrowser.render();
 }

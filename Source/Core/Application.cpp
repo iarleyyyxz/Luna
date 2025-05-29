@@ -1,8 +1,14 @@
-﻿#include "Application.hpp"
+﻿// Application.cpp
+#include "Application.hpp"
 #include <iostream>
-#include <memory> // Para std::make_unique
+#include <memory>
 
-// Definições das funções de callback estáticas da classe Application
+#include "Source/Renderer/Texture.hpp"
+#include "Source/Renderer/Sprite.hpp"
+
+#include <glm.hpp>
+#include <matrix_transform.hpp>
+
 void Application::glfwErrorCallback(int error, const char* description) {
     std::cerr << "Erro GLFW: " << description << std::endl;
 }
@@ -11,8 +17,8 @@ void Application::windowCloseCallback(GLFWwindow* window) {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-
-Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f)
+Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
+framebufferTexture(0), framebufferObject(0), m_viewportGui()
 {
     std::cout << "Application construída!" << std::endl;
 }
@@ -20,20 +26,20 @@ Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0
 Application::~Application()
 {
     std::cout << "Application destruída!" << std::endl;
+    glDeleteFramebuffers(1, &framebufferObject);
+    glDeleteTextures(1, &framebufferTexture);
 }
 
 bool Application::Init()
 {
     std::cout << "Inicializando a Application..." << std::endl;
 
-    // 1. Inicializar GLFW
     glfwSetErrorCallback(Application::glfwErrorCallback);
     if (!glfwInit()) {
         std::cerr << "Falha ao inicializar o GLFW" << std::endl;
         return false;
     }
 
-    // 2. Configurar a janela do GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -41,7 +47,6 @@ bool Application::Init()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    // 3. Criar a janela
     window = glfwCreateWindow(static_cast<int>(screenWidth), static_cast<int>(screenHeight), "Luna Engine Editor", nullptr, nullptr);
     if (window == nullptr) {
         std::cerr << "Falha ao criar a janela do GLFW" << std::endl;
@@ -49,9 +54,8 @@ bool Application::Init()
         return false;
     }
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Ativar VSync
+    glfwSwapInterval(1);
 
-    // 4. Inicializar o GLEW
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         std::cerr << "Falha ao inicializar o GLEW" << std::endl;
@@ -59,16 +63,10 @@ bool Application::Init()
         return false;
     }
 
-    // 5. Configurar o viewport OpenGL
     glViewport(0, 0, static_cast<int>(screenWidth), static_cast<int>(screenHeight));
-
-    // 6. Definir o callback de fechar janela
     glfwSetWindowCloseCallback(window, Application::windowCloseCallback);
-
-    // 7. Definir o ponteiro do utilizador da janela para 'this' (instância da Application)
     glfwSetWindowUserPointer(window, this);
 
-    // 8. Inicializar o Renderer2D
     if (!m_renderer2D.Init(screenWidth, screenHeight)) {
         std::cerr << "Falha ao inicializar o Renderer2D." << std::endl;
         glfwDestroyWindow(window);
@@ -76,13 +74,13 @@ bool Application::Init()
         return false;
     }
 
-    // 9. Inicializar o SceneManager
-    // Definir as referências da engine no SceneManager ANTES de inicializar o ImGuiManager
-  
+    if (!InitFramebuffer()) {
+        std::cerr << "Falha ao inicializar o Framebuffer." << std::endl;
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        return false;
+    }
 
-    // 10. Inicializar ImGuiManager, passando as dependências
-    // O ImGuiManager agora recebe as referências para os gerenciadores de input e renderização,
-    // e também para o SceneManager, para que seus editores possam interagir com eles.
     if (!m_imGuiManager.Init(window, "#version 330 core", m_renderer2D, m_keyboard, m_mouse)) {
         std::cerr << "Falha ao inicializar o ImGuiManager." << std::endl;
         glfwDestroyWindow(window);
@@ -90,18 +88,53 @@ bool Application::Init()
         return false;
     }
 
-    // Carregar uma fonte personalizada (ex: "Resources/Fonts/Roboto-Medium.ttf")
-    if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 16.0f)) {
-        std::cerr << "Falha ao carregar a fonte personalizada. Usando a fonte padrão do ImGui." << std::endl;
+    if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
+    {
+        std::cerr << "Fail load font imGui";
     }
 
-    // Adicionar uma cena inicial padrão e alternar para ela
-  //  m_sceneManager.addScene("Cena Inicial", std::make_unique<Luna::Scene>("Cena Inicial"));
-    //m_sceneManager.switchToScene("Cena Inicial", window, screenWidth, screenHeight,
-     //   m_renderer2D, m_keyboard, m_mouse);
+    if (!m_imGuiManager.LoadFont("Resources/Fonts/fontawesome-webfont.ttf", 16))
+    {
+        std::cerr << "Fail load font imGui";
+    }
 
+    std::cout << "Application inicializada com sucesso." << std::endl;
+    return true;
+}
 
-    std::cout << "Application inicializada com sucesso. Pronto para o utilizador registar as suas cenas." << std::endl;
+bool Application::InitFramebuffer()
+{
+    glGenFramebuffers(1, &framebufferObject);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebufferObject);
+
+    glGenTextures(1, &framebufferTexture);
+    glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, static_cast<int>(screenWidth), static_cast<int>(screenHeight), 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
+
+    unsigned int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<int>(screenWidth), static_cast<int>(screenHeight));
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        std::cerr << "Erro: Framebuffer não está completo!" << std::endl;
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDeleteFramebuffers(1, &framebufferObject);
+        glDeleteTextures(1, &framebufferTexture);
+        glDeleteRenderbuffers(1, &rbo);
+        return false;
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glDeleteRenderbuffers(1, &rbo);
+
     return true;
 }
 
@@ -109,60 +142,66 @@ void Application::Run()
 {
     std::cout << "Executando a Application..." << std::endl;
 
-    double lastFrameTime = glfwGetTime(); // Para calcular deltaTime no loop principal
+    double lastFrameTime = glfwGetTime();
 
-    // Loop principal da aplicação
     while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents(); // Processar eventos GLFW (input, fechamento de janela, etc.)
+        glfwPollEvents();
 
-        // Calcular deltaTime
         double currentFrameTime = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
         lastFrameTime = currentFrameTime;
 
-        // Atualizar o estado do mouse (delta)
-        m_mouse.UpdatePosition(window); // Usar m_mouse
+        m_mouse.UpdatePosition(window);
 
-        // Iniciar o novo frame do ImGui
-        m_imGuiManager.BeginFrame(); // Usar m_imGuiManager
+        m_imGuiManager.BeginFrame();
 
-        // Desenhar a interface do SpritesheetEditor através do ImGuiManager
-        m_imGuiManager.DrawEditorUI(deltaTime); // Usar m_imGuiManager
+        // Renderizar a Viewport GUI
+        m_viewportGui.Render(framebufferTexture);
+        m_imGuiManager.DrawEditorUI(deltaTime);
 
-        // Limpar o buffer de cor e profundidade antes de cada frame
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // Cor de fundo (azul-esverdeado)
+        // *** Renderizar para o Framebuffer ***
+        glBindFramebuffer(GL_FRAMEBUFFER, framebufferObject);
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Renderizar a cena atual (se houver uma)
-      
+        // --- START OF SCENE RENDER ---
+        glm::mat4 projection = glm::ortho(0.0f, screenWidth, screenHeight, 0.0f, -1.0f, 1.0f); // Or whatever your projection is
+        m_renderer2D.beginScene(projection);
+       
+        // --- RENDERING THE SCENE OBJECTS AND HOWEVER ---
+        // --- UPDATE THE SCENE OBJECTS, ANIMATIONS, INPUTS ---
 
-        // Finalizar e renderizar o ImGui
-        m_imGuiManager.EndFrame(window); // Usar m_imGuiManager
 
-        // Trocar os buffers da janela para exibir o frame renderizado
+        m_renderer2D.endScene();
+        // --- END OF SCENE RENDER ---
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDisable(GL_DEPTH_TEST);
+
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        m_imGuiManager.EndFrame(window);
+
         glfwSwapBuffers(window);
     }
-    isRunning = false; // Define como false quando a janela deve fechar
+    isRunning = false;
 }
 
 void Application::Shutdown()
 {
     std::cout << "Encerrando a Application..." << std::endl;
 
-    // Desligar ImGuiManager
-    m_imGuiManager.Shutdown(); // Usar m_imGuiManager
+    m_imGuiManager.Shutdown();
+    m_renderer2D.Shutdown();
 
-    // Encerrar o SceneManager (isso desligará a cena atual e liberará todas as cenas)
-   // m_sceneManager.Shutdown(); // Usar m_sceneManager
+    glDeleteFramebuffers(1, &framebufferObject);
+    glDeleteTextures(1, &framebufferTexture);
 
-    // Encerrar o Renderer2D
-    m_renderer2D.Shutdown(); // Usar m_renderer2D
-
-    // Destruir a janela GLFW
     if (window) {
         glfwDestroyWindow(window);
     }
-    // Terminar o GLFW
     glfwTerminate();
 
     std::cout << "Application encerrada." << std::endl;

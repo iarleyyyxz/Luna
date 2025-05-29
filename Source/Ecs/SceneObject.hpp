@@ -40,7 +40,7 @@ public:
         }
         return nullptr;
     }
-
+         
     void Update(float deltaTime) {
         for (auto& comp : components_) comp->Update(deltaTime);
         for (auto& child : children_) child->Update(deltaTime);
