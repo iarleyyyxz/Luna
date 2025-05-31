@@ -10,7 +10,8 @@
 #include "Renderer2D.hpp"
 #include "InputManager.hpp"
 
-#include "RenderTarget.hpp" // Certifique-se de incluir aqui também
+#include <GL/stb_image.h>
+#include <filesystem>
 
 ImGuiManager::ImGuiManager() : m_spritesheetEditor() { // Tamanho inicial arbitrário
     std::cout << "ImGuiManager construído!" << std::endl;
@@ -258,167 +259,8 @@ void ImGuiManager::SetLunaStyle() {
     style.GrabMinSize = 10.0f;
     style.ChildRounding = 0.0f;
 }
-void ImGuiManager::DrawAssetBrowser(bool& open)
-{
-    ImGui::Begin("Asset Browser", &open, ImGuiWindowFlags_NoScrollbar);
-    ImGui::SetWindowSize(ImVec2(400, 600), ImGuiCond_FirstUseEver);
 
-    // Popup de clique com o botão direito
-    if (ImGui::BeginPopupContextWindow("AssetBrowserContextMenu"))
-    {
-        if (ImGui::MenuItem("Adicionar...")) { /* TODO */ }
-        if (ImGui::MenuItem("Importar...")) { /* TODO */ }
-        if (ImGui::MenuItem("Renomear")) { m_assetBrowserRenameActive = true; }
-        if (ImGui::MenuItem("Criar Pasta...")) { m_assetBrowserCreateFolderActive = true; }
-        ImGui::EndPopup();
-    }
 
-    // Barra de pesquisa
-    if (!m_searchIconTexture)
-    {
-        m_searchIconTexture = std::make_shared<Texture>("C:/Users/josy-/Downloads/search.png");
-        if (m_searchIconTexture->getID() == 0)
-        {
-            ImGui::Text("Erro ao carregar ícone de pesquisa.");
-        }
-    }
-
-    if (m_searchIconTexture && m_searchIconTexture->getID() != 0)
-    {
-        ImVec2 iconSize = ImVec2(ImGui::GetTextLineHeight(), ImGui::GetTextLineHeight());
-        ImGui::Image((ImTextureID)m_searchIconTexture->getID(), iconSize, ImVec2(0, 0), ImVec2(1, 1));
-        ImGui::SameLine();
-    }
-
-    static char searchBuffer[256] = "";
-    ImGui::InputTextWithHint("##Search", "Search...", searchBuffer, IM_ARRAYSIZE(searchBuffer));
-    ImGui::Spacing();
-
-    ImGui::Text("Assets");
-    ImGui::Separator();
-
-    // Simulação da estrutura de diretórios
-    DrawDirectoryNode("Scenes", 0);
-    DrawDirectoryNode("Tilesets", 0);
-    DrawDirectoryNode("Sprites", 0);
-    DrawDirectoryNode("UI", 0);
-    DrawDirectoryNode("Audio", 0);
-
-    // Input para renomear (modal)
-    if (m_assetBrowserRenameActive)
-    {
-        ImGui::OpenPopup("Renomear");
-        m_assetBrowserRenameActive = false;
-    }
-    if (ImGui::BeginPopupModal("Renomear", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        static char renameBuffer[256] = "";
-        ImGui::InputText("Novo nome", renameBuffer, IM_ARRAYSIZE(renameBuffer));
-        if (ImGui::Button("Renomear"))
-        {
-            std::cout << "Pedido de renomeação para: " << renameBuffer << " (funcionalidade não implementada)\n";
-            memset(renameBuffer, 0, sizeof(renameBuffer));
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Cancelar"))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-
-    // Input para criar nova pasta (modal)
-   // Input para criar nova pasta (modal)
-    if (m_assetBrowserCreateFolderActive)
-    {
-        ImGui::OpenPopup("Criar Pasta");
-        m_assetBrowserCreateFolderActive = false;
-    }
-    if (ImGui::BeginPopupModal("Criar Pasta", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        static char newFolderNameBuffer[256] = "";
-        ImGui::InputText("Nome da pasta", newFolderNameBuffer, IM_ARRAYSIZE(newFolderNameBuffer));
-        if (ImGui::Button("Criar"))
-        {
-            std::string newFolderName = newFolderNameBuffer;
-            if (!newFolderName.empty())
-            {
-                std::cout << "Pedido de criação de pasta: " << newFolderName << " no caminho: " << m_assetBrowserCurrentPath << " (simulado)\n";
-                // TODO: Aqui, em um sistema real, você criaria o diretório.
-                // Para a simulação, podemos adicionar essa pasta à lista retornada por GetDirectoryContents
-                // Isso exigiria uma forma de armazenar e modificar essa estrutura simulada.
-                // Por simplicidade agora, apenas vamos imprimir a intenção.
-                // Limpar o buffer
-                memset(newFolderNameBuffer, 0, sizeof(newFolderNameBuffer));
-                ImGui::CloseCurrentPopup();
-            }
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Cancelar"))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-
-    ImGui::End();
-}
-
-void ImGuiManager::DrawDirectoryNode(const std::string& name, int depth)
-{
-    ImGui::PushID(name.c_str());
-    std::string treeNodeLabel = name;
-    for (int i = 0; i < depth; ++i)
-    {
-        treeNodeLabel = "  " + treeNodeLabel;
-    }
-
-    bool isDirectory = true; // Por enquanto, todos os nós são tratados como diretórios
-    ImGuiTreeNodeFlags flags = isDirectory ? 0 : ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-    bool nodeOpen = ImGui::TreeNodeEx(treeNodeLabel.c_str(), flags);
-
-    if (ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))
-    {
-        std::cout << "Pasta/arquivo clicado duas vezes: " << name << " (navegação simulada)\n";
-        m_assetBrowserCurrentPath += "/" + name; // Simular navegação
-    }
-    if (ImGui::IsItemClicked(1))
-    {
-        m_assetBrowserSelectedPath = m_assetBrowserCurrentPath + "/" + name;
-        ImGui::OpenPopup("AssetBrowserContextMenu");
-    }
-
-    if (isDirectory && nodeOpen)
-    {
-        // Simular o conteúdo de algumas pastas
-        if (name == "Scenes") {
-            DrawDirectoryNode("scene_01.scene", depth + 1);
-            DrawDirectoryNode("level_02.scene", depth + 1);
-        }
-        else if (name == "Sprites") {
-            DrawDirectoryNode("player.png", depth + 1);
-            DrawDirectoryNode("enemy.png", depth + 1);
-        }
-        ImGui::TreePop();
-    }
-    ImGui::PopID();
-}
-
-std::vector<std::string> ImGuiManager::GetDirectoryContents(const std::string& path)
-{
-    // Simulação: Retornar uma lista fixa de itens para diferentes "caminhos"
-    if (path == "Assets") {
-        return { "Scenes", "Tilesets", "Sprites", "UI", "Audio" };
-    }
-    else if (path == "Assets/Scenes") {
-        return { "scene_01.scene", "level_02.scene" };
-    }
-    else if (path == "Assets/Sprites") {
-        return { "player.png", "enemy.png" };
-    }
-    return {};
-}
 
 
 bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
@@ -434,8 +276,6 @@ bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
 
 void ImGuiManager::DrawEditorUI(float deltaTime) {
     // DockSpace está ativo no BeginFrame/EndFrame
-    static bool assetBrowserOpen = true;
-    DrawAssetBrowser(assetBrowserOpen);
    /* if (m_showViewport) {
         ImGui::Begin("Viewport");
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();

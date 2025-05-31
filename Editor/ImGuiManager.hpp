@@ -7,6 +7,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#include "AssetBrowserItem.hpp"
+
 #include <string>
 #include <vector> // Para simular a lista de diretórios
 
@@ -25,24 +27,27 @@ public:
     void SetLunaStyle();
     bool LoadFont(const std::string& fontPath, float fontSize);
 
-    void DrawAssetBrowser(bool& open);
-    void DrawDirectoryNode(const std::string& name, int depth);
     void DrawEditorUI(float deltaTime);
 
+    bool open = true;
+
     Luna::MenuBar m_mainMenuBar;
+
     bool m_showSceneManager = false;
     bool m_showSpritesheetEditor = false;
     bool m_showViewport = true;
 
+
+    static std::string selectedFolder;
+    static std::string searchQuery;
+    static std::map<std::string, ImTextureID> folderIcons;
+
+
 private:
     SpritesheetEditor m_spritesheetEditor;
-    std::string m_assetBrowserCurrentPath; // Podemos usar isso para rastrear a "navegação" simulada
-    std::string m_assetBrowserSelectedPath;
-    bool m_assetBrowserRenameActive = false;
-    bool m_assetBrowserCreateFolderActive = false;
-    std::string m_assetBrowserDirectory;
-    std::vector<std::string> GetDirectoryContents(const std::string& path); // Simulação
+    
     std::shared_ptr<Texture> m_searchIconTexture;
+    std::map<std::string, std::shared_ptr<Texture>> m_loadedTextures;
 };
 
 #endif // IMGUI_MANAGER_HPP
