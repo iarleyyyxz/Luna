@@ -35,6 +35,12 @@ bool Renderer2D::Init(float screenWidth, float screenHeight) {
         return false;
     }
 
+    lineShader = new Shader("Resources/Shaders/line.vert", "Resources/Shaders/frag.vert");
+    if (!batchShader->ID) {
+        std::cerr << "Falha ao criar o shader de linhas." << std::endl;
+        return false;
+    }
+
     // Criar uma textura branca 1x1 padrão para quads de cor sólida
     unsigned char whitePixel[] = { 255, 255, 255, 255 }; // RGBA branco
     // Certifique-se de que o construtor Texture(int, int, unsigned char*, GLenum) existe e que Texture.hpp está atualizado!
@@ -47,6 +53,8 @@ bool Renderer2D::Init(float screenWidth, float screenHeight) {
 
     // Configurar a projeção ortográfica (pode ser ajustada dinamicamente)
     projectionMatrix = glm::ortho(0.0f, screenWidth, screenHeight, 0.0f, -1.0f, 1.0f);
+
+    initLineRendering();
 
     std::cout << "Renderer2D inicializado com sucesso." << std::endl;
     return true;
@@ -77,6 +85,10 @@ void Renderer2D::Shutdown() {
         delete defaultWhiteTexture;
         defaultWhiteTexture = nullptr;
     }
+
+    // ... shutdown existente ...
+    if (lineVAO) glDeleteVertexArrays(1, &lineVAO);
+    if (lineVBO) glDeleteBuffers(1, &lineVBO);
 
     std::cout << "Renderer2D encerrado." << std::endl;
 }
@@ -132,6 +144,44 @@ void Renderer2D::initOpenGLResources() {
 
     // Alocar o buffer de CPU para os vértices
     quadBuffer = new QuadVertex[MAX_VERTICES];
+}
+
+void Renderer2D::initLineRendering()
+{
+    glGenVertexArrays(1, &lineVAO);
+    glBindVertexArray(lineVAO);
+
+    glGenBuffers(1, &lineVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+    glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(glm::vec3), nullptr, GL_DYNAMIC_DRAW); // Apenas posições agora
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (const void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void Renderer2D::drawLine(const glm::vec2& p1, const glm::vec2& p2, const glm::vec4& color)
+{
+    lineShader->use();
+    glm::mat4 projection = projectionMatrix;
+    lineShader->setMat4("u_Projection", projection);
+    lineShader->setVec4("u_Color", color);
+
+    glBindVertexArray(lineVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+
+    std::array<glm::vec3, 2> lineVertices = {
+        glm::vec3(p1, 0.0f),
+        glm::vec3(p2, 0.0f)
+    };
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(lineVertices), lineVertices.data());
+
+    glDrawArrays(GL_LINES, 0, 2);
+
+    glBindVertexArray(0);
+    lineShader->unuse();
 }
 
 void Renderer2D::beginScene(const glm::mat4& projMatrix) {

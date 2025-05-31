@@ -8,7 +8,6 @@
 #include "imgui_impl_opengl3.h" // ImGui para OpenGL
 
 #include <string> // Para caminhos de fonte
-#include "RenderTarget.hpp" // <--- Inclua este header
 
 // NOVO: Incluir o cabeçalho do SpritesheetEditor
 #include "Menubar.hpp"
@@ -63,6 +62,8 @@ private:
    // Luna::RenderTarget m_renderTarget;
     // NOVO: Instância do SpritesheetEditor gerenciada pelo ImGuiManager
     SpritesheetEditor m_spritesheetEditor;
+    // NOVO: Sistema de Drag & Drop
+ 
 };
 
 #endif // IMGUI_MANAGER_HPP

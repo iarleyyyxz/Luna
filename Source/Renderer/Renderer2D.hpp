@@ -39,7 +39,8 @@ public:
     void drawQuad(const glm::vec2& position, const glm::vec2& size, Texture& texture, const glm::vec4& tintColor = glm::vec4(1.0f));
     // Desenha um quad com textura e coordenadas de textura específicas
     void drawQuad(const glm::vec2& position, const glm::vec2& size, Texture& texture, const glm::vec2& texCoordMin, const glm::vec2& texCoordMax, const glm::vec4& tintColor = glm::vec4(1.0f));
-
+    // Desenha uma line com cordenadas especificas
+    void drawLine(const glm::vec2& p1, const glm::vec2& p2, const glm::vec4& color);
     // NOVO: Desenha um Sprite
     void drawSprite(const glm::vec2& position, const glm::vec2& size, Sprite& sprite, const glm::vec4& tintColor = glm::vec4(1.0f));
 
@@ -77,6 +78,11 @@ private:
     void initOpenGLResources(); // Configura VAO, VBO, EBO
     void flush(); // Envia o lote para a GPU e desenha
     float getTextureSlot(Texture& texture); // Obtém o slot de textura para uma textura
+
+    // ... outras membros ...
+    Shader* lineShader; // Novo shader para linhas
+    GLuint lineVAO, lineVBO;
+    void initLineRendering();
 };
 
 #endif // RENDERER2D_HPP

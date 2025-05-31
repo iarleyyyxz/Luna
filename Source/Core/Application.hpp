@@ -58,6 +58,14 @@ private:
     unsigned int framebufferObject;
     bool InitFramebuffer();
 
+    // Sprite to render
+    std::unique_ptr<Texture> m_spriteTexture;
+    Sprite m_testSprite;
+
+    static const float GRID_SPACING; // Apenas declaração
+    static const glm::vec4 GRID_COLOR; // Apenas declaração
+    void RenderGrid();
+
     static void glfwErrorCallback(int error, const char* description);
     static void windowCloseCallback(GLFWwindow* window);
 };

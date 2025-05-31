@@ -197,5 +197,7 @@
     <None Include="Resources\Shaders\basic.fs" />
     <None Include="Resources\Shaders\batch.vs" />
     <None Include="Resources\Shaders\batch.fs" />
+    <None Include="Resources\Shaders\line.vert" />
+    <None Include="Resources\Shaders\line.frag" />
   </ItemGroup>
 </Project>
