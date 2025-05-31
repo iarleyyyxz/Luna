@@ -59,8 +59,13 @@ private:
     bool InitFramebuffer();
 
     // Sprite to render
-    std::unique_ptr<Texture> m_spriteTexture;
-    Sprite m_testSprite;
+    // ... (outros membros)
+    std::shared_ptr<Texture> m_spriteTexture;
+    Sprite m_testSprite; // Apenas declaração aqui
+    // ...
+    // ... outros membros ...
+    std::vector<std::shared_ptr<SceneObject>> m_sceneObjects;
+    // ...
 
     static const float GRID_SPACING; // Apenas declaração
     static const glm::vec4 GRID_COLOR; // Apenas declaração

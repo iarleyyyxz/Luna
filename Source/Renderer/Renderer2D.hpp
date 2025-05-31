@@ -35,6 +35,8 @@ public:
 
     // Desenha um quad com cor sólida
     void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+    // Desenha um quad passando uma mat4
+    void drawQuad(const glm::mat4& transform, Texture& texture, const glm::vec4& tintColor);
     // Desenha um quad com textura
     void drawQuad(const glm::vec2& position, const glm::vec2& size, Texture& texture, const glm::vec4& tintColor = glm::vec4(1.0f));
     // Desenha um quad com textura e coordenadas de textura específicas
@@ -44,6 +46,7 @@ public:
     // NOVO: Desenha um Sprite
     void drawSprite(const glm::vec2& position, const glm::vec2& size, Sprite& sprite, const glm::vec4& tintColor = glm::vec4(1.0f));
 
+    Texture* GetDebugWhiteTexture() { return defaultWhiteTexture; }
 private:
     // Constantes para renderização em lotes
     static const GLuint MAX_QUADS = 10000; // Número máximo de quads por lote

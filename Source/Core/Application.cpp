@@ -9,6 +9,11 @@
 #include <glm.hpp>
 #include <matrix_transform.hpp>
 
+#include "SceneObject.hpp"
+#include "Source/Ecs/Component.hpp"
+#include "Source/Ecs/Transform2D.hpp"
+// ... other includes ...
+
 // Inicialização dos membros estáticos
 const float Application::GRID_SPACING = 25.0f;
 const glm::vec4 Application::GRID_COLOR = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -24,7 +29,6 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
 framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get())
 {
-
     std::cout << "Application construída!" << std::endl;
 }
 
@@ -93,7 +97,6 @@ bool Application::Init()
         return false;
     }
 
-
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
     {
         std::cerr << "Fail load font imGui";
@@ -104,13 +107,11 @@ bool Application::Init()
         std::cerr << "Fail load font imGui";
     }
 
-    // Carregar a textura da sprite
-    m_spriteTexture = std::make_unique<Texture>("Resources/textura.png");
-    if (m_spriteTexture->getID() == 0) {
-        std::cerr << "Falha ao carregar a textura da sprite." << std::endl;
-        // Não retornar false aqui, pois a aplicação ainda pode funcionar sem esta sprite.
-    }
-    m_testSprite = Sprite(m_spriteTexture.get());
+    // Application.cpp (dentro da função Application::Init(), após carregar a textura)
+
+    // Carregar a textura da sprite (já existe no seu código)
+   // Carregar a textura da sprite
+ 
 
     std::cout << "Application inicializada com sucesso." << std::endl;
     return true;
@@ -171,7 +172,7 @@ void Application::Run()
 
         // Renderizar a Viewport GUI
         m_viewportGui.Render(framebufferTexture);
-   
+
         m_imGuiManager.DrawEditorUI(deltaTime);
 
         // *** Renderizar para o Framebuffer ***
@@ -184,11 +185,12 @@ void Application::Run()
         glm::mat4 projection = glm::ortho(0.0f, screenWidth, screenHeight, 0.0f, -1.0f, 1.0f);
         m_renderer2D.beginScene(projection);
 
-        // Renderizar a grade
-        RenderGrid();
+        // Renderizar a grade (se descomentado)
+        // RenderGrid();
 
-        // Renderizar a sprite carregada do arquivo
-        m_renderer2D.drawSprite(glm::vec2(100.0f, 100.0f), glm::vec2(100.0f, 100.0f), m_testSprite, glm::vec4(1.0f));
+        
+
+      //  m_renderer2D.drawSprite(glm::vec2(100, 100), glm::vec2(100, 100),)
 
         m_renderer2D.endScene();
         // --- END OF SCENE RENDER ---

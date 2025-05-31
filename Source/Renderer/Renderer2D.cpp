@@ -35,11 +35,11 @@ bool Renderer2D::Init(float screenWidth, float screenHeight) {
         return false;
     }
 
-    lineShader = new Shader("Resources/Shaders/line.vert", "Resources/Shaders/frag.vert");
-    if (!batchShader->ID) {
-        std::cerr << "Falha ao criar o shader de linhas." << std::endl;
-        return false;
-    }
+   // lineShader = new Shader("Resources/Shaders/line.vert", "Resources/Shaders/frag.vert");
+   // if (!lineShader->ID) {
+     //   std::cerr << "Falha ao criar o shader de linhas." << std::endl;
+       // return false;
+   // }
 
     // Criar uma textura branca 1x1 padrão para quads de cor sólida
     unsigned char whitePixel[] = { 255, 255, 255, 255 }; // RGBA branco
@@ -316,6 +316,44 @@ void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, Text
     quadBufferPtr++;
 
     indexCount += 6; // Adicionar 6 índices para este quad
+}
+
+void Renderer2D::drawQuad(const glm::mat4& transform, Texture& texture, const glm::vec4& tintColor)
+{
+    if (indexCount >= MAX_INDICES)
+    {
+        flush();
+    }
+
+    float texID = getTextureSlot(texture);
+
+    // Os quatro vértices do quad no espaço do modelo
+    glm::vec4 vertices[4] = {
+        glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),  // Top-left
+        glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),   // Top-right
+        glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),  // Bottom-right
+        glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f)   // Bottom-left
+    };
+
+    // Coordenadas de textura correspondentes
+    glm::vec2 texCoords[4] = {
+        { 0.0f, 1.0f },
+        { 1.0f, 1.0f },
+        { 1.0f, 0.0f },
+        { 0.0f, 0.0f }
+    };
+
+    for (int i = 0; i < 4; ++i)
+    {
+        glm::vec3 transformedPos = transform * vertices[i];
+        quadBufferPtr->position = transformedPos;
+        quadBufferPtr->color = tintColor;
+        quadBufferPtr->texCoord = texCoords[i];
+        quadBufferPtr->texID = texID;
+        quadBufferPtr++;
+    }
+
+    indexCount += 6;
 }
 
 // NOVO: Implementação do drawSprite
