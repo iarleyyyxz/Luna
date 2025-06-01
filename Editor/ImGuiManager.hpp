@@ -7,8 +7,6 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "AssetBrowserItem.hpp"
-
 #include <string>
 #include <vector> // Para simular a lista de diretórios
 

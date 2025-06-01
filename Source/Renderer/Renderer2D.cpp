@@ -198,7 +198,7 @@ void Renderer2D::endScene() {
 
 void Renderer2D::flush() {
     if (indexCount == 0) return; // Nada para desenhar
-
+    
     // Calcular o tamanho dos dados a serem enviados para o VBO
     GLsizeiptr size = (uint8_t*)quadBufferPtr - (uint8_t*)quadBuffer;
     glBindBuffer(GL_ARRAY_BUFFER, VBO);

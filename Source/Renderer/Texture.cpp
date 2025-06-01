@@ -10,7 +10,7 @@
 // Construtor para carregar uma textura a partir de um ficheiro de imagem
 Texture::Texture(const char* imagePath) : ID(0), width(0), height(0), nrChannels(0), path(imagePath) {
     // Carregar dados da imagem usando stb_image
-    stbi_set_flip_vertically_on_load(false); // Inverter a imagem no eixo Y (OpenGL espera o Y de baixo para cima)
+    stbi_set_flip_vertically_on_load(true); // Inverter a imagem no eixo Y (OpenGL espera o Y de baixo para cima)
     unsigned char* data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
 
     if (data) {

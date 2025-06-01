@@ -12,6 +12,7 @@
 #include "SceneObject.hpp"
 #include "Source/Ecs/Component.hpp"
 #include "Source/Ecs/Transform2D.hpp"
+#include "Camera2D.hpp" // Include do header da Camera2D
 // ... other includes ...
 
 // Inicialização dos membros estáticos
@@ -27,7 +28,8 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 }
 
 Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
-framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get())
+framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get()),
+m_camera(screenWidth, screenHeight) // Instancia a Camera2D aqui
 {
     std::cout << "Application construída!" << std::endl;
 }
@@ -64,6 +66,26 @@ bool Application::Init()
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scancode, int action, int mods) {
+        auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
+        if (app) app->m_keyboard.UpdateKeyState(key, action);
+        });
+
+    glfwSetCursorPosCallback(window, [](GLFWwindow* win, double xpos, double ypos) {
+        auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
+        if (app) app->m_mouse.ProcessCursorPosition(xpos, ypos);
+        });
+
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
+        auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
+        if (app) app->m_mouse.ProcessMouseButton(button, action);
+        });
+
+    glfwSetScrollCallback(window, [](GLFWwindow* win, double xoffset, double yoffset) {
+        auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
+        if (app) app->m_mouse.ProcessScroll(xoffset, yoffset);
+        });
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -111,7 +133,7 @@ bool Application::Init()
 
     // Carregar a textura da sprite (já existe no seu código)
    // Carregar a textura da sprite
- 
+
 
     std::cout << "Application inicializada com sucesso." << std::endl;
     return true;
@@ -181,16 +203,20 @@ void Application::Run()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+        // UPDATING CAMERA
+
+        m_camera.update(deltaTime);
+
         // --- START OF SCENE RENDER ---
-        glm::mat4 projection = glm::ortho(0.0f, screenWidth, screenHeight, 0.0f, -1.0f, 1.0f);
+        glm::mat4 projection = m_camera.getProjectionMatrix() * m_camera.getViewMatrix();
         m_renderer2D.beginScene(projection);
+        
 
         // Renderizar a grade (se descomentado)
         // RenderGrid();
+        m_renderer2D.drawQuad(glm::vec2(100, 100), glm::vec2(100, 100), glm::vec4(0.0f, 2.0f, 4.0f, 1.0f));
 
-        
-
-      //  m_renderer2D.drawSprite(glm::vec2(100, 100), glm::vec2(100, 100),)
 
         m_renderer2D.endScene();
         // --- END OF SCENE RENDER ---

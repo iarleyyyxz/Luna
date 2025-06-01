@@ -1,37 +1,42 @@
 #ifndef CAMERA2D_HPP
 #define CAMERA2D_HPP
 
-#include <glm.hpp> // Para glm::vec2, glm::mat4
-#include <matrix_transform.hpp> // Para glm::translate, glm::rotate, glm::scale
+#include <glm.hpp>
+#include <memory>
+
+#include "Efx/ParallaxLayerData.hpp"
+
+#include "Source/Ecs/Transform2D.hpp"
+
+#include "Source/Renderer/Renderer2D.hpp"
 
 class Camera2D {
 public:
-    Camera2D();
-    ~Camera2D();
+    Camera2D(float viewportWidth, float viewportHeight);
+    ~Camera2D() = default;
 
-    // Define a posição da câmara no mundo 2D
-    void setPosition(const glm::vec2& position);
-    // Obtém a posição atual da câmara
+    void setViewportSize(float width, float height);
     glm::vec2 getPosition() const { return m_position; }
+    void setPosition(const glm::vec2& position);
 
-    // Define o nível de zoom da câmara (1.0f é zoom normal)
+    void setTarget(std::weak_ptr<Transform2D> target);
+    void setFollowSmoothness(float smoothness);
+
+    float getZoom() const;
     void setZoom(float zoom);
-    // Obtém o nível de zoom atual
-    float getZoom() const { return m_zoom; }
 
-    // Define a rotação da câmara em graus
-    void setRotation(float rotationDegrees);
-    // Obtém a rotação atual em graus
-    float getRotation() const { return m_rotationDegrees; }
-
-    // Atualiza a matriz de visualização da câmara
-    // Esta matriz é usada para "mover" o mundo em relação à câmara
     glm::mat4 getViewMatrix() const;
+    glm::mat4 getProjectionMatrix() const;
+
+    void update(float deltaTime);
 
 private:
-    glm::vec2 m_position;        // Posição da câmera no mundo (centro da vista)
-    float m_zoom;                // Nível de zoom (1.0f = 100%)
-    float m_rotationDegrees;     // Rotação em graus
+    glm::vec2 m_position = glm::vec2(0.0f);
+    float m_viewportWidth;
+    float m_viewportHeight;
+    std::weak_ptr<Transform2D> m_target;
+    float m_followSmoothness = 0.1f;
+    float m_zoom = 1.0f; // Zoom padrão
 };
 
 #endif // CAMERA2D_HPP

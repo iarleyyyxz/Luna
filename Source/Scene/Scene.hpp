@@ -16,7 +16,7 @@ public:
     const std::string& GetName() const { return m_name; }
     virtual void Render() { std::cout << "Scene '" << m_name << "' loaded.\n"; }
     virtual void Unload() { std::cout << "Scene '" << m_name << "' unloaded.\n"; }
-    virtual void Update(float deltaTime) { }
+    virtual void Update(float deltaTime);
     virtual void RenderImGui() {}
 
     const std::vector<SceneObject>& GetSceneObjects() const { return objects; }

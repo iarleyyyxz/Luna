@@ -5,7 +5,7 @@
 #include <iostream>
 #include "imgui.h" // Para usar ImGui
 #include "Renderer2D.hpp" // Para usar Renderer2D
-#include "InputManager.hpp" // Para usar Keyboard e Mouse
+#include "Mouse.hpp" // Para usar Keyboard e Mouse
 #include <cstring> // Para strcpy_s
 #include <algorithm> // Para std::min, std::max, std::swap
 

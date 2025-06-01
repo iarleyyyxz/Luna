@@ -11,12 +11,14 @@
 
 #include "Source/Events/EventManager.hpp"
 #include "Renderer2D.hpp"
-#include "InputManager.hpp"
+#include "Keyboard.hpp"
+#include "Mouse.hpp"
 #include "Editor/ImGuiManager.hpp"
 #include "Editor/ViewportGui.hpp"
 #include "Source/Renderer/Texture.hpp" // Incluir Texture
 #include "Source/Renderer/Sprite.hpp"  // Incluir Sprite
 #include <glm.hpp>                 // Incluir glm para vetores
+#include "Camera2D.hpp"
 
 class Application
 {
@@ -65,6 +67,7 @@ private:
     // ...
     // ... outros membros ...
     std::vector<std::shared_ptr<SceneObject>> m_sceneObjects;
+    Camera2D m_camera;
     // ...
 
     static const float GRID_SPACING; // Apenas declaração
