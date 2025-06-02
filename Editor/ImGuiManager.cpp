@@ -8,7 +8,6 @@
 // ... outros includes ...
 // Para Renderer2D, Keyboard, Mouse (necessário para inicializar SpritesheetEditor)
 #include "Renderer2D.hpp"
-#include "InputManager.hpp"
 
 #include <GL/stb_image.h>
 #include <filesystem>

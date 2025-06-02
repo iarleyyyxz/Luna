@@ -19,6 +19,7 @@
 #include "Source/Renderer/Sprite.hpp"  // Incluir Sprite
 #include <glm.hpp>                 // Incluir glm para vetores
 #include "Camera2D.hpp"
+#include "Source/Scene/World/World.hpp"
 
 class Application
 {
@@ -40,6 +41,10 @@ public:
     Keyboard& GetKeyboard() { return m_keyboard; }
     Mouse& GetMouse() { return m_mouse; }
     unsigned int GetFramebufferTexture() const { return framebufferTexture; }
+
+    static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+
+    glm::vec4 GetTileColor(int tileId);
 
 private:
     bool isRunning;
@@ -68,6 +73,7 @@ private:
     // ... outros membros ...
     std::vector<std::shared_ptr<SceneObject>> m_sceneObjects;
     Camera2D m_camera;
+    World m_world; // Instancie o World aqui
     // ...
 
     static const float GRID_SPACING; // Apenas declaração
@@ -76,6 +82,11 @@ private:
 
     static void glfwErrorCallback(int error, const char* description);
     static void windowCloseCallback(GLFWwindow* window);
+
+    // ... outros membros privados ...
+    bool m_isDragging = false;
+    glm::vec2 m_dragStartPosition;
+    void processMousePan(const glm::vec2& currentMousePosition);
 };
 
 #endif // APPLICATION_HPP

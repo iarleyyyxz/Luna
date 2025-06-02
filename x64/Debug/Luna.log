@@ -1,2 +1,6 @@
 ﻿  Application.cpp
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(271,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(272,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(273,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(274,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
   Luna.vcxproj -> C:\Users\josy-\source\repos\Luna\x64\Debug\Luna.exe

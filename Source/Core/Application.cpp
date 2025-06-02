@@ -13,11 +13,36 @@
 #include "Source/Ecs/Component.hpp"
 #include "Source/Ecs/Transform2D.hpp"
 #include "Camera2D.hpp" // Include do header da Camera2D
+#include "Source/Scene/World/Chunk.hpp" // Adicione esta linha
 // ... other includes ...
 
 // Inicialização dos membros estáticos
 const float Application::GRID_SPACING = 25.0f;
 const glm::vec4 Application::GRID_COLOR = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+
+void Application::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    if (app && button == GLFW_MOUSE_BUTTON_LEFT) {
+        if (action == GLFW_PRESS) {
+            app->m_isDragging = true;
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+            app->m_dragStartPosition = glm::vec2(xpos, ypos);
+        }
+        else if (action == GLFW_RELEASE) {
+            app->m_isDragging = false;
+        }
+    }
+}
+
+void Application::processMousePan(const glm::vec2& currentMousePosition) {
+    if (m_isDragging) {
+        glm::vec2 delta = currentMousePosition - m_dragStartPosition;
+        float panSpeed = 0.5f; // Ajuste a sensibilidade do pan
+        m_camera.setPosition(m_camera.getPosition() - delta * panSpeed);
+        m_dragStartPosition = currentMousePosition; // Atualiza para o próximo movimento
+    }
+}
 
 void Application::glfwErrorCallback(int error, const char* description) {
     std::cerr << "Erro GLFW: " << description << std::endl;
@@ -29,7 +54,8 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 
 Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
 framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get()),
-m_camera(screenWidth, screenHeight) // Instancia a Camera2D aqui
+m_camera(screenWidth, screenHeight),
+m_world(10, 10, 32, 32) // By Default 32 tiles in 10 chunks
 {
     std::cout << "Application construída!" << std::endl;
 }
@@ -80,7 +106,8 @@ bool Application::Init()
     glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
         auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
         if (app) app->m_mouse.ProcessMouseButton(button, action);
-        });
+        }); 
+    glfwSetMouseButtonCallback(window, Application::mouseButtonCallback);
 
     glfwSetScrollCallback(window, [](GLFWwindow* win, double xoffset, double yoffset) {
         auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
@@ -118,6 +145,14 @@ bool Application::Init()
         glfwTerminate();
         return false;
     }
+
+    // Preenchendo alguns tiles de teste no World
+    m_world.setTile(5, 5, 1);
+    m_world.setTile(10, 7, 2);
+    m_world.setTile(-3, 2, 3);
+    m_world.setTile(0, 0, 1);
+    m_world.setTile(35, 12, 2);
+
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
     {
@@ -203,19 +238,64 @@ void Application::Run()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        glm::vec2 currentMousePos = m_mouse.GetPosition();
 
-        // UPDATING CAMERA
+        // *** CONTROLES DA CÂMERA (PAN COM O MOUSE) ***
+        processMousePan(currentMousePos);
 
-        m_camera.update(deltaTime);
-
+        // UPDATING CAMERA    
+       m_camera.update(deltaTime);
         // --- START OF SCENE RENDER ---
         glm::mat4 projection = m_camera.getProjectionMatrix() * m_camera.getViewMatrix();
         m_renderer2D.beginScene(projection);
         
+        // Renderizar o World
+        {
+            // Obter os limites da câmera no mundo
+            glm::vec2 cameraPosition = m_camera.getPosition();
+            float zoom = m_camera.getZoom();
+            float viewportWidthWorld = screenWidth / zoom;
+            float viewportHeightWorld = screenHeight / zoom;
+            glm::vec2 bottomLeftWorld = cameraPosition - glm::vec2(viewportWidthWorld / 2.0f, viewportHeightWorld / 2.0f);
+            glm::vec2 topRightWorld = cameraPosition + glm::vec2(viewportWidthWorld / 2.0f, viewportHeightWorld / 2.0f);
 
-        // Renderizar a grade (se descomentado)
-        // RenderGrid();
-        m_renderer2D.drawQuad(glm::vec2(100, 100), glm::vec2(100, 100), glm::vec4(0.0f, 2.0f, 4.0f, 1.0f));
+            int firstChunkX = static_cast<int>(floor(bottomLeftWorld.x / m_world.m_tilesPerChunkWidth));
+            int lastChunkX = static_cast<int>(ceil(topRightWorld.x / m_world.m_tilesPerChunkWidth));
+            int firstChunkY = static_cast<int>(floor(bottomLeftWorld.y / m_world.m_tilesPerChunkHeight));
+            int lastChunkY = static_cast<int>(ceil(topRightWorld.y / m_world.m_tilesPerChunkHeight));
+
+            for (int chunkX = firstChunkX; chunkX <= lastChunkX; ++chunkX) {
+                for (int chunkY = firstChunkY; chunkY <= lastChunkY; ++chunkY) {
+                    std::shared_ptr<Chunk> chunk = m_world.getChunk(chunkX, chunkY);
+                    if (chunk) {
+                        float chunkWorldStartX = chunkX * m_world.m_tilesPerChunkWidth;
+                        float chunkWorldEndX = (chunkX + 1) * m_world.m_tilesPerChunkWidth;
+                        float chunkWorldStartY = chunkY * m_world.m_tilesPerChunkHeight;
+                        float chunkWorldEndY = (chunkY + 1) * m_world.m_tilesPerChunkHeight;
+
+                        // Verificar se o chunk está dentro da viewport (com uma pequena folga opcional)
+                        float cullPadding = 1.0f; // Opcional: adiciona uma pequena margem ao culling
+                        if (chunkWorldEndX >= bottomLeftWorld.x - cullPadding &&
+                            chunkWorldStartX <= topRightWorld.x + cullPadding &&
+                            chunkWorldEndY >= bottomLeftWorld.y - cullPadding &&
+                            chunkWorldStartY <= topRightWorld.y + cullPadding)
+                        {
+                            for (int y = 0; y < chunk->getHeight(); ++y) {
+                                for (int x = 0; x < chunk->getWidth(); ++x) {
+                                    int tileId = chunk->getTile(x, y);
+                                    if (tileId > 0) {
+                                        float worldX = chunkWorldStartX + x;
+                                        float worldY = chunkWorldStartY + y;
+                                        m_renderer2D.drawQuad(glm::vec2(worldX, worldY), glm::vec2(16.0f, 16.0f), GetTileColor(tileId));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+       // m_renderer2D.drawQuad(glm::vec2(150, 150), glm::vec2(15.0f, 15.0f), glm::vec4(3.0f, 1.0f, 4.0f, 1.0f));
 
 
         m_renderer2D.endScene();
@@ -232,6 +312,17 @@ void Application::Run()
         glfwSwapBuffers(window);
     }
     isRunning = false;
+}
+
+glm::vec4 Application::GetTileColor(int tileId)
+{
+    // Uma função temporária para associar um ID a uma cor
+    switch (tileId) {
+    case 1: return glm::vec4(0.8f, 0.2f, 0.3f, 1.0f); // Vermelho
+    case 2: return glm::vec4(0.2f, 0.7f, 0.4f, 1.0f); // Verde
+    case 3: return glm::vec4(0.1f, 0.5f, 0.8f, 1.0f); // Azul
+    default: return glm::vec4(1.0f); // Branco (vazio ou desconhecido)
+    }
 }
 
 void Application::RenderGrid()

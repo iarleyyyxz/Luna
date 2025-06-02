@@ -4,8 +4,6 @@
 #include <glm.hpp>
 #include <memory>
 
-#include "Efx/ParallaxLayerData.hpp"
-
 #include "Source/Ecs/Transform2D.hpp"
 
 #include "Source/Renderer/Renderer2D.hpp"

@@ -15,11 +15,13 @@ public:
     int getTile(int worldX, int worldY);
     void setTile(int worldX, int worldY, int tileId);
 
+    int m_tilesPerChunkWidth;
+    int m_tilesPerChunkHeight;
+
 private:
     int m_chunkWidth; // Largura do grid de chunks
     int m_chunkHeight; // Altura do grid de chunks
-    int m_tilesPerChunkWidth;
-    int m_tilesPerChunkHeight;
+    
     std::map<std::pair<int, int>, std::shared_ptr<Chunk>> m_chunks;
 
     std::pair<int, int> worldToChunkCoordinates(int worldX, int worldY) const;

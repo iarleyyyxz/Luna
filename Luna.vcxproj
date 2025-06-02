@@ -161,7 +161,6 @@
   <ItemGroup>
     <ClInclude Include="Source\Core\Keyboard.hpp" />
     <ClInclude Include="Source\Core\Mouse.hpp" />
-    <ClInclude Include="Source\Core\Efx\ParallaxLayerData.hpp" />
     <ClInclude Include="Source\Scene\World\Chunk.hpp" />
     <ClInclude Include="Source\Scene\Scene.hpp" />
     <ClInclude Include="Source\Scene\SceneManager.hpp" />

@@ -206,9 +206,6 @@
     <ClInclude Include="Source\Scene\World\World.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Efx\ParallaxLayerData.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Core\Mouse.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
