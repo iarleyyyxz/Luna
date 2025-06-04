@@ -171,6 +171,7 @@ bool Application::Init()
     }
 
     // Triangle
+    Luna::GLogger.Debug("Initializing tile rendering");
     m_world.setTile(0, 0, 1);
     m_world.setTile(16, 16, 1);
     m_world.setTile(32, 32, 2);
@@ -187,6 +188,7 @@ bool Application::Init()
     m_world.setTile(-80, 96, 2);
     m_world.setTile(-80, 112, 2);
     m_world.setTile(-80, 96, 2);
+    Luna::GLogger.Debug("All tiles was rendered");
 
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))

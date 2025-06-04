@@ -12,6 +12,9 @@
 #include <GL/stb_image.h>
 #include <filesystem>
 
+#include "Source/Core/Log.hpp"
+#include "Console.hpp"
+
 ImGuiManager::ImGuiManager() : m_spritesheetEditor() { // Tamanho inicial arbitrário
     std::cout << "ImGuiManager construído!" << std::endl;
 }
@@ -48,6 +51,19 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     // 3. Inicializar os backends do ImGui para GLFW e OpenGL
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glslVersion.c_str());
+
+    // Configura o callback do logger para enviar mensagens para o console.
+    // Isso garante que todas as mensagens logadas via GLogger sejam exibidas no console.
+    Luna::GLogger.SetLogCallback([this](const Luna::LogMessage& msg) {
+        console.AddLog(msg);
+        });
+
+    
+
+    // Exemplo de uso do logger após a configuração do callback
+    Luna::GLogger.Info("Luna Engine inicializado.");
+    Luna::GLogger.Debug("Modo de depuracao ativo.");
+    Luna::GLogger.Warn("Verifique os recursos de memoria.");
 
     // Menu Bar
     Luna::Menu arquivoMenu;
@@ -433,6 +449,12 @@ void ImGuiManager::ApplyCurrentTheme() {
     }
 }
 
+void ImGuiManager::ShowConsole() {
+
+    console.OnGui();
+
+}
+
 
 bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
     ImGuiIO& io = ImGui::GetIO();
@@ -453,6 +475,8 @@ void ImGuiManager::DrawEditorUI(float deltaTime) {
         ImGui::Image(m_renderTarget.getTextureID(), viewportPanelSize, ImVec2(0, 1), ImVec2(1, 0));
         ImGui::End();
     }*/
+
+    ShowConsole();
 
     if (m_showSpritesheetEditor) {
         m_spritesheetEditor.DrawUI(deltaTime);

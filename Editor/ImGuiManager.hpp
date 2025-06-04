@@ -12,6 +12,7 @@
 
 #include "Menubar.hpp"
 #include "SpritesheetEditor.hpp"
+#include "Console.hpp"
 
 enum class EditorTheme {
     Dark,
@@ -58,6 +59,8 @@ public:
 
 private:
     SpritesheetEditor m_spritesheetEditor;
+
+    Console console;
     
     std::shared_ptr<Texture> m_searchIconTexture;
     std::map<std::string, std::shared_ptr<Texture>> m_loadedTextures;

@@ -93,9 +93,6 @@
     <ClCompile Include="Source\Scene\World\World.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Camera2D.hpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Core\Camera2D.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -103,6 +100,12 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\Mouse.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Console.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Log.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,16 +215,29 @@
     <ClInclude Include="Source\Core\Keyboard.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\Camera2D.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\ImGui\examples\example_allegro5\imconfig_allegro5.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Console.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Log.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shaders\basic.vs" />
-    <None Include="Resources\Shaders\basic.fs" />
-    <None Include="Resources\Shaders\batch.vs" />
-    <None Include="Resources\Shaders\batch.fs" />
-    <None Include="Resources\Shaders\line.vert" />
-    <None Include="Resources\Shaders\line.frag" />
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudioL.dll" />
+    <None Include="glew32.dll" />
+    <None Include="glfw3.dll" />
+    <None Include="imgui.ini" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

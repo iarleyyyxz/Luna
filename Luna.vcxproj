@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Editor\Console.cpp" />
     <ClCompile Include="Editor\ImGuiManager.cpp" />
     <ClCompile Include="Editor\Menubar.cpp" />
     <ClCompile Include="Editor\SpritesheetEditor.cpp" />
     <ClCompile Include="Editor\ViewportGui.cpp" />
+    <ClCompile Include="Source\Core\Log.cpp" />
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
     <ClCompile Include="Source\Core\Keyboard.cpp" />
@@ -50,10 +52,12 @@
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Editor\Console.hpp" />
     <ClInclude Include="Editor\ImGuiManager.hpp" />
     <ClInclude Include="Editor\Menubar.hpp" />
     <ClInclude Include="Editor\SpritesheetEditor.hpp" />
     <ClInclude Include="Editor\ViewportGui.hpp" />
+    <ClInclude Include="Source\Core\Log.hpp" />
     <ClInclude Include="Source\Core\Application.hpp" />
     <ClInclude Include="Source\Core\Camera2D.hpp" />
     <ClInclude Include="Source\Core\Keyboard.hpp" />

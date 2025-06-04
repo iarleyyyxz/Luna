@@ -1,10 +1,7 @@
-﻿  ImGuiManager.cpp
-  Application.cpp
+﻿  Application.cpp
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(102,16): warning C4305: 'return': truncamento de 'int' para 'bool'
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(313,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(314,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(315,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(316,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
-  main.cpp
-  Gerando Código...
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(317,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(318,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
   Luna.vcxproj -> C:\Users\josy-\source\repos\Luna\x64\Debug\Luna.exe

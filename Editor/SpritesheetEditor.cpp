@@ -8,6 +8,7 @@
 #include "Mouse.hpp" // Para usar Keyboard e Mouse
 #include <cstring> // Para strcpy_s
 #include <algorithm> // Para std::min, std::max, std::swap
+#include "Source/Core/Log.hpp"
 
 // NOVO: Incluir a biblioteca ImGuiFileDialog
 #include "ImGuiFileDialog.h"

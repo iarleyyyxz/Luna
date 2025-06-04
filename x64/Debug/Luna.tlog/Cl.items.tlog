@@ -1,7 +1,9 @@
+C:\Users\josy-\source\repos\Luna\Luna\Editor\Console.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Console.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\ImGuiManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ImGuiManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\Menubar.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Menubar.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\SpritesheetEditor.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SpritesheetEditor.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\ViewportGui.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ViewportGui.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Log.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Log.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Application.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Camera2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Camera2D.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Keyboard.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Keyboard.obj
