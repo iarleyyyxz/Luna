@@ -18,6 +18,7 @@ void ViewportGui::Render(unsigned int framebufferTexture) {
     ImGui::End();
 }
 
+
 bool ViewportGui::isFocused() const {
     return isViewportFocused;
 }

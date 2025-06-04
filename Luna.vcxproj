@@ -18,6 +18,88 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Editor\ImGuiManager.cpp" />
+    <ClCompile Include="Editor\Menubar.cpp" />
+    <ClCompile Include="Editor\SpritesheetEditor.cpp" />
+    <ClCompile Include="Editor\ViewportGui.cpp" />
+    <ClCompile Include="Source\Core\Application.cpp" />
+    <ClCompile Include="Source\Core\Camera2D.cpp" />
+    <ClCompile Include="Source\Core\Keyboard.cpp" />
+    <ClCompile Include="Source\Core\main.cpp" />
+    <ClCompile Include="Source\Core\Mouse.cpp" />
+    <ClCompile Include="Source\Ecs\Anim\Animation.cpp" />
+    <ClCompile Include="Source\Events\EventManager.cpp" />
+    <ClCompile Include="Source\Manager\ResourceManager.cpp" />
+    <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="Source\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Renderer\Sprite.cpp" />
+    <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
+    <ClCompile Include="Source\Renderer\Texture.cpp" />
+    <ClCompile Include="Source\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Scene\World\Chunk.cpp" />
+    <ClCompile Include="Source\Scene\World\World.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui.cpp" />
+    <ClCompile Include="vendor\ImGui\ImGuiFileDialog.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Editor\ImGuiManager.hpp" />
+    <ClInclude Include="Editor\Menubar.hpp" />
+    <ClInclude Include="Editor\SpritesheetEditor.hpp" />
+    <ClInclude Include="Editor\ViewportGui.hpp" />
+    <ClInclude Include="Source\Core\Application.hpp" />
+    <ClInclude Include="Source\Core\Camera2D.hpp" />
+    <ClInclude Include="Source\Core\Keyboard.hpp" />
+    <ClInclude Include="Source\Core\Mouse.hpp" />
+    <ClInclude Include="Source\Ecs\Anim\Animation.hpp" />
+    <ClInclude Include="Source\Ecs\Component.hpp" />
+    <ClInclude Include="Source\Ecs\SceneObject.hpp" />
+    <ClInclude Include="Source\Ecs\Transform2D.hpp" />
+    <ClInclude Include="Source\Events\EventManager.hpp" />
+    <ClInclude Include="Source\Manager\ResourceManager.hpp" />
+    <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
+    <ClInclude Include="Source\Renderer\Shader.hpp" />
+    <ClInclude Include="Source\Renderer\Sprite.hpp" />
+    <ClInclude Include="Source\Renderer\Spritesheet.hpp" />
+    <ClInclude Include="Source\Renderer\Texture.hpp" />
+    <ClInclude Include="Source\Scene\Scene.hpp" />
+    <ClInclude Include="Source\Scene\SceneManager.hpp" />
+    <ClInclude Include="Source\Scene\World\Chunk.hpp" />
+    <ClInclude Include="Source\Scene\World\World.hpp" />
+    <ClInclude Include="vendor\ImGui\dirent\dirent.h" />
+    <ClInclude Include="vendor\ImGui\examples\example_allegro5\imconfig_allegro5.h" />
+    <ClInclude Include="vendor\ImGui\imconfig.h" />
+    <ClInclude Include="vendor\ImGui\imgui.h" />
+    <ClInclude Include="vendor\ImGui\ImGuiFileDialog.h" />
+    <ClInclude Include="vendor\ImGui\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="vendor\ImGui\imgui_internal.h" />
+    <ClInclude Include="vendor\ImGui\imgui_stdlib.h" />
+    <ClInclude Include="vendor\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\ImGui\imstb_textedit.h" />
+    <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudioL.dll" />
+    <None Include="glew32.dll" />
+    <None Include="glfw3.dll" />
+    <None Include="imgui.ini" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,86 +208,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Source\Core\Keyboard.cpp" />
-    <ClCompile Include="Source\Core\Mouse.cpp" />
-    <ClCompile Include="Source\Core\Camera2D.cpp" />
-    <ClCompile Include="Source\Core\Camera2D.hpp" />
-    <ClCompile Include="Source\Scene\World\Chunk.cpp" />
-    <ClCompile Include="Editor\ImGuiManager.cpp" />
-    <ClCompile Include="Editor\Menubar.cpp" />
-    <ClCompile Include="Source\Scene\Scene.cpp" />
-    <ClCompile Include="Source\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Manager\ResourceManager.cpp" />
-    <ClCompile Include="Source\Ecs\Anim\Animation.cpp" />
-    <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="Source\Renderer\Shader.cpp" />
-    <ClCompile Include="Source\Core\Application.cpp" />
-    <ClCompile Include="Source\Events\EventManager.cpp" />
-    <ClCompile Include="Source\Core\main.cpp" />
-    <ClCompile Include="Source\Renderer\Texture.cpp" />
-    <ClCompile Include="Source\Renderer\Sprite.cpp" />
-    <ClCompile Include="Source\Renderer\Spritesheet.cpp" />
-    <ClCompile Include="Editor\SpritesheetEditor.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui.cpp" />
-    <ClCompile Include="vendor\ImGui\ImGuiFileDialog.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Editor\ViewportGui.cpp" />
-    <ClCompile Include="Source\Scene\World\World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source\Core\Keyboard.hpp" />
-    <ClInclude Include="Source\Core\Mouse.hpp" />
-    <ClInclude Include="Source\Scene\World\Chunk.hpp" />
-    <ClInclude Include="Source\Scene\Scene.hpp" />
-    <ClInclude Include="Source\Scene\SceneManager.hpp" />
-    <ClInclude Include="Source\Ecs\SceneObject.hpp" />
-    <ClInclude Include="Source\Ecs\Component.hpp" />
-    <ClInclude Include="Editor\ImGuiManager.hpp" />
-    <ClInclude Include="Editor\Menubar.hpp" />
-    <ClInclude Include="Source\Manager\ResourceManager.hpp" />
-    <ClInclude Include="Source\Ecs\Anim\Animation.hpp" />
-    <ClInclude Include="Source\Renderer\Renderer2D.hpp" />
-    <ClInclude Include="Source\Renderer\Shader.hpp" />
-    <ClInclude Include="Source\Core\Application.hpp" />
-    <ClInclude Include="Source\Events\EventManager.hpp" />
-    <ClInclude Include="Source\Renderer\Texture.hpp" />
-    <ClInclude Include="Source\Renderer\Sprite.hpp" />
-    <ClInclude Include="Source\Renderer\Spritesheet.hpp" />
-    <ClInclude Include="Editor\SpritesheetEditor.hpp" />
-    <ClInclude Include="Source\Ecs\Transform2D.hpp" />
-    <ClInclude Include="vendor\ImGui\dirent\dirent.h" />
-    <ClInclude Include="vendor\ImGui\imconfig.h" />
-    <ClInclude Include="vendor\ImGui\imgui.h" />
-    <ClInclude Include="vendor\ImGui\ImGuiFileDialog.h" />
-    <ClInclude Include="vendor\ImGui\ImGuiFileDialogConfig.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3.h" />
-    <ClInclude Include="vendor\ImGui\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="vendor\ImGui\imgui_internal.h" />
-    <ClInclude Include="vendor\ImGui\imgui_stdlib.h" />
-    <ClInclude Include="vendor\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="vendor\ImGui\imstb_textedit.h" />
-    <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Editor\ViewportGui.hpp" />
-    <ClInclude Include="Source\Scene\World\World.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Shaders\line.frag" />
-    <None Include="Resources\Shaders\line.vert" />
-    <None Include="Resources\Shaders\batch.fs" />
-    <None Include="Resources\Shaders\batch.vs" />
-    <None Include="Resources\Shaders\basic.fs" />
-    <None Include="Resources\Shaders\basic.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

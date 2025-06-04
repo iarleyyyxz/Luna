@@ -13,6 +13,12 @@
 #include "Menubar.hpp"
 #include "SpritesheetEditor.hpp"
 
+enum class EditorTheme {
+    Dark,
+    Light,
+    Custom,
+    Purple
+};
 class ImGuiManager {
 public:
     ImGuiManager();
@@ -35,11 +41,20 @@ public:
     bool m_showSpritesheetEditor = false;
     bool m_showViewport = true;
 
+    void ApplyCurrentTheme();
+
+    EditorTheme m_currentTheme = EditorTheme::Dark;
+
+    void ApplyDarkTheme(ImGuiStyle& style);
+    void ApplyLightTheme(ImGuiStyle& style);
+    void ApplyCustomTheme(ImGuiStyle& style);
+    void ApplyPurpleTheme(ImGuiStyle& style);
 
     static std::string selectedFolder;
     static std::string searchQuery;
     static std::map<std::string, ImTextureID> folderIcons;
 
+    void ShowConsole();
 
 private:
     SpritesheetEditor m_spritesheetEditor;

@@ -2,6 +2,8 @@
 #ifndef VIEWPORT_GUI_HPP
 #define VIEWPORT_GUI_HPP
 
+#include <glm.hpp>
+
 #include "imgui.h"
 
 class ViewportGui {
@@ -11,6 +13,7 @@ public:
 
     bool isFocused() const;
     bool isHovered() const;
+
 
 private:
     // Adicione aqui quaisquer dados ou configurações específicas da Viewport

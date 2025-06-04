@@ -14,6 +14,7 @@
 #include "Source/Ecs/Transform2D.hpp"
 #include "Camera2D.hpp" // Include do header da Camera2D
 #include "Source/Scene/World/Chunk.hpp" // Adicione esta linha
+#include <GL/stb_image.h>
 // ... other includes ...
 
 // Inicialização dos membros estáticos
@@ -90,6 +91,29 @@ bool Application::Init()
         glfwTerminate();
         return false;
     }
+
+    // Carregar imagem do ícone
+    int width, height, channels;
+    unsigned char* iconPixels = stbi_load("Resources/Luna Logo.png", &width, &height, &channels, 4);
+    if (!iconPixels) {
+        printf("Falha ao carregar o ícone\n");
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        return -1;
+    }
+
+    GLFWimage icon;
+    icon.width = width;
+    icon.height = height;
+    icon.pixels = iconPixels;
+
+    // Setar ícone da janela
+    glfwSetWindowIcon(window, 1, &icon);
+
+    // Liberar dados da imagem após setar o ícone
+    stbi_image_free(iconPixels);
+
+
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
@@ -146,12 +170,23 @@ bool Application::Init()
         return false;
     }
 
-    // Preenchendo alguns tiles de teste no World
-    m_world.setTile(5, 5, 1);
-    m_world.setTile(10, 7, 2);
-    m_world.setTile(-3, 2, 3);
+    // Triangle
     m_world.setTile(0, 0, 1);
-    m_world.setTile(35, 12, 2);
+    m_world.setTile(16, 16, 1);
+    m_world.setTile(32, 32, 2);
+    m_world.setTile(48, 48, 3);
+    m_world.setTile(64, 64, 1);
+    m_world.setTile(80, 80, 2);
+    m_world.setTile(80, 96, 2);
+    m_world.setTile(80, 112, 2);
+    m_world.setTile(-16, 16, 1);
+    m_world.setTile(-32, 32, 2);
+    m_world.setTile(-48, 48, 3);
+    m_world.setTile(-64, 64, 1);
+    m_world.setTile(-80, 80, 2);
+    m_world.setTile(-80, 96, 2);
+    m_world.setTile(-80, 112, 2);
+    m_world.setTile(-80, 96, 2);
 
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
@@ -242,6 +277,13 @@ void Application::Run()
 
         // *** CONTROLES DA CÂMERA (PAN COM O MOUSE) ***
         processMousePan(currentMousePos);
+
+        if (m_keyboard.IsKeyPressed(GLFW_KEY_EQUAL)) {
+            m_camera.setZoom(m_camera.getZoom() + 0.1f);
+        }
+        if (m_keyboard.IsKeyPressed(GLFW_KEY_MINUS)) {
+            m_camera.setZoom(m_camera.getZoom() - 0.1f);
+        }
 
         // UPDATING CAMERA    
        m_camera.update(deltaTime);
