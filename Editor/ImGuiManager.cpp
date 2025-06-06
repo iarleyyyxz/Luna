@@ -15,7 +15,7 @@
 #include "Source/Core/Log.hpp"
 #include "Console.hpp"
 
-ImGuiManager::ImGuiManager() : m_spritesheetEditor() { // Tamanho inicial arbitrário
+ImGuiManager::ImGuiManager() { // Tamanho inicial arbitrário
     std::cout << "ImGuiManager construído!" << std::endl;
 }
 
@@ -25,7 +25,7 @@ ImGuiManager::~ImGuiManager() {
 }
 
 
-bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse) {
+bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer) {
     std::cout << "Inicializando ImGuiManager..." << std::endl;
 
     // 1. Inicializar o contexto ImGui
@@ -113,7 +113,6 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
 
 
     // NOVO: Inicializar o SpritesheetEditor
-    m_spritesheetEditor.Init(renderer, keyboard, mouse);
 
     std::cout << "ImGuiManager inicializado com sucesso." << std::endl;
     return true;
@@ -187,9 +186,7 @@ void ImGuiManager::Shutdown() {
 }
 
 void ImGuiManager::SetLunaStyle() {
-    ImGuiStyle& style = ImGui::GetStyle();
-
-    
+    ImGuiStyle& style = ImGui::GetStyle(); 
  }
 
 void ImGuiManager::ApplyDarkTheme(ImGuiStyle& style) {
@@ -450,9 +447,7 @@ void ImGuiManager::ApplyCurrentTheme() {
 }
 
 void ImGuiManager::ShowConsole() {
-
     console.OnGui();
-
 }
 
 
@@ -477,10 +472,6 @@ void ImGuiManager::DrawEditorUI(float deltaTime) {
     }*/
 
     ShowConsole();
-
-    if (m_showSpritesheetEditor) {
-        m_spritesheetEditor.DrawUI(deltaTime);
-    }
 
 
   //  this->assetBrowser.render();

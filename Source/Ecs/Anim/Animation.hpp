@@ -2,46 +2,59 @@
 #define ANIMATION_HPP
 
 #include <vector>
-#include "Source/Ecs/Component.hpp"
-#include "Sprite.hpp" // The animation manages pointers to Sprites
+#include <memory> // Para std::shared_ptr
+#include <string> // Para std::string
 
-class Animation : public Component {
-public:
-    // Constructor: receives a vector of pointers to Sprites (the animation frames)
-    // and the duration of each frame in seconds.
-    Animation(const std::vector<Sprite*>& frames, float frameDuration);
+#include "Source/Ecs/Component.hpp" // A classe base Component
+#include "Source/Renderer/Sprite.hpp" // Inclua Sprite.hpp para a definição de Sprite
 
-    // Destructor: frees the memory of the Sprites that the animation is responsible for managing.
-    // If the Sprites are managed by the Spritesheet, the animation does not delete them.
-    // In that case, the Spritesheet owns the Sprites, so the animation only references them.
-    ~Animation();
+// Forward declaration para SceneObject (se não incluído em Component.hpp)
+class SceneObject;
 
-    // Updates the animation based on the elapsed time.
-    // deltaTime: time in seconds since the last update.
-    void Update(float deltaTime) override;
+namespace Luna {
+    namespace Ecs {
+        namespace Anim {
 
-    // We dont will add OnGui temporally
-    // void OnGui() override; 
+            // A classe Animation é um componente que gerencia animações de flipbook (quadro a quadro)
+            class Animation : public Component {
+            public:
+                // Construtor: recebe um vetor de ponteiros para Sprites (os quadros da animação)
+                // e a duração de cada quadro em segundos.
+                Animation(std::shared_ptr<SceneObject> owner, const std::vector<Sprite*>& frames, float frameDuration);
 
-    // Resets the animation to the first frame.
-    void Reset();
+                // Destrutor padrão (Sprite* não são gerenciados por esta classe).
+                ~Animation() override = default;
 
-    // Gets the Sprite of the current animation frame.
-    Sprite* GetCurrentFrame() const;
+                // Atualiza a animação com base no tempo decorrido.
+                // deltaTime: tempo em segundos desde a última atualização.
+                void Update(float deltaTime) override;
 
-    // Sets whether the animation should loop or stop at the last frame.
-    void SetLooping(bool looping) { m_looping = looping; }
+                // Implementação do método OnGui para ImGui.
+                void OnGui() override;
 
-    // Checks whether the animation has finished (only if not looping).
-    bool IsFinished() const { return !m_looping && m_isFinished; }
+                // Reinicia a animação para o primeiro quadro.
+                void Reset();
 
-private:
-    std::vector<Sprite*> m_frames; // Pointers to the sprites that make up the animation
-    float m_frameDuration;         // Duration of each frame in seconds
-    float m_currentTime;           // Accumulated time for the current frame
-    int m_currentFrameIndex;       // Index of the current frame
-    bool m_looping;                // Whether the animation should loop
-    bool m_isFinished;             // Whether the animation has finished (for non-looping)
-};
+                // Obtém o Sprite do quadro de animação atual.
+                Sprite* GetCurrentFrame() const;
+
+                // Define se a animação deve ser repetida (loop) ou parar no último quadro.
+                void SetLooping(bool looping) { m_looping = looping; }
+
+                // Verifica se a animação terminou (apenas se não estiver em loop).
+                bool IsFinished() const { return !m_looping && m_isFinished; }
+
+            private:
+                std::vector<Sprite*> m_frames;      // Ponteiros para os sprites que compõem a animação
+                float m_frameDuration;              // Duração de cada quadro em segundos
+                float m_currentTime;                // Tempo acumulado para o quadro atual
+                int m_currentFrameIndex;            // Índice do quadro atual
+                bool m_looping;                     // Indica se a animação deve ser repetida
+                bool m_isFinished;                  // Indica se a animação terminou (para não-looping)
+            };
+
+        } // namespace Anim
+    } // namespace Ecs
+} // namespace Luna
 
 #endif // ANIMATION_HPP

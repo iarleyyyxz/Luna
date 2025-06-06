@@ -7,12 +7,16 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#include <map>
+
 #include <string>
 #include <vector> // Para simular a lista de diretórios
 
 #include "Menubar.hpp"
-#include "SpritesheetEditor.hpp"
 #include "Console.hpp"
+
+#include "Source/Renderer/Texture.hpp"
+#include "Source/Renderer/Renderer2D.hpp"
 
 enum class EditorTheme {
     Dark,
@@ -25,7 +29,7 @@ public:
     ImGuiManager();
     ~ImGuiManager();
 
-    bool Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer, Keyboard& keyboard, Mouse& mouse);
+    bool Init(GLFWwindow* window, const std::string& glslVersion, Renderer2D& renderer);
     void BeginFrame();
     void EndFrame(GLFWwindow* window);
     void Shutdown();
@@ -58,12 +62,12 @@ public:
     void ShowConsole();
 
 private:
-    SpritesheetEditor m_spritesheetEditor;
+   // SpritesheetEditor m_spritesheetEditor;
 
     Console console;
     
-    std::shared_ptr<Texture> m_searchIconTexture;
-    std::map<std::string, std::shared_ptr<Texture>> m_loadedTextures;
+   // std::shared_ptr<Texture> m_searchIconTexture;
+  //  std::map<std::string, std::shared_ptr<Texture>> m_loadedTextures;
 };
 
 #endif // IMGUI_MANAGER_HPP

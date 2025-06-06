@@ -1,7 +1,3 @@
-﻿  Application.cpp
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(102,16): warning C4305: 'return': truncamento de 'int' para 'bool'
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(315,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(316,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(317,48): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
-C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(318,46): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1129,5): warning MSB8027: Dois ou mais arquivos com o nome SpritesheetEditor.cpp produzirão saídas para o mesmo local. Isso pode levar a um resultado de compilação incorreto. Os arquivos envolvidos são Editor\SpritesheetEditor.cpp, Editor\SpritesheetEditor.cpp.
+  ImGuiManager.cpp
   Luna.vcxproj -> C:\Users\josy-\source\repos\Luna\x64\Debug\Luna.exe

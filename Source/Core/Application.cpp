@@ -13,8 +13,11 @@
 #include "Source/Ecs/Component.hpp"
 #include "Source/Ecs/Transform2D.hpp"
 #include "Camera2D.hpp" // Include do header da Camera2D
-#include "Source/Scene/World/Chunk.hpp" // Adicione esta linha
 #include <GL/stb_image.h>
+#include "Source/Scene/SceneManager.hpp"
+#include "Source/Scene/Scene.hpp"
+#include "Source/Ecs/SpriteRenderer.hpp"
+#include "Source/Ecs/Anim/Animation.hpp"
 // ... other includes ...
 
 // Inicialização dos membros estáticos
@@ -55,8 +58,7 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 
 Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
 framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get()),
-m_camera(screenWidth, screenHeight),
-m_world(10, 10, 32, 32) // By Default 32 tiles in 10 chunks
+m_camera(screenWidth, screenHeight)
 {
     std::cout << "Application construída!" << std::endl;
 }
@@ -163,32 +165,42 @@ bool Application::Init()
         return false;
     }
 
-    if (!m_imGuiManager.Init(window, "#version 330 core", m_renderer2D, m_keyboard, m_mouse)) {
+    if (!m_imGuiManager.Init(window, "#version 330 core", m_renderer2D)) {
         std::cerr << "Falha ao inicializar o ImGuiManager." << std::endl;
         glfwDestroyWindow(window);
         glfwTerminate();
         return false;
     }
 
-    // Triangle
-    Luna::GLogger.Debug("Initializing tile rendering");
-    m_world.setTile(0, 0, 1);
-    m_world.setTile(16, 16, 1);
-    m_world.setTile(32, 32, 2);
-    m_world.setTile(48, 48, 3);
-    m_world.setTile(64, 64, 1);
-    m_world.setTile(80, 80, 2);
-    m_world.setTile(80, 96, 2);
-    m_world.setTile(80, 112, 2);
-    m_world.setTile(-16, 16, 1);
-    m_world.setTile(-32, 32, 2);
-    m_world.setTile(-48, 48, 3);
-    m_world.setTile(-64, 64, 1);
-    m_world.setTile(-80, 80, 2);
-    m_world.setTile(-80, 96, 2);
-    m_world.setTile(-80, 112, 2);
-    m_world.setTile(-80, 96, 2);
-    Luna::GLogger.Debug("All tiles was rendered");
+    // Obtenha a instância do SceneManager
+   
+
+    // Crie e carregue sua primeira cena
+    sceneManager.LoadScene("Cena Padrão");
+    std::shared_ptr<Scene> currentScene = sceneManager.GetCurrentScene();
+
+    if (currentScene) {
+        // Crie um SceneObject
+        std::shared_ptr<SceneObject> player = std::make_shared<SceneObject>("Player");
+        player->GetTransform().position = glm::vec2(100.0f, 100.0f);
+        player->GetTransform().scale = glm::vec3(50.0f, 50.0f, 1.0f);
+
+        // Crie e adicione um SpriteRenderer ao player
+        // Supondo que você tenha uma forma de carregar Textures
+        std::shared_ptr<Texture> playerTexture = std::make_shared<Texture>("Resources/textura.png");
+        // player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture));
+        player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))); // Exemplo: sprite vermelho
+        
+        // Adicione o player à cena
+        currentScene->AddSceneObject(player);
+
+        // Crie um objeto filho para o player
+        std::shared_ptr<SceneObject> childObject = std::make_shared<SceneObject>("ChildOfPlayer");
+        childObject->GetTransform().position = glm::vec2(20.0f, 20.0f); // Posição relativa ao pai
+        childObject->GetTransform().scale = glm::vec3(20.0f, 20.0f, 1.0f);
+        childObject->AddComponent(std::make_shared<SpriteRenderer>(nullptr, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))); // Exemplo: sprite azul
+        player->AddChild(childObject);
+    }
 
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
@@ -268,6 +280,7 @@ void Application::Run()
         m_viewportGui.Render(framebufferTexture);
 
         m_imGuiManager.DrawEditorUI(deltaTime);
+        sceneManager.OnGui();
 
         // *** Renderizar para o Framebuffer ***
         glBindFramebuffer(GL_FRAMEBUFFER, framebufferObject);
@@ -278,69 +291,29 @@ void Application::Run()
         glm::vec2 currentMousePos = m_mouse.GetPosition();
 
         // *** CONTROLES DA CÂMERA (PAN COM O MOUSE) ***
-        processMousePan(currentMousePos);
+       // processMousePan(currentMousePos);
 
         if (m_keyboard.IsKeyPressed(GLFW_KEY_EQUAL)) {
             m_camera.setZoom(m_camera.getZoom() + 0.1f);
         }
         if (m_keyboard.IsKeyPressed(GLFW_KEY_MINUS)) {
             m_camera.setZoom(m_camera.getZoom() - 0.1f);
-        }
+        } 
 
         // UPDATING CAMERA    
        m_camera.update(deltaTime);
+
+      
+       sceneManager.Update(deltaTime);
+
         // --- START OF SCENE RENDER ---
         glm::mat4 projection = m_camera.getProjectionMatrix() * m_camera.getViewMatrix();
         m_renderer2D.beginScene(projection);
         
         // Renderizar o World
-        {
-            // Obter os limites da câmera no mundo
-            glm::vec2 cameraPosition = m_camera.getPosition();
-            float zoom = m_camera.getZoom();
-            float viewportWidthWorld = screenWidth / zoom;
-            float viewportHeightWorld = screenHeight / zoom;
-            glm::vec2 bottomLeftWorld = cameraPosition - glm::vec2(viewportWidthWorld / 2.0f, viewportHeightWorld / 2.0f);
-            glm::vec2 topRightWorld = cameraPosition + glm::vec2(viewportWidthWorld / 2.0f, viewportHeightWorld / 2.0f);
-
-            int firstChunkX = static_cast<int>(floor(bottomLeftWorld.x / m_world.m_tilesPerChunkWidth));
-            int lastChunkX = static_cast<int>(ceil(topRightWorld.x / m_world.m_tilesPerChunkWidth));
-            int firstChunkY = static_cast<int>(floor(bottomLeftWorld.y / m_world.m_tilesPerChunkHeight));
-            int lastChunkY = static_cast<int>(ceil(topRightWorld.y / m_world.m_tilesPerChunkHeight));
-
-            for (int chunkX = firstChunkX; chunkX <= lastChunkX; ++chunkX) {
-                for (int chunkY = firstChunkY; chunkY <= lastChunkY; ++chunkY) {
-                    std::shared_ptr<Chunk> chunk = m_world.getChunk(chunkX, chunkY);
-                    if (chunk) {
-                        float chunkWorldStartX = chunkX * m_world.m_tilesPerChunkWidth;
-                        float chunkWorldEndX = (chunkX + 1) * m_world.m_tilesPerChunkWidth;
-                        float chunkWorldStartY = chunkY * m_world.m_tilesPerChunkHeight;
-                        float chunkWorldEndY = (chunkY + 1) * m_world.m_tilesPerChunkHeight;
-
-                        // Verificar se o chunk está dentro da viewport (com uma pequena folga opcional)
-                        float cullPadding = 1.0f; // Opcional: adiciona uma pequena margem ao culling
-                        if (chunkWorldEndX >= bottomLeftWorld.x - cullPadding &&
-                            chunkWorldStartX <= topRightWorld.x + cullPadding &&
-                            chunkWorldEndY >= bottomLeftWorld.y - cullPadding &&
-                            chunkWorldStartY <= topRightWorld.y + cullPadding)
-                        {
-                            for (int y = 0; y < chunk->getHeight(); ++y) {
-                                for (int x = 0; x < chunk->getWidth(); ++x) {
-                                    int tileId = chunk->getTile(x, y);
-                                    if (tileId > 0) {
-                                        float worldX = chunkWorldStartX + x;
-                                        float worldY = chunkWorldStartY + y;
-                                        m_renderer2D.drawQuad(glm::vec2(worldX, worldY), glm::vec2(16.0f, 16.0f), GetTileColor(tileId));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      
        // m_renderer2D.drawQuad(glm::vec2(150, 150), glm::vec2(15.0f, 15.0f), glm::vec4(3.0f, 1.0f, 4.0f, 1.0f));
-
+        sceneManager.Render(m_renderer2D);
 
         m_renderer2D.endScene();
         // --- END OF SCENE RENDER ---

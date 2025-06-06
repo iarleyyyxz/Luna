@@ -19,8 +19,8 @@ C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Spritesheet.cpp;C:\Users\j
 C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Texture.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Texture.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\Scene.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Scene.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\SceneManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SceneManager.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\World\Chunk.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Chunk.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\World\World.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\World.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\SpriteRenderer.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SpriteRenderer.obj
+C:\Users\josy-\source\repos\Luna\Luna\Editor\SpritesheetEditor.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SpritesheetEditor.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\ImGuiFileDialog.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ImGuiFileDialog.obj
 C:\Users\josy-\source\repos\Luna\Luna\vendor\ImGui\imgui_demo.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\imgui_demo.obj

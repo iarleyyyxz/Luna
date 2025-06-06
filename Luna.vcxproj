@@ -40,8 +40,8 @@
     <ClCompile Include="Source\Renderer\Texture.cpp" />
     <ClCompile Include="Source\Scene\Scene.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Scene\World\Chunk.cpp" />
-    <ClCompile Include="Source\Scene\World\World.cpp" />
+    <ClCompile Include="Source\Ecs\SpriteRenderer.cpp" />
+    <ClCompile Include="Editor\SpritesheetEditor.cpp" />
     <ClCompile Include="vendor\ImGui\imgui.cpp" />
     <ClCompile Include="vendor\ImGui\ImGuiFileDialog.cpp" />
     <ClCompile Include="vendor\ImGui\imgui_demo.cpp" />
@@ -75,8 +75,8 @@
     <ClInclude Include="Source\Renderer\Texture.hpp" />
     <ClInclude Include="Source\Scene\Scene.hpp" />
     <ClInclude Include="Source\Scene\SceneManager.hpp" />
-    <ClInclude Include="Source\Scene\World\Chunk.hpp" />
-    <ClInclude Include="Source\Scene\World\World.hpp" />
+    <ClInclude Include="Source\Ecs\SpriteRenderer.hpp" />
+    <ClInclude Include="Editor\SpritesheetEditor.hpp" />
     <ClInclude Include="vendor\ImGui\dirent\dirent.h" />
     <ClInclude Include="vendor\ImGui\examples\example_allegro5\imconfig_allegro5.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
@@ -93,6 +93,7 @@
     <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\lang\console_messages.json" />
     <None Include="fmod.dll" />
     <None Include="fmodL.dll" />
     <None Include="fmodstudioL.dll" />

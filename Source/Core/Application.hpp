@@ -19,7 +19,7 @@
 #include "Source/Renderer/Sprite.hpp"  // Incluir Sprite
 #include <glm.hpp>                 // Incluir glm para vetores
 #include "Camera2D.hpp"
-#include "Source/Scene/World/World.hpp"
+#include "Source/Scene/SceneManager.hpp"
 
 class Application
 {
@@ -73,8 +73,8 @@ private:
     // ... outros membros ...
     std::vector<std::shared_ptr<SceneObject>> m_sceneObjects;
     Camera2D m_camera;
-    World m_world; // Instancie o World aqui
-    // ...
+    SceneManager& sceneManager = SceneManager::GetInstance();
+
 
     static const float GRID_SPACING; // Apenas declaração
     static const glm::vec4 GRID_COLOR; // Apenas declaração

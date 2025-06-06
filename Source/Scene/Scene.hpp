@@ -1,30 +1,53 @@
-#ifndef SCENE_HPP
-#define SCENE_HPP
+#pragma once
 
 #include <string>
-#include <iostream>
 #include <vector>
-#include "Source/Ecs/SceneObject.hpp"
+#include <memory> // Para std::shared_ptr
+#include <algorithm> // Para std::remove_if
 
+#include "Source/ECS/SceneObject.hpp" // Inclui a definição de SceneObject
+#include "Source/Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
+
+// Forward declaration para evitar dependência circular se SceneObject precisar de Scene
+// (Não é o caso aqui, mas é boa prática para SceneManager)
+class Renderer2D;
 
 class Scene {
 public:
-    Scene(const std::string& name) : m_name(name) {}
+    // Construtor: Uma cena é criada com um nome.
+    Scene(const std::string& name);
 
-    virtual ~Scene() = default;
+    // Destrutor padrão.
+    ~Scene() = default;
 
+    // Retorna o nome da cena.
     const std::string& GetName() const { return m_name; }
-    virtual void Render() { std::cout << "Scene '" << m_name << "' loaded.\n"; }
-    virtual void Unload() { std::cout << "Scene '" << m_name << "' unloaded.\n"; }
-    virtual void Update(float deltaTime);
-    virtual void RenderImGui() {}
 
-    const std::vector<SceneObject>& GetSceneObjects() const { return objects; }
-    void AddSceneObject(const SceneObject& object);
+    // Adiciona um SceneObject à cena.
+    // O SceneObject deve ser um shared_ptr.
+    void AddSceneObject(std::shared_ptr<SceneObject> object);
 
-protected:
-    std::string m_name;
-    std::vector<SceneObject> objects;
+    // Remove um SceneObject da cena pelo seu nome.
+    void RemoveSceneObject(const std::string& name);
+
+    // Obtém um SceneObject da cena pelo seu nome.
+    // Retorna nullptr se não encontrado.
+    std::shared_ptr<SceneObject> GetSceneObjectByName(const std::string& name);
+
+    // Atualiza todos os SceneObjects na cena.
+    // deltaTime: tempo decorrido desde a última atualização.
+    void Update(float deltaTime);
+
+    // Renderiza todos os SceneObjects na cena.
+    // renderer: A instância do Renderer2D a ser usada para o desenho.
+    void Render(Renderer2D& renderer);
+
+    // Método para desenhar elementos da UI da cena (usando ImGui, por exemplo).
+    void OnGui();
+
+private:
+    std::string m_name; // Nome da cena
+    // Vetor de shared_ptr para os SceneObjects de nível raiz na cena.
+    // SceneObjects com pais serão gerenciados por seus pais.
+    std::vector<std::shared_ptr<SceneObject>> m_rootObjects;
 };
-
-#endif // SCENE_HPP

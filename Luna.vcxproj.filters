@@ -87,12 +87,6 @@
     <ClCompile Include="Source\Scene\Scene.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\World\Chunk.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\World\World.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Core\Camera2D.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -106,6 +100,12 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\Log.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ecs\SpriteRenderer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\SpritesheetEditor.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,12 +203,6 @@
     <ClInclude Include="Source\Scene\SceneManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\World\Chunk.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\World\World.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Core\Mouse.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -227,6 +221,12 @@
     <ClInclude Include="Source\Core\Log.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Ecs\SpriteRenderer.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\SpritesheetEditor.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -239,5 +239,6 @@
     <None Include="glfw3.dll" />
     <None Include="imgui.ini" />
     <None Include="README.md" />
+    <None Include="Resources\lang\console_messages.json" />
   </ItemGroup>
 </Project>
