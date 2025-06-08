@@ -35,6 +35,7 @@ public:
     void Shutdown();
     void SetLunaStyle();
     bool LoadFont(const std::string& fontPath, float fontSize);
+    bool LoadFontAwesome(const std::string& fontAwesomePath, float fontSize);
 
     void DrawEditorUI(float deltaTime);
 

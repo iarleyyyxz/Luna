@@ -18,9 +18,17 @@
 #include "Source/Scene/Scene.hpp"
 #include "Source/Ecs/SpriteRenderer.hpp"
 #include "Source/Ecs/Anim/Animation.hpp"
+
+#define ICON_FA_FOLDER        "\xef\x81\xbb"
+#define ICON_FA_FILE          "\xef\x85\x9c"
+#define ICON_FA_FILE_CODE     "\xef\x87\x9a"
+#define ICON_FA_CHECK         "\xef\x81\xae"
+#define ICON_BOX              "\xef\x91\xa6"
+// including icon fonts
 // ... other includes ...
 
 // Inicialização dos membros estáticos
+ImFont* fontIcons; // fonte com ícones
 const float Application::GRID_SPACING = 25.0f;
 const glm::vec4 Application::GRID_COLOR = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
 
@@ -200,19 +208,41 @@ bool Application::Init()
         childObject->GetTransform().scale = glm::vec3(20.0f, 20.0f, 1.0f);
         childObject->AddComponent(std::make_shared<SpriteRenderer>(nullptr, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))); // Exemplo: sprite azul
         player->AddChild(childObject);
-    }
 
+        // 2
+        std::shared_ptr<SceneObject> pl2 = std::make_shared<SceneObject>("Player 2");
+        pl2->GetTransform().position = glm::vec2(100.0f, 100.0f);
+        pl2->GetTransform().scale = glm::vec3(50.0f, 50.0f, 1.0f);
+
+        // Crie e adicione um SpriteRenderer ao player
+        // Supondo que você tenha uma forma de carregar Textures
+        std::shared_ptr<Texture> pl = std::make_shared<Texture>("Resources/example.png");
+        // player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture));
+        pl2->AddComponent(std::make_shared<SpriteRenderer>(pl, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))); // Exemplo: sprite vermelho
+
+        // Adicione o player à cena
+        currentScene->AddSceneObject(pl2);
+
+        // Crie um objeto filho para o player
+        std::shared_ptr<SceneObject> objc = std::make_shared<SceneObject>("Child");
+        objc->GetTransform().position = glm::vec2(20.0f, 20.0f); // Posição relativa ao pai
+        objc->GetTransform().scale = glm::vec3(20.0f, 20.0f, 1.0f);
+        objc->AddComponent(std::make_shared<SpriteRenderer>(nullptr, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))); // Exemplo: sprite azul
+        pl2->AddChild(objc);
+    }
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
     {
         std::cerr << "Fail load font imGui";
     }
 
-    if (!m_imGuiManager.LoadFont("Resources/Fonts/fontawesome-webfont.ttf", 16))
-    {
-        std::cerr << "Fail load font imGui";
-    }
 
+    static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
+    ImFontConfig icons_config;
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+    fontIcons = ImGui::GetIO().Fonts->AddFontFromFileTTF("Resources/Fonts/fa-solid-900.ttf", 16.0f, &icons_config, icons_ranges);
+  
     // Application.cpp (dentro da função Application::Init(), após carregar a textura)
 
     // Carregar a textura da sprite (já existe no seu código)
@@ -278,6 +308,7 @@ void Application::Run()
 
         // Renderizar a Viewport GUI
         m_viewportGui.Render(framebufferTexture);
+
 
         m_imGuiManager.DrawEditorUI(deltaTime);
         sceneManager.OnGui();

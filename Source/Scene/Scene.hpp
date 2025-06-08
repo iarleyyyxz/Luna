@@ -7,6 +7,7 @@
 
 #include "Source/ECS/SceneObject.hpp" // Inclui a definição de SceneObject
 #include "Source/Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
+#include "Source/Renderer/Texture.hpp"
 
 // Forward declaration para evitar dependência circular se SceneObject precisar de Scene
 // (Não é o caso aqui, mas é boa prática para SceneManager)
@@ -46,6 +47,8 @@ public:
     void OnGui();
 
 private:
+
+
     std::string m_name; // Nome da cena
     // Vetor de shared_ptr para os SceneObjects de nível raiz na cena.
     // SceneObjects com pais serão gerenciados por seus pais.

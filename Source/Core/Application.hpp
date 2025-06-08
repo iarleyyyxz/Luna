@@ -46,6 +46,9 @@ public:
 
     glm::vec4 GetTileColor(int tileId);
 
+    ImFont* fontIcons; // fonte com ícones
+
+
 private:
     bool isRunning;
     GLFWwindow* window;

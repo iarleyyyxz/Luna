@@ -1,6 +1,12 @@
 #include "Scene.hpp"
 #include <iostream> // Para mensagens de log/erro
 #include "Source/Core/Log.hpp"
+
+#include "Source/Core/Application.hpp"
+
+#define ICON_FA_CUBE "\xef\x81\xb2"
+#define ICON_BOX              "\xef\x91\xa6"
+
 Scene::Scene(const std::string& name)
     : m_name(name) {
     Luna::GLogger.Info("INFO::SCENE: Cena '" + m_name + "' criada.");
@@ -66,17 +72,37 @@ void Scene::Render(Renderer2D& renderer) {
 }
 
 void Scene::OnGui() {
-    // Implementação ImGui para a cena.
-    // Pode mostrar uma lista de objetos, etc.
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Framed |
+        ImGuiTreeNodeFlags_DefaultOpen |
+        ImGuiTreeNodeFlags_AllowItemOverlap |
+        ImGuiTreeNodeFlags_FramePadding;
 
-    ////// Adicionar sistema de layers.
-    if (ImGui::TreeNode(("Scene: " + m_name).c_str())) {
-        if (ImGui::TreeNode("Root Scene Objects")) {
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(6, 4));
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(6, 6));
+
+    ImGui::Separator();
+
+    std::string label = "Scene: " + m_name + "##SceneNode_" + m_name;
+    if (ImGui::TreeNodeEx(label.c_str(), flags)) {
+
+        ImGui::Spacing();
+
+        if (ImGui::TreeNodeEx("\xef\x80\xab" " Root Scene Objects ##root", flags)) {
+            ImGui::Spacing();
+            ImGui::SeparatorText("Scene Objects");
+
             for (auto& object : m_rootObjects) {
-                object->OnGui(); // Chama OnGui para cada objeto raiz
+                object->OnGui();
             }
-            ImGui::TreePop();
+
+            ImGui::TreePop(); // fecha Root Scene Objects
         }
-        ImGui::TreePop();
+
+        ImGui::Spacing();
+        ImGui::Separator();
+
+        ImGui::TreePop(); // fecha Scene: <name>
     }
+
+    ImGui::PopStyleVar(2);
 }

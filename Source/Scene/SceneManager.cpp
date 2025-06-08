@@ -43,12 +43,10 @@ void SceneManager::Render(Renderer2D& renderer) {
 
 void SceneManager::OnGui() {
     // Desenha o GUI para o SceneManager (pode listar cenas, etc.)
-    if (ImGui::Begin("Scene Manager")) {
+    if (ImGui::Begin("Scene Hierarchy")) {
 
 
         if (m_currentScene) {
-            ImGui::Text("Current Scene: %s", m_currentScene->GetName().c_str());
-            ImGui::Separator();
             m_currentScene->OnGui(); // Chama o OnGui da cena atual
         }
         else {

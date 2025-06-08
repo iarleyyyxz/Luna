@@ -7,6 +7,7 @@
 #include "Transform2D.hpp" // Inclua o cabeçalho de Transform2D para a definição completa
 #include <imgui.h> // Para ImGui::TreeNodeEx, ImGui::TreePop, etc. (se usado aqui)
 
+
 // Forward declaration para Renderer2D, se SceneObject.hpp precisar dela diretamente
 class Renderer2D;
 
@@ -86,7 +87,10 @@ public:
     }
 
     void OnGui() {
-        if (ImGui::TreeNodeEx(name_.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap;
+
+        std::string label = std::string("\xef\x82\xae ") + name_.c_str();
+        if (ImGui::TreeNodeEx(label.c_str(), flags))
         {
             // O Transform2D é um membro direto, então chame OnGui diretamente nele.
             transform_.OnGui();

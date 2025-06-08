@@ -15,6 +15,7 @@
 #include "Source/Core/Log.hpp"
 #include "Console.hpp"
 
+
 ImGuiManager::ImGuiManager() { // Tamanho inicial arbitrário
     std::cout << "ImGuiManager construído!" << std::endl;
 }
@@ -77,7 +78,7 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
 
     Luna::Menu editarMenu;
     editarMenu.label = "Editar";
-    editarMenu.items.push_back({ "Desfazer", "Ctrl+Z", []() { std::cout << "Desfazer clicado\n"; } });
+    editarMenu.items.push_back({ "Desfazer", "Ctrl + Z", []() { std::cout << "Desfazer clicado\n"; } });
     editarMenu.items.push_back({ "Refazer", "Ctrl+Y", []() { std::cout << "Refazer clicado\n"; }, false });
     editarMenu.items.push_back({ "Recortar", "Ctrl+X", []() { std::cout << "Recortar clicado\n"; } });
     editarMenu.items.push_back({ "Copiar", "Ctrl+C", []() { std::cout << "Copiar clicado\n"; } });
@@ -443,6 +444,7 @@ void ImGuiManager::ApplyCurrentTheme() {
     case EditorTheme::Dark: ApplyDarkTheme(ImGui::GetStyle()); break;
     case EditorTheme::Custom: ApplyCustomTheme(ImGui::GetStyle()); break;
     case EditorTheme::Purple: ApplyPurpleTheme(ImGui::GetStyle()); break;
+    default: ApplyDarkTheme(ImGui::GetStyle());
     }
 }
 
@@ -459,6 +461,25 @@ bool ImGuiManager::LoadFont(const std::string& fontPath, float fontSize) {
         return false;
     }
     std::cout << "Fonte '" << fontPath << "' carregada com sucesso, tamanho: " << fontSize << std::endl;
+    return true;
+}
+
+bool ImGuiManager::LoadFontAwesome(const std::string& fontAwesomePath, float fontSize) {
+    ImGuiIO& io = ImGui::GetIO();
+
+    // Define a faixa Unicode dos ícones FontAwesome (fa-solid)
+    static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
+
+    ImFontConfig icons_config;
+    icons_config.MergeMode = true;       // mescla essa fonte com a fonte atual
+    icons_config.PixelSnapH = true;
+
+    ImFont* fontAwesome = io.Fonts->AddFontFromFileTTF(fontAwesomePath.c_str(), fontSize, &icons_config, icons_ranges);
+    if (fontAwesome == nullptr) {
+        std::cerr << "ERRO::IMGUI_MANAGER: Falha ao carregar a fonte FontAwesome: " << fontAwesomePath << std::endl;
+        return false;
+    }
+    std::cout << "Fonte FontAwesome '" << fontAwesomePath << "' carregada e mesclada com sucesso, tamanho: " << fontSize << std::endl;
     return true;
 }
 
