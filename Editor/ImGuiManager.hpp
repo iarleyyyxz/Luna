@@ -15,8 +15,8 @@
 #include "Menubar.hpp"
 #include "Console.hpp"
 
-#include "Source/Renderer/Texture.hpp"
-#include "Source/Renderer/Renderer2D.hpp"
+#include "Texture.hpp"
+#include "Renderer2D.hpp"
 
 enum class EditorTheme {
     Dark,

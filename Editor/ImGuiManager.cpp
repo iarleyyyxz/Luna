@@ -40,6 +40,8 @@ bool ImGuiManager::Init(GLFWwindow* window, const std::string& glslVersion, Rend
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     // 2. Aplicar o estilo Luna (Godot)
+ 
+    m_currentTheme = EditorTheme::Dark;
     SetLunaStyle();
 
     // Viewports

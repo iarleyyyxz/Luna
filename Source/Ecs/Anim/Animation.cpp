@@ -1,7 +1,7 @@
 #include "Animation.hpp"
 #include "Source/Ecs/SceneObject.hpp"   // Para SceneObject
 #include "Source/Ecs/Transform2D.hpp"   // Para Transform2D
-#include "Source/Renderer/Sprite.hpp"   // Para Sprite (se você precisar de acesso direto a membros)
+#include "Source/Graphics/Sprite.hpp"   // Para Sprite (se você precisar de acesso direto a membros)
 #include <iostream>                     // Para std::cerr
 #include <algorithm>                    // Para std::sort (se você reintroduzir keyframes de interpolação)
 #include <imgui.h>                      // Para ImGui

@@ -3,6 +3,7 @@ C:\Users\josy-\source\repos\Luna\Luna\Editor\ImGuiManager.cpp;C:\Users\josy-\sou
 C:\Users\josy-\source\repos\Luna\Luna\Editor\Menubar.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Menubar.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\SpritesheetEditor.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SpritesheetEditor.obj
 C:\Users\josy-\source\repos\Luna\Luna\Editor\ViewportGui.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ViewportGui.obj
+C:\Users\josy-\source\repos\Luna\Luna\Editor\Gizmo2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Gizmo2D.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Log.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Log.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Application.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Camera2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Camera2D.obj
@@ -12,11 +13,11 @@ C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Mouse.cpp;C:\Users\josy-\sourc
 C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Anim\Animation.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Animation.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Events\EventManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\EventManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Manager\ResourceManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\ResourceManager.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Renderer2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer2D.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Shader.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Shader.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Sprite.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Sprite.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Spritesheet.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Spritesheet.obj
-C:\Users\josy-\source\repos\Luna\Luna\Source\Renderer\Texture.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Texture.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Graphics\Renderer\Renderer2D.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Renderer2D.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Graphics\Renderer\Shader.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Shader.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Graphics\Sprite.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Sprite.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Graphics\Spritesheet.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Spritesheet.obj
+C:\Users\josy-\source\repos\Luna\Luna\Source\Graphics\Renderer\Texture.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Texture.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\Scene.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\Scene.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Scene\SceneManager.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SceneManager.obj
 C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\SpriteRenderer.cpp;C:\Users\josy-\source\repos\Luna\Luna\x64\Debug\SpriteRenderer.obj

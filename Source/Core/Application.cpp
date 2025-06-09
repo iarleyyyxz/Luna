@@ -3,8 +3,8 @@
 #include <iostream>
 #include <memory>
 
-#include "Source/Renderer/Texture.hpp"
-#include "Source/Renderer/Sprite.hpp"
+#include "Texture.hpp"
+#include "Sprite.hpp"
 
 #include <glm.hpp>
 #include <matrix_transform.hpp>
@@ -18,6 +18,7 @@
 #include "Source/Scene/Scene.hpp"
 #include "Source/Ecs/SpriteRenderer.hpp"
 #include "Source/Ecs/Anim/Animation.hpp"
+#include <type_ptr.hpp>
 
 #define ICON_FA_FOLDER        "\xef\x81\xbb"
 #define ICON_FA_FILE          "\xef\x85\x9c"
@@ -32,29 +33,28 @@ ImFont* fontIcons; // fonte com ícones
 const float Application::GRID_SPACING = 25.0f;
 const glm::vec4 Application::GRID_COLOR = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
 
-void Application::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+// Métodos estáticos de callback (precisam do ponteiro de usuário para acessar a instância da classe)
+void Application::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    if (app && button == GLFW_MOUSE_BUTTON_LEFT) {
-        if (action == GLFW_PRESS) {
-            app->m_isDragging = true;
-            double xpos, ypos;
-            glfwGetCursorPos(window, &xpos, &ypos);
-            app->m_dragStartPosition = glm::vec2(xpos, ypos);
-        }
-        else if (action == GLFW_RELEASE) {
-            app->m_isDragging = false;
-        }
+    if (app) {
+        app->m_mouse.ProcessMouseButton(button, action);
     }
 }
 
-void Application::processMousePan(const glm::vec2& currentMousePosition) {
-    if (m_isDragging) {
-        glm::vec2 delta = currentMousePosition - m_dragStartPosition;
-        float panSpeed = 0.5f; // Ajuste a sensibilidade do pan
-        m_camera.setPosition(m_camera.getPosition() - delta * panSpeed);
-        m_dragStartPosition = currentMousePosition; // Atualiza para o próximo movimento
+void Application::CursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    if (app) {
+        app->m_mouse.ProcessCursorPosition(xpos, ypos);
     }
 }
+
+void Application::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    if (app) {
+        app->m_mouse.ProcessScroll(xoffset, yoffset);
+    }
+}
+
 
 void Application::glfwErrorCallback(int error, const char* description) {
     std::cerr << "Erro GLFW: " << description << std::endl;
@@ -66,7 +66,7 @@ void Application::windowCloseCallback(GLFWwindow* window) {
 
 Application::Application() : isRunning(true), window(nullptr), screenWidth(800.0f), screenHeight(600.0f),
 framebufferTexture(0), framebufferObject(0), m_viewportGui(), m_testSprite(m_spriteTexture.get()),
-m_camera(screenWidth, screenHeight)
+m_camera(screenWidth, screenHeight), m_selectedObjectForGizmo(nullptr)
 {
     std::cout << "Application construída!" << std::endl;
 }
@@ -141,7 +141,7 @@ bool Application::Init()
         auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
         if (app) app->m_mouse.ProcessMouseButton(button, action);
         }); 
-    glfwSetMouseButtonCallback(window, Application::mouseButtonCallback);
+    glfwSetMouseButtonCallback(window, Application::MouseButtonCallback);
 
     glfwSetScrollCallback(window, [](GLFWwindow* win, double xoffset, double yoffset) {
         auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
@@ -181,73 +181,48 @@ bool Application::Init()
     }
 
     // Obtenha a instância do SceneManager
-   
 
-    // Crie e carregue sua primeira cena
+    // --- Configuração da Cena e Objetos de Teste ---
     sceneManager.LoadScene("Cena Padrão");
     std::shared_ptr<Scene> currentScene = sceneManager.GetCurrentScene();
 
     if (currentScene) {
-        // Crie um SceneObject
-        std::shared_ptr<SceneObject> player = std::make_shared<SceneObject>("Player");
-        player->GetTransform().position = glm::vec2(100.0f, 100.0f);
-        player->GetTransform().scale = glm::vec3(50.0f, 50.0f, 1.0f);
+        // Objeto principal para o Gizmo
+        m_selectedObjectForGizmo = std::make_shared<SceneObject>("PlayerGizmo");
+        m_selectedObjectForGizmo->GetTransform().position = glm::vec2(200.0f, 200.0f);
+        m_selectedObjectForGizmo->GetTransform().scale = glm::vec3(100.0f, 100.0f, 1.0f);
+        // Carregue uma textura real para o sprite do objeto de teste
+        // Use AssetManager para carregar texturas
+        std::shared_ptr<Texture> gizmoSelectedTexture = std::make_shared<Texture>("Resources/textura.png");
+        m_selectedObjectForGizmo->AddComponent(std::make_shared<SpriteRenderer>(gizmoSelectedTexture, glm::vec4(1.0f)));
+        currentScene->AddSceneObject(m_selectedObjectForGizmo);
 
-        // Crie e adicione um SpriteRenderer ao player
-        // Supondo que você tenha uma forma de carregar Textures
-        std::shared_ptr<Texture> playerTexture = std::make_shared<Texture>("Resources/textura.png");
-        // player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture));
-        player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))); // Exemplo: sprite vermelho
-        
-        // Adicione o player à cena
-        currentScene->AddSceneObject(player);
-
-        // Crie um objeto filho para o player
-        std::shared_ptr<SceneObject> childObject = std::make_shared<SceneObject>("ChildOfPlayer");
-        childObject->GetTransform().position = glm::vec2(20.0f, 20.0f); // Posição relativa ao pai
-        childObject->GetTransform().scale = glm::vec3(20.0f, 20.0f, 1.0f);
-        childObject->AddComponent(std::make_shared<SpriteRenderer>(nullptr, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))); // Exemplo: sprite azul
-        player->AddChild(childObject);
-
-        // 2
-        std::shared_ptr<SceneObject> pl2 = std::make_shared<SceneObject>("Player 2");
-        pl2->GetTransform().position = glm::vec2(100.0f, 100.0f);
-        pl2->GetTransform().scale = glm::vec3(50.0f, 50.0f, 1.0f);
-
-        // Crie e adicione um SpriteRenderer ao player
-        // Supondo que você tenha uma forma de carregar Textures
-        std::shared_ptr<Texture> pl = std::make_shared<Texture>("Resources/example.png");
-        // player->AddComponent(std::make_shared<SpriteRenderer>(playerTexture));
-        pl2->AddComponent(std::make_shared<SpriteRenderer>(pl, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))); // Exemplo: sprite vermelho
-
-        // Adicione o player à cena
-        currentScene->AddSceneObject(pl2);
-
-        // Crie um objeto filho para o player
-        std::shared_ptr<SceneObject> objc = std::make_shared<SceneObject>("Child");
-        objc->GetTransform().position = glm::vec2(20.0f, 20.0f); // Posição relativa ao pai
-        objc->GetTransform().scale = glm::vec3(20.0f, 20.0f, 1.0f);
-        objc->AddComponent(std::make_shared<SpriteRenderer>(nullptr, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f))); // Exemplo: sprite azul
-        pl2->AddChild(objc);
+        // Objeto secundário (sem gizmo)
+        std::shared_ptr<SceneObject> player2 = std::make_shared<SceneObject>("Player2");
+        player2->GetTransform().position = glm::vec2(400.0f, 150.0f);
+        player2->GetTransform().scale = glm::vec3(80.0f, 80.0f, 1.0f);
+        std::shared_ptr<Texture> player2Texture =
+           std::make_shared<Texture>("Resources/example.png"); // *** VERIFIQUE ESTE CAMINHO ***
+        player2->AddComponent(std::make_shared<SpriteRenderer>(player2Texture, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f)));
+        currentScene->AddSceneObject(player2);
     }
+
+    // *** Inicializa o Gizmo 2D com o objeto selecionado ***
+    // Certifique-se de que m_selectedObjectForGizmo está inicializado antes de passar.
+    m_gizmo.SetSelectedObject(m_selectedObjectForGizmo.get());
+
 
     if (!m_imGuiManager.LoadFont("Resources/Fonts/Roboto-Medium.ttf", 18))
     {
         std::cerr << "Fail load font imGui";
     }
 
-
+    // Adding icon fonts
     static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
     ImFontConfig icons_config;
     icons_config.MergeMode = true;
     icons_config.PixelSnapH = true;
     fontIcons = ImGui::GetIO().Fonts->AddFontFromFileTTF("Resources/Fonts/fa-solid-900.ttf", 16.0f, &icons_config, icons_ranges);
-  
-    // Application.cpp (dentro da função Application::Init(), após carregar a textura)
-
-    // Carregar a textura da sprite (já existe no seu código)
-   // Carregar a textura da sprite
-
 
     std::cout << "Application inicializada com sucesso." << std::endl;
     return true;
@@ -289,6 +264,8 @@ bool Application::InitFramebuffer()
     return true;
 }
 
+
+
 void Application::Run()
 {
     std::cout << "Executando a Application..." << std::endl;
@@ -299,16 +276,16 @@ void Application::Run()
         glfwPollEvents();
 
         double currentFrameTime = glfwGetTime();
-        float deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+        deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
         lastFrameTime = currentFrameTime;
 
-        m_mouse.UpdatePosition(window);
+        ProcessInput(window); // Atualiza m_keyboard e m_mouse
 
         m_imGuiManager.BeginFrame();
 
         // Renderizar a Viewport GUI
         m_viewportGui.Render(framebufferTexture);
-
+              
 
         m_imGuiManager.DrawEditorUI(deltaTime);
         sceneManager.OnGui();
@@ -334,6 +311,7 @@ void Application::Run()
         // UPDATING CAMERA    
        m_camera.update(deltaTime);
 
+       m_gizmo.Update(m_mouse.GetPosition().x, m_mouse.GetPosition().y, m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT), m_camera);
       
        sceneManager.Update(deltaTime);
 
@@ -345,6 +323,8 @@ void Application::Run()
       
        // m_renderer2D.drawQuad(glm::vec2(150, 150), glm::vec2(15.0f, 15.0f), glm::vec4(3.0f, 1.0f, 4.0f, 1.0f));
         sceneManager.Render(m_renderer2D);
+
+        m_gizmo.Render(m_renderer2D, m_camera); // Renderiza o gizmo por cima da cena
 
         m_renderer2D.endScene();
         // --- END OF SCENE RENDER ---
@@ -362,6 +342,8 @@ void Application::Run()
     isRunning = false;
 }
 
+
+
 glm::vec4 Application::GetTileColor(int tileId)
 {
     // Uma função temporária para associar um ID a uma cor
@@ -373,23 +355,39 @@ glm::vec4 Application::GetTileColor(int tileId)
     }
 }
 
-void Application::RenderGrid()
-{
-    float width = screenWidth;
-    float height = screenHeight;
-    float spacing = GRID_SPACING;
+void Application::ProcessInput(GLFWwindow* wwindow) {
+    // A m_keyboard e m_mouse são atualizadas pelos callbacks GLFW.
+    // Você pode adicionar lógica de input adicional aqui se precisar de processamento contínuo.
+    // Exemplo: Mover a câmera com WASD
+    m_mouse.UpdatePosition(wwindow);
 
-    // Desenhar linhas verticais
-    for (float x = 0.0f; x < width; x += spacing)
-    {
-        m_renderer2D.drawLine(glm::vec2(x, 0.0f), glm::vec2(x, height), GRID_COLOR);
+    // Lógica para arrastar o gizmo
+    glm::vec2 mousePos = m_mouse.GetPosition();
+    glm::vec2 gizmoPos = m_gizmo.GetPosition(); // Pega a posição atual do gizmo
+    float gizmoRadius = m_gizmo.GetRadius();    // Assumindo que o gizmo tem um raio/tamanho para detecção de clique
+
+    // Verifica se o mouse está sobre o gizmo
+    bool isMouseOverGizmo = glm::distance(mousePos, gizmoPos) < gizmoRadius;
+
+    // Se o botão esquerdo do mouse foi pressionado e o mouse está sobre o gizmo
+    if (m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && isMouseOverGizmo && !m_isGizmoDragging) {
+        m_isGizmoDragging = true;
+        // Calcula o offset inicial entre o mouse e o centro do gizmo
+        m_dragOffset = mousePos - gizmoPos;
+        // Poderíamos também registrar a posição inicial do gizmo aqui se o cálculo de offset fosse diferente
+    }
+    // Se o botão esquerdo do mouse está pressionado E estamos arrastando
+    else if (m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && m_isGizmoDragging) {
+        // Nova posição do gizmo é a posição atual do mouse menos o offset inicial
+        m_gizmo.SetPosition(mousePos - m_dragOffset);
+    }
+    // Se o botão esquerdo do mouse foi liberado E estávamos arrastando
+    else if (!m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && m_isGizmoDragging) {
+        m_isGizmoDragging = false; // Para de arrastar
     }
 
-    // Desenhar linhas horizontais
-    for (float y = 0.0f; y < height; y += spacing)
-    {
-        m_renderer2D.drawLine(glm::vec2(0.0f, y), glm::vec2(width, y), GRID_COLOR);
-    }
+    // Limpa o scroll no final do frame se não quiser que seja cumulativo
+    m_mouse.ClearScroll();
 }
 
 void Application::Shutdown()

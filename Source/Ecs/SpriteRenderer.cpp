@@ -1,7 +1,7 @@
 #include "Source/Ecs/SpriteRenderer.hpp"
 #include "Source/Ecs/SceneObject.hpp"   // Para SceneObject
 #include "Source/Ecs/Transform2D.hpp"   // Para Transform2D
-#include "Source/Renderer/Renderer2D.hpp" // Para Renderer2D
+#include "Renderer2D.hpp" // Para Renderer2D
 #include <iostream>
 #include <imgui.h>
 

@@ -2,7 +2,7 @@
 #define SPRITE_RENDERER_HPP
 
 #include "Source/Ecs/Component.hpp"
-#include "Source/Renderer/Texture.hpp" // Inclua Texture
+#include "Texture.hpp" // Inclua Texture
 #include <glm.hpp>                 // Para glm::vec4 (cor)
 #include <memory>                      // Para std::shared_ptr
 

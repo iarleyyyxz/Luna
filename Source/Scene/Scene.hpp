@@ -5,9 +5,9 @@
 #include <memory> // Para std::shared_ptr
 #include <algorithm> // Para std::remove_if
 
-#include "Source/ECS/SceneObject.hpp" // Inclui a definição de SceneObject
-#include "Source/Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
-#include "Source/Renderer/Texture.hpp"
+#include "Source/Ecs/SceneObject.hpp" // Inclui a definição de SceneObject
+#include "Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
+#include "Renderer/Texture.hpp"
 
 // Forward declaration para evitar dependência circular se SceneObject precisar de Scene
 // (Não é o caso aqui, mas é boa prática para SceneManager)

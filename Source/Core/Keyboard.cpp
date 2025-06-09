@@ -17,6 +17,14 @@ bool Keyboard::IsKeyPressed(int key) const {
     return it != keyStates.end() && it->second;
 }
 
+// *** NOVO / EQUIVALENTE: Implementação explícita do IsKeyDown ***
+bool Keyboard::IsKeyDown(int key) const {
+    // Apenas para garantir que a chave é encontrada, caso contrário, retorna false
+    // (ou use .at() se tiver certeza que a chave existe e quer uma exceção para depuração)
+    auto it = keyStates.find(key);
+    return it != keyStates.end() && it->second;
+}
+
 bool Keyboard::WasKeyJustPressed(int key) const {
     return keyStates.at(key) && !previousKeyStates.at(key);
 }

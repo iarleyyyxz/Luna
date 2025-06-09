@@ -5,7 +5,7 @@
 #include <map>    // Para std::map de cenas
 
 #include "Scene.hpp" // Inclui a definição de Scene
-#include "Source/Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
+#include "Renderer/Renderer2D.hpp" // Inclui Renderer2D para o método Render
 
 class SceneManager {
 public:

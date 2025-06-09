@@ -6,7 +6,7 @@
 #include <string> // Para std::string
 
 #include "Source/Ecs/Component.hpp" // A classe base Component
-#include "Source/Renderer/Sprite.hpp" // Inclua Sprite.hpp para a definição de Sprite
+#include "Source/Graphics/Sprite.hpp" // Inclua Sprite.hpp para a definição de Sprite
 
 // Forward declaration para SceneObject (se não incluído em Component.hpp)
 class SceneObject;

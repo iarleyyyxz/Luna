@@ -24,19 +24,19 @@
     <ClCompile Include="Source\Events\EventManager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Shader.cpp">
+    <ClCompile Include="Source\Graphics\Renderer\Shader.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Texture.cpp">
+    <ClCompile Include="Source\Graphics\Renderer\Texture.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Renderer2D.cpp">
+    <ClCompile Include="Source\Graphics\Renderer\Renderer2D.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Sprite.cpp">
+    <ClCompile Include="Source\Graphics\Sprite.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Spritesheet.cpp">
+    <ClCompile Include="Source\Graphics\Spritesheet.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Source\Ecs\Anim\Animation.cpp">
@@ -108,6 +108,9 @@
     <ClCompile Include="Editor\SpritesheetEditor.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Gizmo2D.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Application.hpp">
@@ -116,19 +119,19 @@
     <ClInclude Include="Source\Events\EventManager.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Shader.hpp">
+    <ClInclude Include="Source\Graphics\Renderer\Shader.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Texture.hpp">
+    <ClInclude Include="Source\Graphics\Renderer\Texture.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Renderer2D.hpp">
+    <ClInclude Include="Source\Graphics\Renderer\Renderer2D.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Sprite.hpp">
+    <ClInclude Include="Source\Graphics\Sprite.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Spritesheet.hpp">
+    <ClInclude Include="Source\Graphics\Spritesheet.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Source\Ecs\Anim\Animation.hpp">
@@ -225,6 +228,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Editor\SpritesheetEditor.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Gizmo2D.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,12 +6,15 @@
 
 #include "Source/Ecs/Transform2D.hpp"
 
-#include "Source/Renderer/Renderer2D.hpp"
+#include "Renderer2D.hpp"
 
 class Camera2D {
 public:
     Camera2D(float viewportWidth, float viewportHeight);
     ~Camera2D() = default;
+
+    float getViewportWidth() const { return m_viewportWidth; }   // Adicionado
+    float getViewportHeight() const { return m_viewportHeight; } // Adicionado
 
     void setViewportSize(float width, float height);
     glm::vec2 getPosition() const { return m_position; }

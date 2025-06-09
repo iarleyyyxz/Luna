@@ -15,12 +15,13 @@
 #include "Mouse.hpp"
 #include "Editor/ImGuiManager.hpp"
 #include "Editor/ViewportGui.hpp"
-#include "Source/Renderer/Texture.hpp" // Incluir Texture
-#include "Source/Renderer/Sprite.hpp"  // Incluir Sprite
+#include "Texture.hpp" // Incluir Texture
+#include "Sprite.hpp"  // Incluir Sprite
 #include <glm.hpp>                 // Incluir glm para vetores
 #include "Camera2D.hpp"
 #include "Source/Scene/SceneManager.hpp"
-
+#include "Editor/Gizmo2D.hpp"
+// Estrutura de dados para a luz
 class Application
 {
 public:
@@ -39,10 +40,17 @@ public:
 
     EventManager& GetEventManager() { return eventManager; }
     Keyboard& GetKeyboard() { return m_keyboard; }
-    Mouse& GetMouse() { return m_mouse; }
+    Luna::Input::Mouse& GetMouse() { return m_mouse; }
     unsigned int GetFramebufferTexture() const { return framebufferTexture; }
 
-    static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+    void ProcessInput(GLFWwindow* wwindow);
+
+    Luna::Editor::Gizmo2D m_gizmo;
+    std::shared_ptr<SceneObject> m_selectedObjectForGizmo; // O objeto que o gizmo manipulará
+
+    static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+    static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+    static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
     glm::vec4 GetTileColor(int tileId);
 
@@ -58,9 +66,11 @@ private:
 
     Renderer2D m_renderer2D;
     Keyboard m_keyboard;
-    Mouse m_mouse;
+    Luna::Input::Mouse m_mouse;
     ImGuiManager m_imGuiManager;
     ViewportGui m_viewportGui;
+
+    float deltaTime;
 
     EventManager eventManager;
 
@@ -78,6 +88,9 @@ private:
     Camera2D m_camera;
     SceneManager& sceneManager = SceneManager::GetInstance();
 
+    bool m_isGizmoDragging = false;
+    glm::vec2 m_dragOffset; // Offset entre a posição do mouse e o centro do gizmo ao iniciar o drag
+
 
     static const float GRID_SPACING; // Apenas declaração
     static const glm::vec4 GRID_COLOR; // Apenas declaração
@@ -89,7 +102,7 @@ private:
     // ... outros membros privados ...
     bool m_isDragging = false;
     glm::vec2 m_dragStartPosition;
-    void processMousePan(const glm::vec2& currentMousePosition);
+   // void processMousePan(const glm::vec2& currentMousePosition);
 };
 
 #endif // APPLICATION_HPP
