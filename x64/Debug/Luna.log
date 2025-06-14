@@ -1,5 +1,94 @@
-﻿  Gizmo2D.cpp
-  Scene.cpp
-  Gerando Código...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflita com uso de outras bibliotecas; use /NODEFAULTLIB:library
-  Luna.vcxproj -> C:\Users\josy-\source\repos\Luna\x64\Debug\Luna.exe
+﻿  Application.cpp
+C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(112,16): warning C4305: 'return': truncamento de 'int' para 'bool'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,61): error C2665: 'Luna::Ecs::Anim::Animation::Animation': nenhuma função sobrecarregada pode converter todos os tipos de argumento
+  (compilando o arquivo fonte 'Source/Core/Application.cpp')
+      C:\Users\josy-\source\repos\Luna\Luna\Source\Ecs\Anim\Animation.hpp(23,17):
+      poderia ser 'Luna::Ecs::Anim::Animation::Animation(std::shared_ptr<SceneObject>,const std::vector<Sprite *,std::allocator<Sprite *>> &,float)'
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,61):
+          'Luna::Ecs::Anim::Animation::Animation(std::shared_ptr<SceneObject>,const std::vector<Sprite *,std::allocator<Sprite *>> &,float)': não é possível converter um argumento 2 de '_Ty' em 'const std::vector<Sprite *,std::allocator<Sprite *>> &'
+          with
+          [
+              _Ty=nullptr
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+              Razão: não é possível converter de '_Ty' para 'const std::vector<Sprite *,std::allocator<Sprite *>>'
+          with
+          [
+              _Ty=nullptr
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+              'std::vector<Sprite *,std::allocator<Sprite *>>::vector': nenhuma função sobrecarregada pode converter todos os tipos de argumento
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(719,5):
+                  poderia ser 'std::vector<Sprite *,std::allocator<Sprite *>>::vector(std::initializer_list<_Ty>,const _Alloc &)'
+          with
+          [
+              _Ty=Sprite *,
+              _Alloc=std::allocator<Sprite *>
+          ]
+                      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+                      'std::vector<Sprite *,std::allocator<Sprite *>>::vector(std::initializer_list<_Ty>,const _Alloc &)': não é possível converter um argumento 1 de '_Ty' em 'std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=Sprite *,
+              _Alloc=std::allocator<Sprite *>
+          ]
+          and
+          [
+              _Ty=nullptr
+          ]
+          and
+          [
+              _Ty=Sprite *
+          ]
+                          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+                          Conversão requer um segundo operador de conversão definida pelo usuário ou construtor
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(692,5):
+                  ou       'std::vector<Sprite *,std::allocator<Sprite *>>::vector(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<Sprite *>
+          ]
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\vector(686,5):
+                  ou       'std::vector<Sprite *,std::allocator<Sprite *>>::vector(const unsigned __int64,const _Ty &,const _Alloc &)'
+          with
+          [
+              _Ty=Sprite *,
+              _Alloc=std::allocator<Sprite *>
+          ]
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+                  ao tentar corresponder a lista de argumentos '(_Ty)'
+          with
+          [
+              _Ty=nullptr
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,61):
+      ao tentar corresponder a lista de argumentos '(_Ty, _Ty, _Ty)'
+          with
+          [
+              _Ty=nullptr
+          ]
+          and
+          [
+              _Ty=nullptr
+          ]
+          and
+          [
+              _Ty=float
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(476,61):
+      o contexto de instanciação do modelo (o mais antigo primeiro) é
+          C:\Users\josy-\source\repos\Luna\Luna\Source\Core\Application.cpp(198,53):
+          consulte a referência à instanciação 'std::shared_ptr<Luna::Ecs::Anim::Animation> std::make_shared<Luna::Ecs::Anim::Animation,nullptr,nullptr,float>(nullptr &&,nullptr &&,float &&)' do modelo que está sendo compilada
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(2913,46):
+          consulte a referência à instanciação 'std::_Ref_count_obj2<Luna::Ecs::Anim::Animation>::_Ref_count_obj2<_Ty,_Ty,float>(_Ty &&,_Ty &&,float &&)' do modelo que está sendo compilada
+          with
+          [
+              _Ty=nullptr
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(2100,18):
+          consulte a referência à instanciação 'void std::_Construct_in_place<_Ty,nullptr,nullptr,float>(_Ty &,nullptr &&,nullptr &&,float &&) noexcept(false)' do modelo que está sendo compilada
+          with
+          [
+              _Ty=Luna::Ecs::Anim::Animation
+          ]
+  

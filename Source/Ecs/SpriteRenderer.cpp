@@ -41,7 +41,7 @@ void SpriteRenderer::Render(Renderer2D& renderer) {
 void SpriteRenderer::OnGui() {
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap;
     ImGuiButtonFlags flagsb = ImGuiButtonFlags_EnableNav;
-    if (ImGui::TreeNodeEx("\xef\x80\xbe Sprite Renderer", flags)) {
+    if (ImGui::TreeNodeEx("\xef\x94\xbf Sprite Renderer", flags)) {
         ImGui::ColorEdit4("Color", &m_color.r);
         if (m_texture) {
            

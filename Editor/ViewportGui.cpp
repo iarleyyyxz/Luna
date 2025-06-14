@@ -1,7 +1,7 @@
 // ViewportGui.cpp
 #include "ViewportGui.hpp"
 #include "imgui.h"
-
+#include <string>
 ViewportGui::ViewportGui() {
     // Inicialização da ViewportGui, se necessário
 }

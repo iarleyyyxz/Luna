@@ -89,7 +89,7 @@ public:
     void OnGui() {
         ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap;
 
-        std::string label = std::string("\xef\x82\xae ") + name_.c_str();
+        std::string label = std::string("\xef\x86\xb2 ") + name_.c_str();
         if (ImGui::TreeNodeEx(label.c_str(), flags))
         {
             // O Transform2D é um membro direto, então chame OnGui diretamente nele.

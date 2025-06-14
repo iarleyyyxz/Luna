@@ -25,6 +25,7 @@
     <ClCompile Include="Editor\SpritesheetEditor.cpp" />
     <ClCompile Include="Editor\ViewportGui.cpp" />
     <ClCompile Include="Editor\Gizmo2D.cpp" />
+    <ClCompile Include="Source\Core\Gamepad.cpp" />
     <ClCompile Include="Source\Core\Log.cpp" />
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\Camera2D.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="Editor\SpritesheetEditor.hpp" />
     <ClInclude Include="Editor\ViewportGui.hpp" />
     <ClInclude Include="Editor\Gizmo2D.hpp" />
+    <ClInclude Include="Source\Core\Gamepad.hpp" />
     <ClInclude Include="Source\Core\Log.hpp" />
     <ClInclude Include="Source\Core\Application.hpp" />
     <ClInclude Include="Source\Core\Camera2D.hpp" />

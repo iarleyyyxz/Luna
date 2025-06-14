@@ -37,7 +37,7 @@ const glm::vec4 Application::GRID_COLOR = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
 void Application::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
     if (app) {
-        app->m_mouse.ProcessMouseButton(button, action);
+        app->m_mouse.ProcessMouseButton(button, action, mods);
     }
 }
 
@@ -139,7 +139,7 @@ bool Application::Init()
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
         auto app = static_cast<Application*>(glfwGetWindowUserPointer(win));
-        if (app) app->m_mouse.ProcessMouseButton(button, action);
+        if (app) app->m_mouse.ProcessMouseButton(button, action, mods);
         }); 
     glfwSetMouseButtonCallback(window, Application::MouseButtonCallback);
 
@@ -193,8 +193,9 @@ bool Application::Init()
         m_selectedObjectForGizmo->GetTransform().scale = glm::vec3(100.0f, 100.0f, 1.0f);
         // Carregue uma textura real para o sprite do objeto de teste
         // Use AssetManager para carregar texturas
-        std::shared_ptr<Texture> gizmoSelectedTexture = std::make_shared<Texture>("Resources/textura.png");
+        std::shared_ptr<Texture> gizmoSelectedTexture = std::make_shared<Texture>("Resources/example.png");
         m_selectedObjectForGizmo->AddComponent(std::make_shared<SpriteRenderer>(gizmoSelectedTexture, glm::vec4(1.0f)));
+        m_selectedObjectForGizmo->AddComponent(std::make_shared <Luna::Ecs::Anim::Animation>(nullptr, nullptr, 1.0f));
         currentScene->AddSceneObject(m_selectedObjectForGizmo);
 
         // Objeto secundário (sem gizmo)
@@ -311,7 +312,7 @@ void Application::Run()
         // UPDATING CAMERA    
        m_camera.update(deltaTime);
 
-       m_gizmo.Update(m_mouse.GetPosition().x, m_mouse.GetPosition().y, m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT), m_camera);
+       m_gizmo.Update(m_mouse.GetPosition().x, m_mouse.GetPosition().y, m_keyboard.IsKeyPressed(GLFW_KEY_H), m_camera);
       
        sceneManager.Update(deltaTime);
 
@@ -377,8 +378,9 @@ void Application::ProcessInput(GLFWwindow* wwindow) {
         // Poderíamos também registrar a posição inicial do gizmo aqui se o cálculo de offset fosse diferente
     }
     // Se o botão esquerdo do mouse está pressionado E estamos arrastando
-    else if (m_mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT) && m_isGizmoDragging) {
+    else if (m_keyboard.IsKeyPressed(GLFW_KEY_G) && m_isGizmoDragging) {
         // Nova posição do gizmo é a posição atual do mouse menos o offset inicial
+        Luna::GLogger.Info("Mouse pressed");
         m_gizmo.SetPosition(mousePos - m_dragOffset);
     }
     // Se o botão esquerdo do mouse foi liberado E estávamos arrastando

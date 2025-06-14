@@ -19,6 +19,8 @@ private:
     // Adicione aqui quaisquer dados ou configurações específicas da Viewport
     bool isViewportFocused = false;
     bool isViewportHovered = false;
+
+    bool IN_EDITOR = true;
 };
 
 #endif // VIEWPORT_GUI_HPP

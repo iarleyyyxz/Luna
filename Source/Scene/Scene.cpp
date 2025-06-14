@@ -87,7 +87,7 @@ void Scene::OnGui() {
 
         ImGui::Spacing();
 
-        if (ImGui::TreeNodeEx("\xef\x80\xab" " Root Scene Objects ##root", flags)) {
+        if (ImGui::TreeNodeEx("\xef\x80\xbe " " Root Scene Objects ##root", flags)) {
             ImGui::Spacing();
             ImGui::SeparatorText("Scene Objects");
 

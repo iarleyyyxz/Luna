@@ -1,5 +1,5 @@
 #include "Mouse.hpp"
-#include <GLFW/glfw3.h> // Certifique-se de que está incluído para definições GLFW_MOUSE_BUTTON_*
+#include <GLFW/glfw3.h>
 
 namespace Luna {
     namespace Input {
@@ -8,10 +8,11 @@ namespace Luna {
             m_position = glm::vec2(x, y);
         }
 
-        void Mouse::ProcessMouseButton(int button, int action) {
-            // Armazena o estado do botão
-            // true se a ação for GLFW_PRESS, false se for GLFW_RELEASE
+        // *** CORRIGIDO: Adicionado 'int mods' ***
+        void Mouse::ProcessMouseButton(int button, int action, int mods) {
             m_buttonStates[button] = (action == GLFW_PRESS);
+            // O 'mods' pode ser usado aqui se você precisar saber se Shift/Ctrl/Alt estavam pressionados
+            // Ex: if (mods & GLFW_MOD_SHIFT) { /* Fazer algo com Shift */ }
         }
 
         void Mouse::UpdatePosition(GLFWwindow* window) {
@@ -38,10 +39,7 @@ namespace Luna {
             scrollOffsetY = 0.0f;
         }
 
-        // *** NOVO: Implementação do método IsButtonPressed ***
         bool Mouse::IsButtonPressed(int button) const {
-            // Procura o botão no mapa. Se encontrado e o valor for true, está pressionado.
-            // Se não encontrado, assume false (não pressionado/estado desconhecido).
             auto it = m_buttonStates.find(button);
             return it != m_buttonStates.end() && it->second;
         }
